@@ -1,0 +1,47 @@
+.card-category{
+font-weight: bold;
+font-size: 1.2rem;
+color: black;
+}
+
+#muda{
+font-size: 1.2em;
+}
+
+.bg-siaga {
+background-color: #2fdb09 !important;
+color: white;
+}
+
+.bg-penggalang {
+background-color: #f70505 !important; 
+color: white;
+}
+
+.bg-penegak {
+background-color: #fadd00 !important;
+color: white;
+}
+
+.bg-pandega {
+background-color: #662104 !important;
+color: white;
+}
+
+
+/*text*/
+.text-siaga{
+color : #2fdb09 !important;
+}
+
+.text-penggalang{
+color : #f70505 !important;
+}
+
+.text-penegak{
+color : #fadd00 !important;
+}
+
+.text-pandega{
+color : #662104 !important;
+}
