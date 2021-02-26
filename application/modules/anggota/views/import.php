@@ -21,7 +21,7 @@
 						<input type="file" name="file" class="form-control" placeholder="pilih file xls / xlsx">
 					</div>
 					<div class="col-md-2 py-1">
-						<button class="btn btn-secondary" type="submit"> <i class="fa fa-upload"></i> Import File</button>
+						<button class="btn btn-secondary" type="submit" onclick="return confirm('apakah data anda sudah benar? jika ada kekeliruan mungkin akan mengakibatkan data anda redundant dan tidak valid, mohon pastikan terlebih dahulu sebelum anda melakukan proses import.. Terimakasih,.')"> <i class="fa fa-upload"></i> Import File</button>
 					</div>
 				</div>
 			</form>

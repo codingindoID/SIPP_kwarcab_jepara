@@ -37,6 +37,11 @@ class M_beranda extends CI_Model {
 		return $this->db->get('tb_anggota');
 	}
 
+	function count_pangkalan()
+	{
+		
+	}
+
 }
 
 /* End of file M_beranda.php */

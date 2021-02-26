@@ -29,28 +29,30 @@
 				<?php 
 				$no = 1;
 				foreach ($pangkalan as $p): ?>
-					<tr>
-						<td><?php echo $no++ ?></td>
-						<td><?php echo $p->nama_pangkalan ?></td>
-						<td><?php echo $p->kamabigus ?></td>
-						<td><?php echo $p->kagudep ?></td>
-						<td class="text-center"><?php echo $p->jumlah_pembina ?></td>
-						<td class="text-right">
-							<div class="dropdown">
-								<a href="#" class="btn-sm btn-success dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="color: white"> 
-									<i class="fas fa-align-justify"></i>
-								</a>
-								<div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-									<a class="dropdown-item" href="<?php echo site_url('pangkalan/lihat/').$p->id_pangkalan.'/'.$p->jumlah_pembina ?>" ><i class="fa fa-eye" ></i> Lihat</a>
+					<?php if ($p->nama_pangkalan != null): ?>
+						<tr>
+							<td><?php echo $no++ ?></td>
+							<td><?php echo $p->nama_pangkalan ?></td>
+							<td><?php echo $p->kamabigus ?></td>
+							<td><?php echo $p->kagudep ?></td>
+							<td class="text-center"><?php echo $p->jumlah_pembina ?></td>
+							<td class="text-right">
+								<div class="dropdown">
+									<a href="#" class="btn-sm btn-success dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="color: white"> 
+										<i class="fas fa-align-justify"></i>
+									</a>
+									<div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+										<a class="dropdown-item" href="<?php echo site_url('pangkalan/lihat/').$p->id_pangkalan.'/'.$p->jumlah_pembina ?>" ><i class="fa fa-eye" ></i> Lihat</a>
 
-									<?php if ($this->session->userdata('ses_level') == 1): ?>
-										<a onclick="edit(<?php echo $p->id_pangkalan ?>)" class="dropdown-item" href="#modal_edit" data-toggle="modal"><i class="fa fa-edit" ></i> Edit</a>
-										<a class="dropdown-item" href="#" onclick="hapus(<?php echo $p->id_pangkalan ?>)"><i class="fa fa-trash"></i> Hapus</a>
-									<?php endif ?>
+										<?php if ($this->session->userdata('ses_level') == 1): ?>
+											<a onclick="edit(<?php echo $p->id_pangkalan ?>)" class="dropdown-item" href="#modal_edit" data-toggle="modal"><i class="fa fa-edit" ></i> Edit</a>
+											<a class="dropdown-item" href="#" onclick="hapus(<?php echo $p->id_pangkalan ?>)"><i class="fa fa-trash"></i> Hapus</a>
+										<?php endif ?>
+									</div>
 								</div>
-							</div>
-						</td>
-					</tr>
+							</td>
+						</tr>
+					<?php endif ?>
 				<?php endforeach ?>
 			</tbody>
 		</table>

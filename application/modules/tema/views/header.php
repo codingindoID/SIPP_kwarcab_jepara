@@ -27,6 +27,7 @@
     <script src="<?php echo base_url('assets/login') ?>/sweetalert.min.js"></script>
 
     <link href="https://cdn.jsdelivr.net/gh/gitbrent/bootstrap4-toggle@3.6.1/css/bootstrap4-toggle.min.css" rel="stylesheet">
+    <script src="<?php echo base_url('assets/select2') ?>/select2.full.min.js"></script>
 
 </head>
 
@@ -44,6 +45,11 @@ else if($this->session->flashdata('error'))
 {
     $flash_type = 'error';
     $data_flash = $this->session->flashdata('error');
+}
+else if($this->session->flashdata('prompt'))
+{
+    $flash_type = 'prompt';
+    $data_flash = $this->session->flashdata('prompt');
 }
 else
 {

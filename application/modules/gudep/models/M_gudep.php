@@ -87,12 +87,21 @@ class M_gudep extends CI_Model {
 
 	function pangkalan_gudep_regional()
 	{
-		$id_kwaran = $this->session->userdata('ses_kwaran');
-		$where = [
-			'kwaran'		=> $id_kwaran
-		];
-
-		return $this->db->get_where('tb_pangkalan', $where)->result();
+		if ($this->session->userdata('ses_level') == 3) {
+			$id_pangkalan = $this->session->userdata('ses_pangkalan');
+			$where = [
+				'id_pangkalan'		=> $id_pangkalan
+			];
+			return $this->db->get_where('tb_pangkalan',$where)->result();
+		}
+		else
+		{
+			$id_kwaran = $this->session->userdata('ses_kwaran');
+			$where = [
+				'kwaran'		=> $id_kwaran
+			];
+			return $this->db->get_where('tb_pangkalan', $where)->result();
+		}
 	}
 
 }

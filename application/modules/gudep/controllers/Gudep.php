@@ -243,6 +243,7 @@ class Gudep extends MY_Controller {
 			'rekap'			=> $this->M_gudep->get_gudep_regional()
 		];
 
+		//echo json_encode($data);
 		$this->template->load('tema/index','gudep_regional',$data);
 	}
 

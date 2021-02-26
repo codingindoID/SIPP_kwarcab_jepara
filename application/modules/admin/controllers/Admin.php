@@ -18,7 +18,10 @@ class Admin extends MY_Controller {
 			'kolom'		=> 'created_date',
 			'urutan'	=> 'desc'
 		];
-		$button = '<a href="#modal_add" data-toggle="modal" class="btn-sm btn-white btn-border btn-round mr-2" id="tambah_data"><i class="fa fa-plus"></i> Tambah Admin</a>';
+		$button = '
+		<a href="'.site_url('admin/export_admin/kwaran').'" class="btn-sm btn-white btn-border btn-round mr-2"><i class="fa fa-file-excel"></i> Export Excel</a>
+		<a href="#modal_add" data-toggle="modal" class="btn-sm btn-white btn-border btn-round mr-2" id="tambah_data"><i class="fa fa-plus"></i> Tambah Admin</a>
+		';
 
 		$data = [
 			'title'			=> 'Admin',
@@ -42,7 +45,9 @@ class Admin extends MY_Controller {
 				'kolom'		=> 'created_date',
 				'urutan'	=> 'desc'
 			];
-			$button = '<a href="#modal_add" data-toggle="modal" class="btn-sm btn-white btn-border btn-round mr-2" id="tambah_data"><i class="fa fa-plus"></i> Tambah Admin</a>';
+			$button = '
+			<a href="'.site_url('admin/export_admin/gudep').'" class="btn-sm btn-white btn-border btn-round mr-2"><i class="fa fa-file-excel"></i> Export Excel</a>
+			<a href="#modal_add" data-toggle="modal" class="btn-sm btn-white btn-border btn-round mr-2" id="tambah_data"><i class="fa fa-plus"></i> Tambah Admin</a>';
 
 			/*kondisi berdasarkan level admin*/
 			if ($level == 1) {
@@ -292,6 +297,16 @@ class Admin extends MY_Controller {
 				'action'	=> $action
 			));
 		}
+	}
+
+	/*EXPORT*/
+	function export_admin($param)
+	{
+		if ($this->session->userdata('ses_level') == null) {
+			redirect('auth','refresh');
+		}
+		
+		$this->M_admin->export($param);
 	}
 }
 

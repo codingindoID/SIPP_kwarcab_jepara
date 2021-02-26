@@ -1,3 +1,9 @@
+<style>
+	.detil_p{
+		font-size: 1rem;
+	}
+</style>
+
 <div class="row row-card-no-pd">
 	<div class="col-sm-12 col-md-12 mt-2">
 		<div class="card card-stats card-secondary card-round">
@@ -30,34 +36,34 @@
 			<div class="form-group row">
 				<div class="col-md-6">
 					<label for="exampleInputEmail1">Nama Pangkalan</label>
-					<input type="text" value="<?php echo $pangkalan->nama_pangkalan ?>" class="form-control">
+					<p class="detil_p"><?php echo $pangkalan->nama_pangkalan ?></p>
 				</div>
 				<div class="col-md-6">
 					<label for="exampleInputPassword1">Kwaran</label>
-					<input type="text" value="<?php echo $pangkalan->nama_kwaran ?>" class="form-control">
+					<p class="detil_p"><?php echo $pangkalan->nama_kwaran ?></p>
 				</div>
 			</div>
 			<div class="form-group row">
 				<div class="col-md-12">
 					<label for="exampleInputPassword1">Alamat</label>
-					<textarea type="text" class="form-control" name="alamat" placeholder="xxx.xxx" required><?php echo $pangkalan->alamat_pangkalan ?></textarea>
+					<p class="detil_p"><?php echo $pangkalan->alamat_pangkalan ?></p>
 				</div>
 
 			</div>
 			<div class="form-group row">
 				<div class="col-md-6">
 					<label for="exampleInputPassword1">Kamabigus</label>
-					<input type="text" name="kamabigus" value="<?php echo $pangkalan->kamabigus ?>" class="form-control">
+					<p class="detil_p"><?php echo $pangkalan->kamabigus ?></p>
 				</div>
 				<div class="col-md-6">
 					<label for="exampleInputPassword1">Kagudep</label>
-					<input type="text" name="kagudep" value="<?php echo $pangkalan->kagudep ?>" class="form-control">
+					<p class="detil_p"><?php echo $pangkalan->kagudep ?></p>
 				</div>
 			</div>
 			<div class="form-group row">
 				<div class="col-md-6">
 					<label for="exampleInputPassword1">Jumlah Pembina</label>
-					<input type="number" name="jumlah_pembina" value="<?php echo $jumlah_pembina ?>" class="form-control">
+					<p class="detil_p"><?php echo $jumlah_pembina ?></p>
 				</div>
 			</div>
 
@@ -89,7 +95,7 @@
 					<div class="row mt-2 collapse" id="card-siaga">
 						<div class="col-md-12">
 							<div class="card">
-								<div class="card-body bg-primary text-white" style="border-radius: 20px;">
+								<div class="card-body bg-siaga text-white" style="border-radius: 20px;">
 									<table width="100%" style="font-size: 1rem">
 										<?php foreach ($sub_siaga as $s): ?>
 											<tr>
@@ -125,7 +131,7 @@
 					<div class="row mt-2 collapse" id="card-penggalang">
 						<div class="col-md-12">
 							<div class="card">
-								<div class="card-body bg-info text-white" style="border-radius: 20px;">
+								<div class="card-body bg-penggalang text-white" style="border-radius: 20px;">
 									<table width="100%" style="font-size: 1rem">
 										<?php foreach ($sub_penggalang as $g): ?>
 											<tr>
@@ -161,7 +167,7 @@
 					<div class="row mt-2 collapse" id="card-penegak">
 						<div class="col-md-12">
 							<div class="card">
-								<div class="card-body bg-success text-white" style="border-radius: 20px;">
+								<div class="card-body bg-penegak text-white" style="border-radius: 20px;">
 									<table width="100%" style="font-size: 1rem">
 										<?php foreach ($sub_penegak as $t): ?>
 											<tr>
@@ -197,7 +203,7 @@
 					<div class="row mt-2 collapse" id="card-pandega">
 						<div class="col-md-12">
 							<div class="card">
-								<div class="card-body bg-secondary text-white" style="border-radius: 20px;">
+								<div class="card-body bg-pandega text-white" style="border-radius: 20px;">
 									<table width="100%" style="font-size: 1rem">
 										<?php foreach ($sub_pandega as $d): ?>
 											<tr>

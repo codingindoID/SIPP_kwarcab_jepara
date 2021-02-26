@@ -476,7 +476,17 @@ class Anggota extends MY_Controller {
 					'golongan_kpl'		=> $worksheet[$i][20]
 				];
 
-				$this->M_master->input('tb_anggota',$data);
+				if ($worksheet[$i][0] != null) {
+					if ($worksheet[$i][1] != null) {
+						$this->M_master->input('tb_anggota',$data);
+					}
+				}
+				else
+				{
+					unlink($config['upload_path'].$config['file_name']); 
+					$this->session->set_flashdata('error', 'ID KWARAN ataupun ID GUDEP Tidak Boleh Kosong, Mungkin Ada Beberapa Data Anda Yang Belum Terupload, Silahkan Cek Kembali Data Anda');
+					redirect('anggota/import','refresh');
+				}	
 			}
 			unlink($config['upload_path'].$config['file_name']); 
 			$this->session->set_flashdata('success', 'Data Berhasil Diimport');

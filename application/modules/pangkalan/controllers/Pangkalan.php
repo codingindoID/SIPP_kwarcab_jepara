@@ -353,7 +353,18 @@ class Pangkalan extends MY_Controller {
 					'jumlah_pembina'	=> $worksheet[$i][5],
 				];
 
-				$this->M_master->input('tb_pangkalan',$data);
+				if ($worksheet[$i][0] != null) {
+					if ($worksheet[$i][2] != null) {
+						$this->M_master->input('tb_pangkalan',$data);
+					}
+				}
+				else
+				{
+					unlink($config['upload_path'].$config['file_name']); 
+					$this->session->set_flashdata('error', 'Nama Pangkalan ataupun Kwaran Tidak Boleh Kosong, Mungkin Ada Beberapa Data Anda Yang Belum Terupload, Silahkan Cek Kembali Data Anda');
+					redirect('pangkalan','refresh');
+				}	
+
 			}
 			unlink($config['upload_path'].$config['file_name']); 
 			$this->session->set_flashdata('success', 'Data Berhasil Diimport');

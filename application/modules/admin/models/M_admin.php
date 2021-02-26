@@ -1,5 +1,7 @@
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
+use PhpOffice\PhpSpreadsheet\Spreadsheet;
+use PhpOffice\PhpSpreadsheet\Writer\Xlsx;
 
 class M_admin extends CI_Model {
 
@@ -87,6 +89,113 @@ class M_admin extends CI_Model {
 			];
 		}
 		return $res;
+	}
+
+
+	/*Export*/
+	function export($jenis)
+	{
+		if ($jenis == 'kwaran') {
+			$where = [
+				'level'		=> 2
+			];
+
+			$this->db->join('tb_kwaran', 'tb_kwaran.id_kwaran = tb_user.id_kwaran');
+			$this->db->where($where);
+			$data = $this->db->get('tb_user')->result();
+
+			$this->excel_kwaran($data);
+		}
+		else if($jenis == 'gudep')
+		{
+			if ($this->session->userdata('ses_level') == 1) {
+				$where = [
+					'level'		=> 3
+				];
+				$this->db->join('tb_pangkalan', 'tb_pangkalan.id_pangkalan = tb_user.id_pangkalan');
+				$this->db->where($where);
+			}
+			else
+			{
+				$where = [
+					'level'						=> 3,
+					'tb_pangkalan.kwaran'		=> $this->session->userdata('ses_kwaran')
+				];
+				$this->db->join('tb_pangkalan', 'tb_pangkalan.id_pangkalan = tb_user.id_pangkalan');
+				$this->db->join('tb_kwaran', 'tb_pangkalan.kwaran = tb_kwaran.id_kwaran');
+				$this->db->where($where);
+
+			}
+
+			
+			$data = $this->db->get('tb_user')->result();
+			//echo json_encode($data);
+			$this->excel_gudep($data);
+		}
+	}
+
+	function excel_kwaran($data)
+	{
+		$spreadsheet = new Spreadsheet();
+		$sheet = $spreadsheet->getActiveSheet();
+		$sheet->setCellValue('A1', 'No');
+		$sheet->setCellValue('B1', 'Asal Kwaran');
+		$sheet->setCellValue('C1', 'Email');
+		$sheet->setCellValue('D1', 'Username');
+		$sheet->setCellValue('E1', 'Password ( Jika Belum Diganti )');
+
+		$no = 1;
+		$x = 2;
+		foreach($data as $row)
+		{
+			$sheet->setCellValue('A'.$x, $no++);
+			$sheet->setCellValue('B'.$x, $row->nama_kwaran);
+			$sheet->setCellValue('C'.$x, $row->email);
+			$sheet->setCellValue('D'.$x, $row->username);
+			$sheet->setCellValue('E'.$x, '12345');
+			$x++;
+		}
+
+		$writer = new Xlsx($spreadsheet);
+		$filename = 'Rekap Admin Kwaran ';
+
+		header('Content-Type: application/vnd.ms-excel');
+		header('Content-Disposition: attachment;filename="'. $filename .'.xlsx"'); 
+		header('Cache-Control: max-age=0');
+
+		$writer->save('php://output');
+	}
+
+	function excel_gudep($data)
+	{
+		$spreadsheet = new Spreadsheet();
+		$sheet = $spreadsheet->getActiveSheet();
+		$sheet->setCellValue('A1', 'No');
+		$sheet->setCellValue('B1', 'Asal Pangkalan');
+		$sheet->setCellValue('C1', 'Email');
+		$sheet->setCellValue('D1', 'Username');
+		$sheet->setCellValue('E1', 'Password ( Jika Belum Diganti )');
+
+		$no = 1;
+		$x = 2;
+		foreach($data as $row)
+		{
+			$sheet->setCellValue('A'.$x, $no++);
+			$sheet->setCellValue('B'.$x, $row->nama_pangkalan);
+			$sheet->setCellValue('C'.$x, $row->email);
+			$sheet->setCellValue('D'.$x, $row->username);
+			$sheet->setCellValue('E'.$x, '12345');
+			$x++;
+		}
+
+		$writer = new Xlsx($spreadsheet);
+		$filename = 'Rekap Admin Gudep ';
+
+		header('Content-Type: application/vnd.ms-excel');
+		header('Content-Disposition: attachment;filename="'. $filename .'.xlsx"'); 
+		header('Cache-Control: max-age=0');
+
+		$writer->save('php://output');
 	}
 }
 

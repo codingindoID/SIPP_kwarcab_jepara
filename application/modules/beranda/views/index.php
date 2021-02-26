@@ -2,7 +2,14 @@
 <?php 
 $level = $this->session->userdata('ses_level');
 switch ($level) {
+	case 1:
+	$link_pangkalan = 'pangkalan';
+	$link_gudep 	= 'gudep';
+	$link_anggota 	= 'anggota';
+	$link_kwaran 	= 'kwaran';
+	break;
 	case 2:
+	$link_kwaran 	= '';
 	$link_pangkalan = 'pangkalan/regional';
 	$link_gudep 	= 'gudep/regional';
 	$link_anggota 	= 'anggota/filter_anggota/'.$id_kwaran;
@@ -12,14 +19,7 @@ switch ($level) {
 	$link_gudep 	= 'gudep/regional';
 	$link_anggota 	= 'anggota/anggota_gudep/'.$id_kwaran; //id kwaran disini berisi id pangkalan, penamaannya saja yang kwaran
 	break;
-	case 4:
-	$link_pangkalan = 'pangkalan/regional';
-	break;
 	default:
-	$link_pangkalan = 'pangkalan';
-	$link_gudep 	= 'gudep';
-	$link_anggota 	= 'anggota';
-	$link_kwaran 	= 'kwaran';
 	break;
 }
 ?>
