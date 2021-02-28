@@ -113,6 +113,10 @@ switch ($level) {
 </div>
 <br>
 
+<?php if ($level == '2'): ?>
+	<?php $this->load->view('detil/kwaran'); ?>
+<?php endif ?>
+
 
 <!-- PRAMUKA MUDA -->
 <h3 data-toggle="collapse" href="#body_muda" role="button" aria-expanded="false" aria-controls="collapseExample" style="cursor: pointer"><b><i class="flaticon-layers-1"></i> Potensi Anggota Muda</b> (<?php echo $siaga+$penggalang+$penegak+$pandega ?>)</h3>

@@ -5,6 +5,10 @@ use PhpOffice\PhpSpreadsheet\Spreadsheet;
 use PhpOffice\PhpSpreadsheet\Writer\Xlsx;
 
 class M_anggota extends CI_Model {
+	function getall($table)
+	{
+		return $this->db->get($table);
+	}
 
 	function get_anggota($id_kwaran)
 	{
@@ -86,7 +90,7 @@ class M_anggota extends CI_Model {
 
 	function getgudep($id_kwaran)
 	{
-		if ($this->session->userdata('ses_pangkalan')) {
+		if ($this->session->userdata('ses_pangkalan') != 'admin') {
 			$where = [
 				'tb_gudep.id_pangkalan'		=> $this->session->userdata('ses_pangkalan'),
 				'tb_pangkalan.kwaran'		=>  $id_kwaran

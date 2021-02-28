@@ -222,6 +222,7 @@ class Kwaran extends MY_Controller {
 
 		return $data;
 	}
+
 }
 
 /* End of file Kwaran.php */

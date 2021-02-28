@@ -82,6 +82,7 @@ class Beranda extends MY_Controller {
 			'sub'			=> '',
 			'button_menu'	=> '',
 			'menu'			=> 'beranda',
+			'kwaran'		=> $this->M_master->getWhere('tb_kwaran',['id_kwaran'=> $id_kwaran],$order)->row(),
 			'gudep'			=> $this->M_beranda->getGudep($id_kwaran)->num_rows(),
 			'anggota'		=> $this->M_master->getWhere('tb_anggota',['id_kwaran' => $id_kwaran],$order)->num_rows(),
 			'pangkalan'		=> $this->M_master->getWhere('tb_pangkalan',['kwaran' => $id_kwaran],$order)->num_rows(),
@@ -98,9 +99,12 @@ class Beranda extends MY_Controller {
 			'sub_penggalang'=> $this->_get_tingkat_kwaran('penggalang',$id_kwaran),
 			'sub_penegak'	=> $this->_get_tingkat_kwaran('penegak',$id_kwaran),
 			'sub_pandega'	=> $this->_get_tingkat_kwaran('pandega',$id_kwaran),
-			'id_kwaran'		=> $id_kwaran 
+			'id_kwaran'		=> $id_kwaran,
+			'status_sek'	=> $this->M_master->getall('tb_status_kepemilikan',$order2)->result(),
+			'sifat_sek'		=> $this->M_master->getall('tb_sifat_kepemilikan',$order2)->result(),
 		];
 
+		//echo json_encode($data);
 		$this->template->load('tema/index','index',$data);
 	}
 
@@ -238,6 +242,24 @@ class Beranda extends MY_Controller {
 		}
 
 		return $data;
+	}
+
+	function aksi_update_kwaran($id)
+	{
+		if ($this->session->userdata('ses_username') == null) {
+			redirect('auth','refresh');
+		}
+
+		$cek = $this->M_beranda->update_kwaran();
+		if ($cek['res'] == 1) {
+			$this->session->set_flashdata('success', 'Update Berhasil');
+			redirect('beranda/index_kwaran','refresh');
+		}
+		else
+		{
+			$this->session->set_flashdata('error', 'Gagal Update');
+			redirect('beranda/index_kwaran','refresh');
+		}
 	}
 
 }

@@ -162,15 +162,7 @@
 				</div>
 			</div>
 			<div class="col-md-4">
-				<div class="form-group">
-					<label>Golongan</label>
-					<select name="golongan_kmd" class="form-control">
-						<option value="">Pilih . . </option>
-						<?php foreach ($golongan as $g): ?>
-							<option value="<?php echo $g->golongan ?>"><?php echo $g->golongan ?></option>
-						<?php endforeach ?>
-					</select>
-				</div>
+
 			</div>
 		</div>
 		<div class="separator-solid"></div>
@@ -205,7 +197,7 @@
 					<label>Golongan</label>
 					<select name="golongan_kml" class="form-control">
 						<option value="">Pilih . . </option>
-						<?php foreach ($golongan as $g): ?>
+						<?php foreach ($golongan_sert as $g): ?>
 							<option value="<?php echo $g->golongan ?>"><?php echo $g->golongan ?></option>
 						<?php endforeach ?>
 					</select>
@@ -241,15 +233,7 @@
 				</div>
 			</div>
 			<div class="col-md-4">
-				<div class="form-group">
-					<label>Golongan</label>
-					<select name="golongan_kpd" class="form-control">
-						<option value="">Pilih . . </option>
-						<?php foreach ($golongan as $g): ?>
-							<option value="<?php echo $g->golongan ?>"><?php echo $g->golongan ?></option>
-						<?php endforeach ?>
-					</select>
-				</div>
+
 			</div>
 		</div>
 
@@ -281,15 +265,7 @@
 				</div>
 			</div>
 			<div class="col-md-4">
-				<div class="form-group">
-					<label>Golongan</label>
-					<select name="golongan_kpl" class="form-control">
-						<option value="">Pilih . . </option>
-						<?php foreach ($golongan as $g): ?>
-							<option value="<?php echo $g->golongan ?>"><?php echo $g->golongan ?></option>
-						<?php endforeach ?>
-					</select>
-				</div>
+
 			</div>
 		</div>
 		<div class="row">

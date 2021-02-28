@@ -169,7 +169,8 @@ class Anggota extends MY_Controller {
 			'darah'			=> $this->M_master->getall('tb_darah',$order)->result(),
 			'golongan'		=> $this->M_master->getall('tb_golongan',$order)->result(),
 			'kecamatan'		=> $this->db->get('tb_kecamatan')->result(),
-			'kwaran'		=> $kwaran
+			'kwaran'		=> $kwaran,
+			'golongan_sert'	=> $this->M_anggota->getall('tb_golongan_sertifikat')->result(),
 		];
 
 		//echo json_encode($data);
@@ -332,7 +333,8 @@ class Anggota extends MY_Controller {
 			'gudep_dropdown'=> $this->M_anggota->getallGudep()->result(),
 			'darah'			=> $this->M_master->getall('tb_darah',$order)->result(),
 			'golongan'		=> $this->M_master->getall('tb_golongan',$order)->result(),
-			'kwaran'		=> $this->M_master->getall('tb_kwaran',$order)->result()
+			'kwaran'		=> $this->M_master->getall('tb_kwaran',$order)->result(),
+			'golongan_sert'	=> $this->M_anggota->getall('tb_golongan_sertifikat')->result(),
 		];
 
 		$this->template->load('tema/index','edit_anggota',$data);

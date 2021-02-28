@@ -95,10 +95,7 @@
 								</div>
 							</div>
 							<div class="col-md-4">
-								<div class="form-group form-group-default">
-									<label>Golongan</label>
-									<input type="text" class="form-control" value="<?php  echo $anggota->golongan_kmd ?>">
-								</div>
+
 							</div>
 						</div>
 						<div class="separator-solid"></div>
@@ -139,10 +136,7 @@
 								</div>
 							</div>
 							<div class="col-md-4">
-								<div class="form-group form-group-default">
-									<label>Golongan</label>
-									<input type="text" class="form-control" value="<?php  echo $anggota->golongan_kpd ?>">
-								</div>
+
 							</div>
 						</div>
 						<div class="separator-solid"></div>
@@ -161,10 +155,7 @@
 								</div>
 							</div>
 							<div class="col-md-4">
-								<div class="form-group form-group-default">
-									<label>Golongan</label>
-									<input type="text" class="form-control" value="<?php  echo $anggota->golongan_kpl ?>">
-								</div>
+
 							</div>
 						</div>
 					<?php endif ?>
