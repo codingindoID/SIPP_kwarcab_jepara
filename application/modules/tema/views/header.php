@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <title>Sensus Anggota Pramuka Kwarcab Jepara</title>
+    <title><?php echo SITENAME ?></title>
     <meta content='width=device-width, initial-scale=1.0, shrink-to-fit=no' name='viewport' />
     <link rel="icon" href="<?php echo base_url('assets/') ?>img/logo2.png" type="image/x-icon"/>
     <script src="<?php echo base_url('assets/') ?>js/core/jquery.3.2.1.min.js"></script>
@@ -18,6 +18,9 @@
             }
         });
     </script>
+    <!-- 
+        tema dari : http://www.themekita.com  
+     -->
 
     <!-- CSS Files -->
     <link rel="stylesheet" href="<?php echo base_url('assets/') ?>css/bootstrap.min.css">

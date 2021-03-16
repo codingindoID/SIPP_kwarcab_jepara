@@ -88,3 +88,5 @@ defined('EXIT__AUTO_MAX')      OR define('EXIT__AUTO_MAX', 125); // highest auto
 define('ADMIN' ,1);
 define('ADMIN_KWARAN',2);
 define('ADMIN_GUDEP',3);
+
+define('SITENAME', "SIPP Kwarcab Jepara");

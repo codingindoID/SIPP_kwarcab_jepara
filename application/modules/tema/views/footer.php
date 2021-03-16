@@ -4,7 +4,7 @@
             <ul class="nav">
                 <li class="nav-item">
                     <a class="nav-link" href="https://www.pengenngoding.com">
-                        Pengenngoding.com
+                        Agus Setiawan, S.Kom
                     </a>
                 </li>
                 <li class="nav-item">
@@ -20,7 +20,7 @@
             </ul>
         </nav>
         <div class="copyright ml-auto">
-            2020, made with <i class="fa fa-heart heart text-danger"></i> by <a href="#">pengenngoding</a>
+            SIPP v1 -<a href="http://jepara.pramukajateng.or.id"> Kwartir Cabang Jepara</a> - 2021
         </div>              
     </div>
 </footer>
