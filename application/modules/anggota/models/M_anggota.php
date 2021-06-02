@@ -369,9 +369,12 @@ class M_anggota extends CI_Model {
 			$worksheet = $spreadsheet->getActiveSheet()->toArray();
 
 			for ($i=1; $i < count($worksheet) ; $i++) { 
+				$id_gudep = $this->db->get_where('tb_gudep', ['no_gudep' => $worksheet[$i][1] ])->row();
+				$id_gudep = $id_gudep->id_gudep;
+
 				$data = [
 					'id_kwaran' 		=> $worksheet[$i][0],
-					'id_gudep' 			=> $worksheet[$i][1],
+					'id_gudep' 			=> $id_gudep,
 					'ta' 				=> $worksheet[$i][2],
 					'nama' 				=> $worksheet[$i][3],
 					'tempat_lahir' 		=> $worksheet[$i][4],
@@ -437,9 +440,12 @@ class M_anggota extends CI_Model {
 			$worksheet = $spreadsheet->getActiveSheet()->toArray();
 
 			for ($i=1; $i < count($worksheet) ; $i++) { 
+				$id_gudep = $this->db->get_where('tb_gudep', ['no_gudep' => $worksheet[$i][0] ])->row();
+				$id_gudep = $id_gudep->id_gudep;
+
 				$data = [
 					'id_kwaran' 		=> $this->session->userdata('ses_kwaran'),
-					'id_gudep' 			=> $worksheet[$i][0],
+					'id_gudep' 			=> $id_gudep,
 					'ta' 				=> $worksheet[$i][1],
 					'nama' 				=> $worksheet[$i][2],
 					'tempat_lahir' 		=> $worksheet[$i][3],
@@ -511,9 +517,12 @@ class M_anggota extends CI_Model {
 			$worksheet = $spreadsheet->getActiveSheet()->toArray();
 
 			for ($i=1; $i < count($worksheet) ; $i++) { 
+				$id_gudep = $this->db->get_where('tb_gudep', ['no_gudep' => $worksheet[$i][0] ])->row();
+				$id_gudep = $id_gudep->id_gudep;
+
 				$data = [
 					'id_kwaran' 		=> $id_kwaran,
-					'id_gudep' 			=> $worksheet[$i][0],
+					'id_gudep' 			=> $id_gudep,
 					'ta' 				=> $worksheet[$i][1],
 					'nama' 				=> $worksheet[$i][2],
 					'tempat_lahir' 		=> $worksheet[$i][3],

@@ -21,6 +21,7 @@ class Anggota extends MY_Controller {
 		switch ($level) {
 			case ADMIN:
 			$select = '<select name="kwaran" class="form-control" id="kwaran"></select>';
+			$anggota = $this->M_anggota->getsemuaAnggota();
 			break;
 			case ADMIN_KWARAN:
 			$anggota = $this->M_anggota->getanggotaKwaran()->result();
@@ -299,7 +300,14 @@ class Anggota extends MY_Controller {
 		$cek = $this->M_master->delete('tb_anggota',['id_anggota' => $id]);
 		if (!$cek) {
 			$this->session->set_flashdata('success', 'Data Berhasil Dihapus');
-			redirect('anggota/filter_anggota/'.$id_kwaran,'refresh');
+			if ($this->session->userdata('ses_level') == 1) {
+				redirect('anggota/filter_anggota/'.$id_kwaran,'refresh');
+			}
+			else
+			{
+				redirect('anggota','refresh');
+			}
+
 		}
 		else
 		{
@@ -405,22 +413,24 @@ class Anggota extends MY_Controller {
 		];
 
 		switch ($this->session->userdata('ses_level')) {
-			case '1':
+			case 1:
 			$link = 'import_admin';
 			break;
-			case '2':
+			case 2:
 			$link = 'import_kwaran';
 			break;
-			default:
+			case 3:
 			$link = 'import_gudep';
+			break;
+			default:
 			break;
 		}
 
 		$button = '<a href="'.base_url('excel/anggota/').$link.'.xls" class="btn-sm btn-success btn-round"><i class="fas fa-file-download"></i> Download Format</a>';
 		$data = [
 			'title'			=> 'Pangkalan',
-			'sub'			=> 'Master data Pangkalan',
-			'menu'			=> 'pangkalan',
+			'sub'			=> 'Master Data Anggota',
+			'menu'			=> 'anggota',
 			'button_menu'	=> $button,
 			'gudep'			=> $this->M_anggota->getallGudep()->result(),
 			'kwaran'		=> $this->M_master->getall('tb_kwaran',$order)->result()

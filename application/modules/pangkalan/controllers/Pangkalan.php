@@ -63,22 +63,19 @@ class Pangkalan extends MY_Controller {
 
 		$cek = $this->M_master->input('tb_pangkalan',$data);
 		if (!$cek) {
-			echo json_encode(array(
-				'success'	=> 1,
-				'title'		=> 'Sukses',
-				'message'	=> 'Pangkalan Berhasil Ditambahkan',
-				'icon'		=> 'success',
-				'action'	=> site_url('pangkalan')
-			));
+			$this->session->set_flashdata('success', 'Pangkalan Berhasil Ditambahkan');
 		}
 		else
 		{
-			echo json_encode(array(
-				'success'	=> 0,
-				'title'		=> 'Gagal',
-				'message'	=> 'Gagal Input, Silahkan Ulangi Atau Gunakan Koneksi Yang Baik',
-				'icon'		=> 'error'
-			));
+			$this->session->set_flashdata('error', 'Gagal Input, Silahkan Ulangi Atau Gunakan Koneksi Yang Baik');
+		}
+
+		if ($this->session->userdata('ses_level') == 1) {
+			redirect('pangkalan','refresh');
+		}
+		else
+		{
+			redirect('pangkalan/regional','refresh');
 		}
 	}
 
@@ -116,22 +113,19 @@ class Pangkalan extends MY_Controller {
 
 		$cek = $this->M_master->update('tb_pangkalan',$where,$data);
 		if (!$cek) {
-			echo json_encode(array(
-				'success'	=> 1,
-				'title'		=> 'Sukses',
-				'message'	=> 'Pangkalan Berhasil Diupdate',
-				'icon'		=> 'success',
-				'action'	=> site_url('pangkalan')
-			));
+			$this->session->set_flashdata('success', 'Pangkalan Berhasil Diperbarui');
 		}
 		else
 		{
-			echo json_encode(array(
-				'success'	=> 0,
-				'title'		=> 'Gagal',
-				'message'	=> 'Gagal Update, Silahkan Ulangi Atau Gunakan Koneksi Yang Baik',
-				'icon'		=> 'error'
-			));
+			$this->session->set_flashdata('error', 'Gagal Update, Silahkan Ulangi Atau Gunakan Koneksi Yang Baik');
+		}
+
+		if ($this->session->userdata('ses_level') == 1) {
+			redirect('pangkalan','refresh');
+		}
+		else
+		{
+			redirect('pangkalan/regional','refresh');
 		}
 	}
 

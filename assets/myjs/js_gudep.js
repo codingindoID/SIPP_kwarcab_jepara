@@ -67,68 +67,6 @@ function edit(id)
 
 }
 
-$('#update_data').click(function(event){
-	var base 		= $('#base').val()
-	var pangkalan 	= $('#pangkalan').val()
-	var no_gudep 	= $('#gudep').val()
-	var ambalan 	= $('#ambalan').val()
-	var id_gudep 	= $('#id_gudep').val()
-
-	if (pangkalan == '' || no_gudep == '' || ambalan == '') {
-		Swal.fire({
-			title: 'Maaf,',
-			text: 'Inputan Tidak Boleh Ada Yang Kosong',
-			icon: 'error',
-			confirmButtonColor: '#3085d6',
-			confirmButtonText: 'Ok'
-		}).then((result) => {
-			if (result.isConfirmed) {
-			}
-		})
-	}
-	else
-	{
-		$.ajax({
-			url: base+'gudep/update_gudep',
-			type: 'post',
-			dataType: 'json',
-			data: {
-				pangkalan : pangkalan,
-				gudep     : no_gudep,
-				ambalan   : ambalan,
-				id_gudep  : id_gudep
-			},
-		})
-		.done(function(data) {
-			Swal.fire({
-				title: data.title,
-				text: data.message,
-				icon: data.icon,
-				confirmButtonColor: '#3085d6',
-				confirmButtonText: 'Ok'
-			}).then((result) => {
-				if (result.isConfirmed) {
-					if (data.success == 1) {
-						location.href  = data.action;
-					}
-				}
-			})
-		})
-		.fail(function() {
-			Swal.fire({
-				title: 'Maaf,',
-				text: 'Gagal Update, Silahkan Ulangi Atau Gunakan Koneksi Yang Baik',
-				icon: 'error',
-				confirmButtonColor: '#3085d6',
-				confirmButtonText: 'Ok'
-			}).then((result) => {
-				if (result.isConfirmed) {
-				}
-			})
-		});
-	}
-});
-
 function lihat(id)
 {
 	location.href = base+'gudep/lihat_gudep/'+ id;

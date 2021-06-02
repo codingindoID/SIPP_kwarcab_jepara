@@ -55,107 +55,111 @@
 
 
 	<!-- modal -->
-	<div id="modal_add" class="modal" tabindex="-1" role="dialog">
-		<div class="modal-dialog modal-lg" role="document">
-			<div class="modal-content">
-				<div class="modal-header">
-					<h5 class="modal-title">Tambah Pangkalan</h5>
-					<button type="button" class="close" data-dismiss="modal" aria-label="Close">
-						<span aria-hidden="true">&times;</span>
-					</button>
-				</div>
-				<div class="modal-body">
-					<div class="form-group row">
-						<div class="col-md-6">
-							<input type="hidden" name="kwaran" value="<?php echo $kwaran ?>">
-							<label for="exampleInputEmail1">Nama Pangkalan</label>
-							<input type="text" name="nama_pangkalan" value="" class="form-control">
+	<form action="<?php echo site_url('pangkalan/tambah_pangkalan') ?>" method="post" accept-charset="utf-8">
+		<div id="modal_add" class="modal" tabindex="-1" role="dialog">
+			<div class="modal-dialog modal-lg" role="document">
+				<div class="modal-content">
+					<div class="modal-header">
+						<h5 class="modal-title">Tambah Pangkalan</h5>
+						<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+							<span aria-hidden="true">&times;</span>
+						</button>
+					</div>
+					<div class="modal-body">
+						<div class="form-group row">
+							<div class="col-md-6">
+								<input type="hidden" name="kwaran" value="<?php echo $kwaran ?>">
+								<label for="exampleInputEmail1">Nama Pangkalan</label>
+								<input type="text" name="nama_pangkalan" value="" class="form-control" required>
+							</div>
+						</div>
+						<div class="form-group row">
+							<div class="col-md-12">
+								<label for="exampleInputPassword1">Alamat</label>
+								<textarea type="text" class="form-control" name="alamat" placeholder="xxx.xxx" required></textarea>
+							</div>
+
+						</div>
+						<div class="form-group row">
+							<div class="col-md-6">
+								<label for="exampleInputPassword1">Kamabigus</label>
+								<input type="text" name="kamabigus" value="" class="form-control">
+							</div>
+							<div class="col-md-6">
+								<label for="exampleInputPassword1">Kagudep</label>
+								<input type="text" name="kagudep" value="" class="form-control">
+							</div>
+						</div>
+						<div class="form-group row">
+							<div class="col-md-6">
+								<label for="exampleInputPassword1">Jumlah Pembina</label>
+								<input type="number" name="jumlah_pembina" value="" class="form-control">
+							</div>
 						</div>
 					</div>
-					<div class="form-group row">
-						<div class="col-md-12">
-							<label for="exampleInputPassword1">Alamat</label>
-							<textarea type="text" class="form-control" name="alamat" placeholder="xxx.xxx" required></textarea>
-						</div>
-						
+					<div class="modal-footer">
+						<button type="submit" class="btn btn-primary"><i class="fa fa-save"></i> Simpan Data</button>
+						<button type="button" class="btn btn-secondary" data-dismiss="modal">Batal</button>
 					</div>
-					<div class="form-group row">
-						<div class="col-md-6">
-							<label for="exampleInputPassword1">Kamabigus</label>
-							<input type="text" name="kamabigus" value="" class="form-control">
-						</div>
-						<div class="col-md-6">
-							<label for="exampleInputPassword1">Kagudep</label>
-							<input type="text" name="kagudep" value="" class="form-control">
-						</div>
-					</div>
-					<div class="form-group row">
-						<div class="col-md-6">
-							<label for="exampleInputPassword1">Jumlah Pembina</label>
-							<input type="number" name="jumlah_pembina" value="" class="form-control">
-						</div>
-					</div>
-				</div>
-				<div class="modal-footer">
-					<button type="submit" class="btn btn-primary" id="simpan_data"><i class="fa fa-save"></i> Simpan Data</button>
-					<button type="button" class="btn btn-secondary" data-dismiss="modal">Batal</button>
 				</div>
 			</div>
 		</div>
-	</div>
+	</form>
 
 	<!-- modal -->
-	<div id="modal_edit" class="modal" tabindex="-1" role="dialog">
-		<div class="modal-dialog modal-lg" role="document">
-			<div class="modal-content">
-				<div class="modal-header">
-					<h5 class="modal-title">Edit Pangkalan</h5>
-					<button type="button" class="close" data-dismiss="modal" aria-label="Close">
-						<span aria-hidden="true">&times;</span>
-					</button>
-				</div>
-				<div class="modal-body">
-					<div class="form-group row">
-						<div class="col-md-6">
-							<input type="hidden" name="kwaran" value="<?php echo $kwaran ?>">
-							<input type="hidden" id="id_pangkalan">
-							<label for="exampleInputEmail1">Nama Pangkalan</label>
-							<input type="text" id="nama_pangkalan"  value="" class="form-control">
-						</div>
+	<form action="<?php echo site_url('pangkalan/update_pangkalan') ?>" method="post" accept-charset="utf-8">
+		<div id="modal_edit" class="modal" tabindex="-1" role="dialog">
+			<div class="modal-dialog modal-lg" role="document">
+				<div class="modal-content">
+					<div class="modal-header">
+						<h5 class="modal-title">Edit Pangkalan</h5>
+						<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+							<span aria-hidden="true">&times;</span>
+						</button>
 					</div>
-					<div class="form-group row">
-						<div class="col-md-12">
-							<label for="exampleInputPassword1">Alamat</label>
-							<textarea type="text" class="form-control" id="alamat" id="alamat" placeholder="xxx.xxx" required></textarea>
+					<div class="modal-body">
+						<div class="form-group row">
+							<div class="col-md-6">
+								<input type="hidden" name="kwaran" value="<?php echo $kwaran ?>">
+								<input type="hidden" id="id_pangkalan" name="id_pangkalan">
+								<label for="exampleInputEmail1">Nama Pangkalan</label>
+								<input type="text" id="nama_pangkalan" name="nama_pangkalan" value="" class="form-control">
+							</div>
 						</div>
-						
-					</div>
-					<div class="form-group row">
-						<div class="col-md-6">
-							<label for="exampleInputPassword1">Kamabigus</label>
-							<input type="text" id="kamabigus" value="" class="form-control">
+						<div class="form-group row">
+							<div class="col-md-12">
+								<label for="exampleInputPassword1">Alamat</label>
+								<textarea type="text" class="form-control" name="alamat" id="alamat" placeholder="xxx.xxx" required></textarea>
+							</div>
+
 						</div>
-						<div class="col-md-6">
-							<label for="exampleInputPassword1">Kagudep</label>
-							<input type="text" id="kagudep" value="" class="form-control">
+						<div class="form-group row">
+							<div class="col-md-6">
+								<label for="exampleInputPassword1">Kamabigus</label>
+								<input type="text" id="kamabigus" name="kamabigus" value="" class="form-control">
+							</div>
+							<div class="col-md-6">
+								<label for="exampleInputPassword1">Kagudep</label>
+								<input type="text" id="kagudep" name="kagudep" value="" class="form-control">
+							</div>
 						</div>
-					</div>
-					<div class="form-group row">
-						<div class="col-md-6">
-							<label for="exampleInputPassword1">Jumlah Pembina</label>
-							<input type="number" id="jumlah_pembina" value="" class="form-control">
+						<div class="form-group row">
+							<div class="col-md-6">
+								<label for="exampleInputPassword1">Jumlah Pembina</label>
+								<input type="number" id="jumlah_pembina" name="jumlah_pembina" value="" class="form-control">
+							</div>
 						</div>
-					</div>
 
 
-				</div>
-				<div class="modal-footer">
-					<button type="submit" class="btn btn-primary" id="update_data"><i class="fa fa-save"></i> Simpan Perubahan</button>
-					<button type="button" class="btn btn-secondary" data-dismiss="modal">Batal</button>
+					</div>
+					<div class="modal-footer">
+						<button type="submit" class="btn btn-primary"><i class="fa fa-save"></i> Simpan Perubahan</button>
+						<button type="button" class="btn btn-secondary" data-dismiss="modal">Batal</button>
+					</div>
 				</div>
 			</div>
 		</div>
-	</div>
+	</form>
 
 	<!-- select 2 -->
 	<script src="<?php echo base_url('assets/select2') ?>/select2.full.min.js"></script>

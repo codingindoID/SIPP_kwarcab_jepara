@@ -33,7 +33,7 @@
 					<div class="form-group row">
 						<div class="col-md-12">
 							<label for="exampleInputPassword1">No Gudep</label>
-							<input type="text" class="form-control" name="gudep" placeholder="xxx.xxx" required>
+							<input type="text" class="form-control" name="gudep" placeholder="xx.xxx" required>
 						</div>
 					</div>
 					<div class="form-group row">

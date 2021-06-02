@@ -5,65 +5,6 @@ $(document).ready(function() {
 	});
 });
 
-$('#simpan_data').click(function(event){
-	var base = $('#base').val()
-	var nama_pangkalan 	= $('input[name="nama_pangkalan"]').val()
-	var alamat    		= $('textarea[name="alamat"]').val()
-	var kwaran  		= $('select[name="kwaran"]').val()
-	var kamabigus 		= $('input[name="kamabigus"]').val()
-	var kagudep 		= $('input[name="kagudep"]').val()
-	var jumlah_pembina 	= $('input[name="jumlah_pembina"]').val()
-
-	var input = {
-		nama_pangkalan 	: nama_pangkalan,
-		alamat 			: alamat,
-		kwaran 			: kwaran,
-		kamabigus 		: kamabigus,
-		kagudep 		: kagudep,
-		jumlah_pembina 	: jumlah_pembina
-	};
-
-	if (nama_pangkalan == '' || alamat == '' || kwaran == '' || kamabigus == '' || kagudep == '' ||jumlah_pembina == ''  ) {
-		Swal.fire(
-			'Maaf,',
-			'Data Inputan Tidak Boleh Kosong..',
-			'error'
-			)
-	}
-	else
-	{
-		$.ajax({
-			url: base+'pangkalan/tambah_pangkalan',
-			type: 'post',
-			dataType: 'json',
-			data:input,
-		})
-		.done(function(data) {
-			Swal.fire({
-				title: data.title,
-				text: data.message,
-				icon: data.icon,
-				confirmButtonColor: '#3085d6',
-				confirmButtonText: 'Ok'
-			}).then((result) => {
-				if (result.isConfirmed) {
-					if (data.success == 1) {
-						location.href  = data.action;
-					}
-				}
-			})
-		})
-		.fail(function() {
-			Swal.fire(
-				'Gagal,',
-				'Silahkan Ulangi, Atau gunakan koneksi yang baik..',
-				'error'
-				)
-		});
-		
-	}
-});	
-
 function edit(id)
 {
 	var base = $('#base').val()
@@ -92,67 +33,6 @@ function edit(id)
 	});
 	
 }
-
-$('#update_data').click(function(event) {
-	var base = $('#base').val()
-	var id_pangkalan 	= $('#id_pangkalan').val()
-	var nama_pangkalan 	= $('#nama_pangkalan').val()
-	var alamat    		= $('#alamat').val()
-	var kwaran  		= $('#kwaran').val()
-	var kamabigus 		= $('#kamabigus').val()
-	var kagudep 		= $('#kagudep').val()
-	var jumlah_pembina 	= $('#jumlah_pembina').val()
-
-	var input = {
-		id_pangkalan 	: id_pangkalan,
-		nama_pangkalan 	: nama_pangkalan,
-		alamat 			: alamat,
-		kwaran 			: kwaran,
-		kamabigus 		: kamabigus,
-		kagudep 		: kagudep,
-		jumlah_pembina 	: jumlah_pembina
-	};
-
-	if (nama_pangkalan == '' || alamat == '' || kwaran == '' || kamabigus == '' || kagudep == '' ||jumlah_pembina == ''  ) {
-		Swal.fire(
-			'Maaf,',
-			'Data Inputan Tidak Boleh Kosong..',
-			'error'
-			)
-	}
-	else
-	{
-		$.ajax({
-			url: base+'pangkalan/update_pangkalan',
-			type: 'post',
-			dataType: 'json',
-			data:input,
-		})
-		.done(function(data) {
-			Swal.fire({
-				title: data.title,
-				text: data.message,
-				icon: data.icon,
-				confirmButtonColor: '#3085d6',
-				confirmButtonText: 'Ok'
-			}).then((result) => {
-				if (result.isConfirmed) {
-					if (data.success == 1) {
-						location.href  = data.action;
-					}
-				}
-			})
-		})
-		.fail(function() {
-			Swal.fire(
-				'Gagal,',
-				'Silahkan Ulangi, Atau gunakan koneksi yang baik..',
-				'error'
-				)
-		});
-		
-	}
-});
 
 function hapus(id)
 {

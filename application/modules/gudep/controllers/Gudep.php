@@ -76,6 +76,17 @@ class Gudep extends MY_Controller {
 			redirect('auth','refresh');
 		}
 
+		//cek no gudep
+		$no_gudep 	= $this->input->post('gudep');
+		$cek = $this->db->get_where('tb_gudep', ['no_gudep' => $no_gudep])->num_rows();
+		if ($cek > 0) {
+			$this->session->set_flashdata('error', 'NOMOR GUDEP Sudah Terdaftar');
+			redirect('gudep','refresh');
+		}
+
+
+
+		//proses insert
 		$data = [
 			'id_pangkalan'	=> $this->input->post('pangkalan'),
 			'no_gudep'		=> $this->input->post('gudep'),
@@ -85,7 +96,7 @@ class Gudep extends MY_Controller {
 		$cek  = $this->M_master->input('tb_gudep',$data);
 		if (!$cek) {
 			$this->session->set_flashdata('success', 'Gudep Berhasil Ditambahkan');
-		
+
 		}
 		else
 		{
@@ -167,22 +178,19 @@ class Gudep extends MY_Controller {
 
 		$cek  = $this->M_master->update('tb_gudep',$where,$data);
 		if (!$cek) {
-			echo json_encode(array(
-				'success'	=> 1,
-				'title'		=> 'Sukses',
-				'message'	=> 'Gudep Berhasil Diupdate',
-				'icon'		=> 'success',
-				'action'	=> site_url('gudep')
-			));
+			$this->session->set_flashdata('success', 'Gudep Berhasil Di Perbarui');
 		}
 		else
 		{
-			echo json_encode(array(
-				'success'	=> 0,
-				'title'		=> 'Gagal',
-				'message'	=> 'Gagal Update, Silahkan Ulangi Atau Gunakan Koneksi Yang Baik',
-				'icon'		=> 'error'
-			));
+			$this->session->set_flashdata('error', 'Gagal Update, Silahkan Ulangi Atau Gunakan Koneksi Yang Baik');
+		}
+
+		if ($this->session->userdata('ses_level') == 1) {
+			redirect('gudep','refresh');
+		}
+		else
+		{
+			redirect('gudep/regional','refresh');
 		}
 	}
 
@@ -231,7 +239,7 @@ class Gudep extends MY_Controller {
 		if ($this->session->userdata('ses_username') == null) {
 			redirect('auth','refresh');
 		}
-	
+
 		$button = '<a href="#modal_add" data-toggle="modal" class="btn-sm btn-white btn-border btn-round mr-2"><i class="fa fa-plus"></i> Tambah Gudep</a>';
 
 		$data = [

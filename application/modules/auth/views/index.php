@@ -62,9 +62,9 @@
 							<a href="#" class="btn btn-primary btn-rounded btn-login" id="btn-login">Masuk</a>
 						</div>
 						<div class="row">
-							<div class="col-md-12 text-center">
+							<!-- <div class="col-md-12 text-center">
 								<a href="<?php echo site_url('auth/lupa') ?>" class="link">Lupa Password ?</a>
-							</div>
+							</div> -->
 						</div>
 						<div class="login-account">
 							<span class="msg">Sistem Informasi Data Potensi Pramuka</span>
