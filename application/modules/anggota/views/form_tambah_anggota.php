@@ -56,9 +56,9 @@
 					<div class="select2-input">
 						<select id="desa" name="desa" disabled required>
 							<option value="">DESA</option>
-							<?php foreach ($kecamatan as $kec): ?>
+							<!-- <?php foreach ($kecamatan as $kec): ?>
 								<option value="<?php echo $kec->id_kecamatan ?>"><?php echo $kec->nama_kecamatan ?></option>
-							<?php endforeach ?>
+							<?php endforeach ?> -->
 						</select>
 					</div>
 				</div>

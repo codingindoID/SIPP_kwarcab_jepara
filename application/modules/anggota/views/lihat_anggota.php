@@ -40,7 +40,8 @@
 						<div class="col-md-6">
 							<div class="form-group form-group-default">
 								<label>Alamat Anggota</label>
-								<textarea type="text" class="form-control"><?php echo $anggota->nama_desa.", RT: ".$anggota->rt."/ RW : ".$anggota->rw.", Kecamatan : ".$anggota->nama_kecamatan?></textarea>
+								<!-- <textarea type="text" class="form-control"><?php echo $anggota->nama_desa.", RT: ".$anggota->rt."/ RW : ".$anggota->rw.", Kecamatan : ".$anggota->nama_kecamatan?></textarea> -->
+								<textarea type="text" class="form-control"><?php echo $anggota->alamat ?></textarea>
 							</div>
 						</div>
 					</div>

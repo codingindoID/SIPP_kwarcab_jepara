@@ -138,6 +138,7 @@ class Anggota extends MY_Controller {
 			'urutan'	=> 'desc'
 		];
 
+
 		$button = '<a href="'.site_url('anggota/import').'" class="btn-sm btn-success btn-round" accept=".xls , .xlsx"><i class="fas fa-file-import"></i> Import Excel</a>';
 
 		//membuat data dropdown kwaran berdasarkan level
@@ -198,16 +199,11 @@ class Anggota extends MY_Controller {
 			redirect('auth','refresh');
 		}
 
-		if ($this->session->userdata('ses_pangkalan')) {
-			$data = $this->M_anggota->getgudep($id_kwaran)->result();
-		}
-		else
-		{
-			$data = $this->M_anggota->getgudep($id_kwaran)->result();
-		}
+		$data = $this->M_anggota->getgudep($id_kwaran)->result();
 
 		echo json_encode($data);
 	}
+
 
 	function insert_anggota()
 	{
@@ -215,18 +211,20 @@ class Anggota extends MY_Controller {
 			redirect('auth','refresh');
 		}
 
+		$alamat = $this->M_anggota->alamat();
+
 		$data = [
 			'id_kwaran'     => $this->input->post('kwaran'),
 			'id_gudep'  	=> $this->input->post('gudep') ,
 			'nama' 			=> $this->input->post('nama'),
 			'tempat_lahir'  => $this->input->post('tempat_lahir'),
-			'tanggal_lahir' => date('Y-m-d', strtotime($this->input->post('tanggal_lahir'))),
-			/*'alamat' 		=> $this->input->post('alamat'),*/
+			'tanggal_lahir' => date('Y-m-d', strtotime($this->input->post('tgl_lahir'))),
+			'alamat' 		=> $alamat,
 			'rt' 			=> $this->input->post('rt'),
 			'rw' 			=> $this->input->post('rw'),
 			'desa' 			=> $this->input->post('desa'),
 			'kecamatan' 	=> $this->input->post('kecamatan'),
-			'gol_darah' 	=> $this->input->post('gol_darah'),
+			'gol_darah' 	=> $this->input->post('darah'),
 			'golongan' 		=> $this->input->post('golongan'),
 			'tingkat' 		=> $this->input->post('tingkat'),
 			'kta' 			=> $this->input->post('kta'),
@@ -256,7 +254,13 @@ class Anggota extends MY_Controller {
 		$cek = $this->M_master->input('tb_anggota',$data);
 		if (!$cek) {
 			$this->session->set_flashdata('success', 'Anggota Berhasil Ditambahkan');
-			redirect('anggota/filter_anggota/'.$this->input->post('kwaran'),'refresh');
+			if ($this->session->userdata('ses_level') == 3) {
+				redirect('anggota','refresh');	
+			}
+			else
+			{
+				redirect('anggota/filter_anggota/'.$this->input->post('kwaran'),'refresh');
+			}
 		}
 		else
 		{
@@ -400,7 +404,19 @@ class Anggota extends MY_Controller {
 			'urutan'	=> 'asc'
 		];
 
-		$button = '<a href="'.base_url('excel/anggota/master_anggota.xls').'" class="btn-sm btn-success btn-round"><i class="fas fa-file-download"></i> Download Format</a>';
+		switch ($this->session->userdata('ses_level')) {
+			case '1':
+			$link = 'import_admin';
+			break;
+			case '2':
+			$link = 'import_kwaran';
+			break;
+			default:
+			$link = 'import_gudep';
+			break;
+		}
+
+		$button = '<a href="'.base_url('excel/anggota/').$link.'.xls" class="btn-sm btn-success btn-round"><i class="fas fa-file-download"></i> Download Format</a>';
 		$data = [
 			'title'			=> 'Pangkalan',
 			'sub'			=> 'Master data Pangkalan',
@@ -432,68 +448,25 @@ class Anggota extends MY_Controller {
 			break;
 		}
 
+		//echo json_encode($anggota);
 		$this->M_anggota->excel($anggota);
 	}
 
 	function upload()
 	{
-		$config['upload_path']          = './excel/';
-		$config['allowed_types']        = 'xls|xlsx';
-		$config['max_size']             = 5000;
-		$config['file_name']           	= uniqid().".xls";
-		$this->load->library('upload', $config);
-		$this->upload->overwrite = true;
-
-		if ( ! $this->upload->do_upload('file')){
-			$response = $this->upload->display_errors();
-			$this->session->set_flashdata('error', $response);
-			redirect('anggota','refresh');
-		}else{
-			//proses import
-			$spreadsheet = \PhpOffice\PhpSpreadsheet\IOFactory::load($config['upload_path'].$config['file_name']);
-			$worksheet = $spreadsheet->getActiveSheet()->toArray();
-
-			for ($i=1; $i < count($worksheet) ; $i++) { 
-				$data = [
-					'id_kwaran' 		=> $worksheet[$i][0],
-					'id_gudep' 			=> $worksheet[$i][1],
-					'nama' 				=> $worksheet[$i][2],
-					'tempat_lahir' 		=> $worksheet[$i][3],
-					'tanggal_lahir' 	=> date('Y-m-d',strtotime($worksheet[$i][4])),
-					'alamat'			=> $worksheet[$i][5],
-					'gol_darah'			=> $worksheet[$i][6],
-					'golongan'			=> $worksheet[$i][7],
-					'kta'				=> $worksheet[$i][8],
-					'tempat_kmd'		=> $worksheet[$i][9],
-					'tahun_kmd'			=> $worksheet[$i][10],
-					'golongan_kmd'		=> $worksheet[$i][11],
-					'tempat_kml'		=> $worksheet[$i][12],
-					'tahun_kml'			=> $worksheet[$i][13],
-					'golongan_kml'		=> $worksheet[$i][14],
-					'tempat_kpd'		=> $worksheet[$i][15],
-					'tahun_kpd'			=> $worksheet[$i][16],
-					'golongan_kpd'		=> $worksheet[$i][17],
-					'tempat_kpl'		=> $worksheet[$i][18],
-					'tahun_kpl'			=> $worksheet[$i][19],
-					'golongan_kpl'		=> $worksheet[$i][20]
-				];
-
-				if ($worksheet[$i][0] != null) {
-					if ($worksheet[$i][1] != null) {
-						$this->M_master->input('tb_anggota',$data);
-					}
-				}
-				else
-				{
-					unlink($config['upload_path'].$config['file_name']); 
-					$this->session->set_flashdata('error', 'ID KWARAN ataupun ID GUDEP Tidak Boleh Kosong, Mungkin Ada Beberapa Data Anda Yang Belum Terupload, Silahkan Cek Kembali Data Anda');
-					redirect('anggota/import','refresh');
-				}	
-			}
-			unlink($config['upload_path'].$config['file_name']); 
+		//proses import
+		$cek = $this->M_anggota->proses_import();
+		if ($cek['success'] == 1) {
 			$this->session->set_flashdata('success', 'Data Berhasil Diimport');
 			redirect('anggota/import','refresh');
 		}
+		else
+		{
+			$this->session->set_flashdata('error', $cek['msg']);
+			redirect('anggota/import','refresh');	
+		}
+		
+		
 	}
 }
 

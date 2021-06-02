@@ -1,9 +1,11 @@
+<?php echo $this->session->userdata('ses_kwaran'); ?>
+
 <div class="row">
 	<div class="col-md-12">
 		<form method="post" action="<?php echo site_url('pangkalan/upload') ?>" enctype="multipart/form-data" style="text-align: center">
 			<div class="form-row">
 				<div class="col-md-6">
-					<input type="file" name="file" class="form-control" placeholder="pilih file xls / xlsx">
+					<input type="file" name="file" class="form-control" placeholder="pilih file xls / xlsx" accept=".xls , .xlsx">
 				</div>
 				<div class="col-md-2 py-1">
 					<button class="btn btn-secondary" type="submit"> <i class="fa fa-upload"></i> Import File</button>

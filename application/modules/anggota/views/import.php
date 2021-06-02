@@ -18,7 +18,7 @@
 			<form method="post" action="<?php echo site_url('anggota/upload') ?>" enctype="multipart/form-data" style="text-align: center">
 				<div class="form-row">
 					<div class="col-md-6">
-						<input type="file" name="file" class="form-control" placeholder="pilih file xls / xlsx">
+						<input type="file" name="file" class="form-control" placeholder="pilih file xls / xlsx" accept=".xlsx, .xls">
 					</div>
 					<div class="col-md-2 py-1">
 						<button class="btn btn-secondary" type="submit" onclick="return confirm('apakah data anda sudah benar? jika ada kekeliruan mungkin akan mengakibatkan data anda redundant dan tidak valid, mohon pastikan terlebih dahulu sebelum anda melakukan proses import.. Terimakasih,.')"> <i class="fa fa-upload"></i> Import File</button>

@@ -4,6 +4,7 @@ $('#btn-reset').click(function(event){
 	var p1 		= $('input[name="password1"]').val()
 	var p2 		= $('input[name="password2"]').val()
 
+
 	if (p1 != p2) {
 		Swal.fire({
 			icon: 'error',

@@ -145,21 +145,30 @@ class Auth extends MY_Controller {
 		$dat['token']	= $token;
 		$message = $this->load->view('view_email', $dat, true);
 
+		/*$config['protocol']		= 'smtp';
+		$config['smtp_host']	= 'ssl://smtp.googlemail.com';
+		$config['smtp_user']	= 'jeparakwarcabgateway@gmail.com';
+		$config['smtp_pass']	= 'Indonesia1945';
+		$config['smtp_port']	= 465;
+		$config['mailtype']		= 'html';
+		$config['charset']		= 'utf-8';*/
+
 		$config = [
 			'protocol'		=> 'smtp',
 			'smtp_host'		=> 'ssl://smtp.googlemail.com',
-			'smtp_user'		=> 'kwarcabjepara1120@gmail.com',
+			'smtp_user'		=> 'jeparakwarcabgateway@gmail.com',
 			'smtp_pass'		=> 'Indonesia1945',
-			'smtp_port'		=> 	465,
+			'smtp_port'		=> '465',
 			'mailtype'		=> 'html',
 			'charset'		=> 'utf-8',
-		];
+			'newline'		=> "\r\n",
+		];	
 
 		$this->load->library('email');
 		$this->email->initialize($config);
 		$this->email->set_newline("\r\n");  
 		
-		$this->email->from('kwarcabjepara1120@gmail.com', 'Pramuka Kwarcab Jepara');
+		$this->email->from('jeparakwarcabgateway@gmail.com', 'Pramuka Kwarcab Jepara');
 		$this->email->to($email);		
 		$this->email->subject('reset password');
 		$this->email->message($message);
@@ -195,7 +204,7 @@ class Auth extends MY_Controller {
 		else
 		{
 			$this->session->set_flashdata('error', 'maaf terjadi kesalahan, coba ulangi');
-			redirect('lupa','refresh');
+			redirect('auth/lupa','refresh');
 		}
 	}
 

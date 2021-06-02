@@ -1,20 +1,27 @@
 <footer class="footer">
     <div class="container-fluid">
         <nav class="pull-left">
+            <div class="col-xs-12" style="margin-top: -1em; margin-bottom: -0.1em">
+                <center>
+                    <a href="https://www.pengenngoding.com">
+                        <img height="15px" src="<?php echo base_url('assets/img/official.png') ?>" alt="">
+                    </a>
+                </center>
+            </div>
             <ul class="nav">
                 <li class="nav-item">
-                    <a class="nav-link" href="https://www.pengenngoding.com">
-                        Agus Setiawan, S.Kom
+                    <!-- <a class="nav-link" href="https://www.pengenngoding.com">
+                        <img height="15px" src="<?php echo base_url('assets/img/official.png') ?>" alt="">
+                    </a> -->
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#">
+                        <img height="30px" src="<?php echo base_url('assets/img/pengen.PNG') ?>" alt="">
                     </a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="#">
-                        
-                    </a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="#">
-                        
+                        <img height="30px" src="<?php echo base_url('assets/img/logo_bawah_2.png') ?>" alt="">
                     </a>
                 </li>
             </ul>

@@ -88,6 +88,97 @@ class M_pangkalan extends CI_Model {
 
 		$writer->save('php://output');
 	}
+
+	function import_pangkalan()
+	{
+		$nama_file = uniqid().".xls";
+
+		$cek = $this->_proses_import($nama_file);
+		if (!$cek) {
+			$data = $this->db->get_where('tb_pangkalan_sementara', ['petugas' => $this->session->userdata('ses_id')])->result();
+			$this->db->insert_batch('tb_pangkalan', $data);
+
+			$this->db->where('petugas', $this->session->userdata('ses_id'));
+			$this->db->delete('tb_pangkalan_sementara');
+
+			unlink('./excel/'.$nama_file);
+
+			return $res = [
+				'success'		=> 1,
+				'msg'			=> "berhasil import data"
+			];
+		}
+		else
+		{
+			return $res = [
+				'success'		=> 0,
+				'msg'			=> 'NO KWARAN Tidak Boleh Kosong, Silahkan Periksa Data Anda dan Ulangi Prosesnya,.'
+			];
+		}
+
+	}
+
+
+	private function _proses_import($nama_file)
+	{
+		$config['upload_path']          = './excel/';
+		$config['allowed_types']        = 'xls|xlsx';
+		$config['max_size']             = 5000;
+		$config['file_name']           	= $nama_file;
+		$this->load->library('upload', $config);
+		$this->upload->overwrite = true;
+
+		if ( ! $this->upload->do_upload('file')){
+			$response = $this->upload->display_errors();
+			$this->session->set_flashdata('error', $response);
+			redirect('pangkalan','refresh');
+		}else{
+			//proses import
+			$spreadsheet = \PhpOffice\PhpSpreadsheet\IOFactory::load($config['upload_path'].$config['file_name']);
+			$worksheet = $spreadsheet->getActiveSheet()->toArray();
+
+			for ($i=1; $i < count($worksheet) ; $i++) { 
+				if ($this->session->userdata('ses_level') != 1) {
+					$data = [
+						'nama_pangkalan' 	=> $worksheet[$i][0],
+						'alamat_pangkalan'	=> $worksheet[$i][1],
+						'kwaran' 			=> $this->session->userdata('ses_kwaran'),
+						'kamabigus' 		=> $worksheet[$i][2],
+						'kagudep' 			=> $worksheet[$i][3],
+						'jumlah_pembina'	=> $worksheet[$i][4],
+						'petugas'			=> $this->session->userdata('ses_id')
+					];
+				}
+				else
+				{
+					$data = [
+						'nama_pangkalan' 	=> $worksheet[$i][0],
+						'alamat_pangkalan'	=> $worksheet[$i][1],
+						'kwaran' 			=> $worksheet[$i][2],
+						'kamabigus' 		=> $worksheet[$i][3],
+						'kagudep' 			=> $worksheet[$i][4],
+						'jumlah_pembina'	=> $worksheet[$i][5],
+						'petugas'			=> $this->session->userdata('ses_id')
+					];
+				}
+				
+				if ($data['kwaran'] != null) {
+					$this->M_master->input('tb_pangkalan_sementara',$data);
+				}
+				else
+				{
+					unlink($config['upload_path'].$config['file_name']); 
+					
+					//hapus data anggota sementara
+					$this->db->where('petugas', $this->session->userdata('ses_id'));
+					$this->db->delete('tb_pangkalan_sementara');
+
+					return $cek = 1;
+				}	
+
+			}
+		}
+	}
 }
 
 /* End of file M_pangkalan.php */

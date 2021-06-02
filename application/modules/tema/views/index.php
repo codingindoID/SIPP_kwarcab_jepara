@@ -1,4 +1,9 @@
 <?php $this->load->view('header'); ?>
+<style>
+    .backgroundatas{
+        background-color: #F25961 !important;
+    }
+</style>
 <body>
     <input type="hidden" id="base" value="<?php echo site_url() ?>">
     <div class="wrapper">
@@ -9,11 +14,11 @@
         <!-- Sidebar -->
         <?php $this->load->view('sidebar'); ?>
         <!-- End Sidebar -->
-
+        <!-- background asli = bg-primary-gradient -->
         <div class="main-panel">
             <div class="content">
-              <div class="panel-header bg-primary-gradient">
-                <div class="page-inner py-3">
+              <div class="panel-header">
+                <div class="page-inner py-3 bg-primary">
                   <div class="d-flex align-items-left align-items-md-center flex-column flex-md-row">
                     <div>
                         <h2 class="text-white fw-bold"><?php echo $title ?></h2>

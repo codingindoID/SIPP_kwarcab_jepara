@@ -303,7 +303,16 @@ class Pangkalan extends MY_Controller {
 			'urutan'	=> 'asc'
 		];
 
-		$button = '<a href="'.base_url('excel/pangkalan/master_pangkalan.xlsx').'" class="btn-sm btn-success btn-round"><i class="fas fa-file-download"></i> Download Format</a>';
+		if ($this->session->userdata('ses_level') != 1) {
+			$link = "master_pangkalan.xlsx";
+		}
+		else
+		{
+			$link = "master_pangkalan_admin.xlsx";
+		}
+
+
+		$button = '<a href="'.base_url('excel/pangkalan/').$link.'" class="btn-sm btn-success btn-round"><i class="fas fa-file-download"></i> Download Format</a>';
 		$data = [
 			'title'			=> 'Pangkalan',
 			'sub'			=> 'Master data Pangkalan',
@@ -327,48 +336,22 @@ class Pangkalan extends MY_Controller {
 
 	function upload()
 	{
-		$config['upload_path']          = './excel/';
-		$config['allowed_types']        = 'xls|xlsx';
-		$config['max_size']             = 5000;
-		$config['file_name']           	= uniqid().".xls";
-		$this->load->library('upload', $config);
-		$this->upload->overwrite = true;
-
-		if ( ! $this->upload->do_upload('file')){
-			$response = $this->upload->display_errors();
-			$this->session->set_flashdata('error', $response);
-			redirect('pangkalan','refresh');
-		}else{
-			//proses import
-			$spreadsheet = \PhpOffice\PhpSpreadsheet\IOFactory::load($config['upload_path'].$config['file_name']);
-			$worksheet = $spreadsheet->getActiveSheet()->toArray();
-
-			for ($i=1; $i < count($worksheet) ; $i++) { 
-				$data = [
-					'nama_pangkalan' 	=> $worksheet[$i][0],
-					'alamat_pangkalan'	=> $worksheet[$i][1],
-					'kwaran' 			=> $worksheet[$i][2],
-					'kamabigus' 		=> $worksheet[$i][3],
-					'kagudep' 			=> $worksheet[$i][4],
-					'jumlah_pembina'	=> $worksheet[$i][5],
-				];
-
-				if ($worksheet[$i][0] != null) {
-					if ($worksheet[$i][2] != null) {
-						$this->M_master->input('tb_pangkalan',$data);
-					}
-				}
-				else
-				{
-					unlink($config['upload_path'].$config['file_name']); 
-					$this->session->set_flashdata('error', 'Nama Pangkalan ataupun Kwaran Tidak Boleh Kosong, Mungkin Ada Beberapa Data Anda Yang Belum Terupload, Silahkan Cek Kembali Data Anda');
-					redirect('pangkalan','refresh');
-				}	
-
-			}
-			unlink($config['upload_path'].$config['file_name']); 
+		//proses import
+		$cek = $this->M_pangkalan->import_pangkalan();
+		if ($cek['success'] == 1) {
 			$this->session->set_flashdata('success', 'Data Berhasil Diimport');
-			redirect('pangkalan','refresh');
+			if ($this->session->userdata('ses_level') != 1) {
+				redirect('pangkalan/regional','refresh');
+			}
+			else
+			{
+				redirect('pangkalan','refresh');
+			}
+		}
+		else
+		{
+			$this->session->set_flashdata('error', $cek['msg']);
+			redirect('pangkalan/import','refresh');	
 		}
 	}
 	

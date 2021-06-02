@@ -240,7 +240,7 @@ label {
 .fw-extrabold {
   font-weight: 700 !important; }
 
-/* 		Opacity  	*/
+/*    Opacity   */
 .op-9 {
   opacity: 0.9; }
 
@@ -1301,7 +1301,7 @@ body {
   padding: 1rem;
   flex-direction: column; }
 
-/*     	Customable Layouts Colors     */
+/*      Customable Layouts Colors     */
 .main-header .navbar-header[data-background-color] .nav-search .input-group {
   border: 0;
   background: rgba(0, 0, 0, 0.14) !important;
@@ -2074,7 +2074,7 @@ body {
 .border-dark {
   border-color: #202940 !important; }
 
-/* 		Breadcrumb		*/
+/*    Breadcrumb    */
 .breadcrumbs {
   list-style: none;
   display: inline;
@@ -4594,7 +4594,7 @@ label.error {
   font-size: 11px !important;
   padding: 8px 16px !important; }
 
-/*     	Popover     */
+/*      Popover     */
 .popover {
   max-width: 240px;
   line-height: 1.7;
@@ -4628,7 +4628,7 @@ label.error {
 .popover.bs-popover-auto[x-placement^=bottom], .popover.bs-popover-bottom {
   margin-top: 10px; }
 
-/*     	Progress     */
+/*      Progress     */
 .progress {
   border-radius: 100px;
   height: 14px; }
@@ -4696,7 +4696,7 @@ label.error {
 .slider-danger .ui-slider-range {
   background: #F25961; }
 
-/*     	Modal     */
+/*      Modal     */
 .modal .bg-default .modal-title, .modal .bg-primary .modal-title, .modal .bg-secondary .modal-title, .modal .bg-info .modal-title, .modal .bg-success .modal-title, .modal .bg-warning .modal-title, .modal .bg-danger .modal-title {
   color: #ffffff !important; }
 
@@ -8380,7 +8380,7 @@ label.error {
   -webkit-animation-name: slideOutUp;
   animation-name: slideOutUp; }
 
-/*		Sweet Alert		*/
+/*    Sweet Alert   */
 .swal-footer {
   text-align: center !important;
   margin-bottom: 20px !important; }
@@ -8819,7 +8819,7 @@ div.table-responsive > div.dataTables_wrapper > div.row {
   .quick_sidebar_open .quick-sidebar {
     width: 100%;
     padding: 20px; } }
-/* 	 Background Body */
+/*   Background Body */
 body {
   background: #f9fbfd; }
   body[data-background-color="bg1"] {

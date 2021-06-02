@@ -59,7 +59,7 @@
 			<div class="col-md-4">
 				<div class="form-group">
 					<div class="select2-input">
-						<select id="desa" name="desa" disabled class="form-control" required>
+						<select id="desa" name="desa" readonly class="form-control" required>
 							<option value="">DESA</option>
 							<?php foreach ($desa as $des): ?>
 								<option <?php echo $anggota->desa == $des->id_desa ? 'selected' : '' ?> value="<?php echo $des->id_desa ?>"><?php echo $des->nama_desa ?></option>
@@ -70,12 +70,12 @@
 			</div>
 			<div class="col-md-2">
 				<div class="form-group">
-					<input type="number" class="form-control" name="rt" disabled placeholder="RT" value="<?= $anggota->rt ?>" required>
+					<input type="number" class="form-control" name="rt" placeholder="RT" value="<?= $anggota->rt ?>" required>
 				</div>
 			</div>
 			<div class="col-md-2">
 				<div class="form-group">
-					<input type="number" class="form-control" name="rw" disabled placeholder="RT"  value="<?= $anggota->rw ?>" required>
+					<input type="number" class="form-control" name="rw"  placeholder="RT"  value="<?= $anggota->rw ?>" required>
 				</div>
 			</div>
 		</div>

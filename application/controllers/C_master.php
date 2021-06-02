@@ -21,6 +21,17 @@ class C_master extends MY_Controller {
 		echo json_encode($data);
 	}
 
+	function ajax_gudep($id_kwaran)
+	{
+		$this->db->join('tb_pangkalan', 'tb_pangkalan.kwaran = tb_kwaran.id_kwaran');
+		$this->db->join('tb_gudep', 'tb_gudep.id_pangkalan = tb_pangkalan.id_pangkalan');
+		$this->db->where('id_kwaran', $id_kwaran);
+		$data =  $this->db->get('tb_kwaran')->result();
+
+		echo json_encode($data);
+	}
+
+
 }
 
 /* End of file C_master.php */

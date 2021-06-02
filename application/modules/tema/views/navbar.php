@@ -1,8 +1,8 @@
 <!-- Logo Header -->
 <div class="logo-header" data-background-color="blue">
-    
+
     <a href="<?php echo site_url() ?>" class="logo">
-        <img src="<?php echo base_url('assets/') ?>img/logo.png" alt="navbar brand" class="navbar-brand">
+        <img height="40px" src="<?php echo base_url('assets/') ?>img/logo.png" alt="navbar brand" class="navbar-brand ml-2">
     </a>
     <button class="navbar-toggler sidenav-toggler ml-auto" type="button" data-toggle="collapse" data-target="collapse" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon">
@@ -19,18 +19,18 @@
 <!-- End Logo Header -->
 
 <!-- Navbar Header -->
-<nav class="navbar navbar-header navbar-expand-lg" data-background-color="blue2">
-    
+<nav class="navbar navbar-header navbar-expand-lg" data-background-color="blue">
+
     <div class="container-fluid">
         <div class="collapse" id="search-nav">
-            <form class="navbar-left navbar-form nav-search mr-md-3">
+            <form action="<?php echo site_url('cari/hasil') ?>" class="navbar-left navbar-form nav-search mr-md-3" method="post">
                 <div class="input-group">
                     <div class="input-group-prepend">
                         <button type="submit" class="btn btn-search pr-1">
                             <i class="fa fa-search search-icon"></i>
                         </button>
                     </div>
-                    <input type="text" placeholder="Search ..." class="form-control">
+                    <input name="cari" type="text" placeholder="Search ..." class="form-control">
                 </div>
             </form>
         </div>
@@ -93,6 +93,9 @@
                     </div>
                 </div>
             </li> -->
+            <li class="nav-item dropdown hidden-caret">
+                <span class="text-white"><strong><?php echo strtoupper($this->session->userdata('ses_display')) ?></strong></span>
+            </li>
             <li class="nav-item dropdown hidden-caret">
                 <a class="dropdown-toggle profile-pic" data-toggle="dropdown" href="#" aria-expanded="false">
                     <div class="avatar-sm">
