@@ -412,21 +412,7 @@ class Anggota extends MY_Controller {
 			'urutan'	=> 'asc'
 		];
 
-		switch ($this->session->userdata('ses_level')) {
-			case 1:
-			$link = 'import_admin';
-			break;
-			case 2:
-			$link = 'import_kwaran';
-			break;
-			case 3:
-			$link = 'import_gudep';
-			break;
-			default:
-			break;
-		}
-
-		$button = '<a href="'.base_url('excel/anggota/').$link.'.xls" class="btn-sm btn-success btn-round"><i class="fas fa-file-download"></i> Download Format</a>';
+		$button = '<a href="'.base_url('excel/anggota/impot_admin').'.xls" class="btn-sm btn-success btn-round"><i class="fas fa-file-download"></i> Download Format</a>';
 		$data = [
 			'title'			=> 'Pangkalan',
 			'sub'			=> 'Master Data Anggota',
@@ -475,8 +461,6 @@ class Anggota extends MY_Controller {
 			$this->session->set_flashdata('error', $cek['msg']);
 			redirect('anggota/import','refresh');	
 		}
-		
-		
 	}
 }
 

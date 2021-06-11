@@ -46,7 +46,7 @@
 						</div>
 					</div>
 					<div class="separator-solid"></div>
-					<h3 class="text-secondary"><center><b>Infromasi Pangkalan</b></center></h3>
+					<h3 class="text-secondary"><center><b>Informasi Pangkalan</b></center></h3>
 					<div class="separator-solid"></div>
 					<div class="row mt-2">
 						<div class="col-md-6">
@@ -57,8 +57,8 @@
 						</div>
 						<div class="col-md-6">
 							<div class="form-group form-group-default">
-								<label>Tingkat Pendidikan</label>
-								<input type="text" class="form-control" value="<?php echo $anggota->tingkat  ?>" >
+								<label>Golongan Kepramukaan</label>
+								<input type="text" class="form-control" value="<?php echo strtoupper($anggota->golongan.' '.$anggota->tingkat)  ?>" >
 							</div>
 						</div>
 					</div>

@@ -87,6 +87,7 @@ class Admin extends MY_Controller {
 		
 	}
 
+
 	function tambah_admin($asal = null)
 	{
 		if ($this->session->userdata('ses_level') == null) {

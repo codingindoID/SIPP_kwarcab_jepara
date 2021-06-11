@@ -43,7 +43,7 @@ $master = ['gudep','pangkalan','kwarran'];
 		<ul class="nav nav-collapse">
 			<li class="<?php echo $menu == 'admin_gudep' ? 'active' : '' ?>">
 				<a href="<?php echo site_url('admin/admin_gudep') ?>">
-					<span class="sub-item">Admin gudep</span>
+					<span class="sub-item">Admin Gudep</span>
 				</a>
 			</li>
 		</li>

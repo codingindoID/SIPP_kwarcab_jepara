@@ -27,7 +27,8 @@
 
 	<script src="<?php echo base_url('assets/login') ?>/sweetalert.min.js"></script>
 </head>
-<div style="background-image: url('<?php echo base_url()."assets/img/bg_log.jpg" ?>');">
+<!-- <div style="background-image: url('<?php echo base_url()."assets/img/bg_log.jpg" ?>');"> -->
+<div>
 	<body class="login">
 		<input type="hidden" id="base" value="<?php echo site_url() ?>">
 		<div class="wrapper wrapper-login">

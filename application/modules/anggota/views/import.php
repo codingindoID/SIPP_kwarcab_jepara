@@ -86,19 +86,17 @@
 				<table id="table-gudep" class="table table-bordered">
 					<thead>
 						<tr class="bg-secondary" style="color: white">
-							<th class="text-center">ID GUDEP</th>
+							<th class="text-center">NO GUDEP</th>
 							<th class="text-center">Pangkalan</th>
 							<th class="text-center">Satuan</th>
-							<th class="text-center">No Gudep</th>
 						</tr>
 					</thead>
 					<tbody>
 						<?php foreach ($gudep as $g): ?>
 							<tr>
-								<td class="text-center"><?php echo $g->id_gudep ?></td>
+								<td class="text-center"><?php echo $g->no_gudep ?></td>
 								<td class="text-center"><?php echo $g->nama_pangkalan ?></td>
 								<td class="text-center"><?php echo $g->ambalan ?></td>
-								<td class="text-center"><?php echo $g->no_gudep ?></td>
 							</tr>
 						<?php endforeach ?>
 					</tbody>

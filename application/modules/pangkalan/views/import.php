@@ -1,5 +1,3 @@
-<?php echo $this->session->userdata('ses_kwaran'); ?>
-
 <div class="row">
 	<div class="col-md-12">
 		<form method="post" action="<?php echo site_url('pangkalan/upload') ?>" enctype="multipart/form-data" style="text-align: center">
