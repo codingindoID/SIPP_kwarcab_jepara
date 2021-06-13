@@ -14,10 +14,73 @@
 		}
 	});
 
+	$('#kwaran').select2({
+		theme: "bootstrap"
+	});
+
 	$('#kwaran').change(function(event) {
 		var id = $('#kwaran').val()
 		location.href = base+'anggota/filter_anggota/'+id;	
 	});
+
+	$('#pangkalan_bulk').select2({
+		theme: "bootstrap",
+		dropdownParent: $("#modal-bulk")
+	});
+
+	$('#pangkalan_bulk').change(function(event) {
+		var id = $(this).val()
+			var ta="<option value=''>--Pilih Tahun Ajaran--</option>";
+			$.ajax({
+				url : base+'anggota/get_tahun_ajaran/',
+				type:'post',
+				data : { pangkalan_bulk : id},
+				dataType: 'json',
+				success: function(response) {
+					
+					for (var i = 0; i < response.length; i++) {
+						ta+="<option value='"+response[i].ta+"'>"+response[i].ta+"</option>";
+					}
+					$("#ta_bulk").html(ta); 
+
+				}
+			});
+	});
+
+	$('#bulk').change(function(event) {
+		var id = $(this).val()
+		if (id == 'angkatan') {
+			var ta="<option value=''>--Pilih Tahun Ajaran--</option>";
+			$.ajax({
+				url : base+'anggota/get_tahun_ajaran',
+				type:'get',
+				dataType: 'json',
+				success: function(response) {
+					
+					for (var i = 0; i < response.length; i++) {
+						ta+="<option value='"+response[i].ta+"'>"+response[i].ta+"</option>";
+					}
+					$("#ta_bulk").html(ta); 
+
+				}
+			});
+
+
+			$('#modal-bulk').modal('show')
+		}
+	});
+
+	$('#close').click(function(event) {
+		$('#bulk').val("")
+	});
+
+	$('.close').click(function(event) {
+		$('#bulk').val("")
+	});
+
+
+
+
 
 	function lihat(id)
 	{

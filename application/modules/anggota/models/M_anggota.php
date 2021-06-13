@@ -66,6 +66,99 @@ class M_anggota extends CI_Model {
 		return $this->db->get('tb_anggota');
 	}
 
+	function getTahunAjaran()
+	{
+		$level = $this->session->userdata('ses_level');
+
+		switch ($level) {
+			case ADMIN:
+			$id_pangkalan = $_POST['pangkalan_bulk'];
+			break;
+
+			case ADMIN_KWARAN:
+			$id_pangkalan = $_POST['pangkalan_bulk'];
+			break;
+
+			default:
+			$id_pangkalan = $this->session->userdata('ses_pangkalan');
+			break;
+		}
+
+
+		$this->db->join('tb_gudep', 'tb_gudep.id_gudep = tb_anggota.id_gudep');
+		$this->db->join('tb_pangkalan', 'tb_pangkalan.id_pangkalan = tb_gudep.id_pangkalan');
+		$this->db->where('tb_pangkalan.id_pangkalan', $id_pangkalan);
+		$this->db->group_by('ta');
+		return $this->db->get('tb_anggota')->result();
+	}
+
+
+	function getPangkalanBulk()
+	{
+		$level = $this->session->userdata('ses_level');
+
+		$this->db->order_by('nama_pangkalan', 'asc');
+
+		switch ($level) {
+			case ADMIN:
+			$data = $this->db->get('tb_pangkalan')->result();
+			break;
+
+			case ADMIN_KWARAN:
+			$data = $this->db->get_where('tb_pangkalan',['kwaran' => $this->session->userdata('ses_kwaran')])->result();
+			break;
+
+			default:
+			$data = '';
+			break;
+		}
+
+		return $data;
+	}
+
+
+	function bulkHapus()
+	{
+		$level 	= $this->session->userdata('ses_level');
+		$ta 	= $_POST['ta_bulk'];
+
+		switch ($level) {
+			case ADMIN:
+			$pang = $this->db->get_where('tb_gudep', ['id_pangkalan' => $_POST['pangkalan_bulk']])->result();
+			$arr = array_column($pang,'id_gudep');
+
+			$this->db->where('ta', $ta);
+			$this->db->where_in('id_gudep', $arr);
+			$cek = $this->db->delete('tb_anggota');
+			break;
+
+			case ADMIN_KWARAN:
+			$pang = $this->db->get_where('tb_gudep', ['id_pangkalan' => $_POST['pangkalan_bulk']])->result();
+			$arr = array_column($pang,'id_gudep');
+
+			$this->db->where('ta', $ta);
+			$this->db->where_in('id_gudep', $arr);
+			$cek = $this->db->delete('tb_anggota');
+			break;
+
+			case ADMIN_GUDEP:
+			$pang = $this->db->get_where('tb_gudep', ['id_pangkalan' => $this->session->userdata('ses_pangkalan')])->result();
+			$arr = array_column($pang,'id_gudep');
+
+			$this->db->where('ta', $ta);
+			$this->db->where_in('id_gudep', $arr);
+			$cek = $this->db->delete('tb_anggota');
+			break;	
+
+			default:
+			break;
+		}
+
+		if ($cek) {
+			return 1;
+		}
+	}
+
 	function get_anggota_byID($id_anggota)
 	{
 		$this->db->join('tb_gudep', 'tb_gudep.id_gudep = tb_anggota.id_gudep');
@@ -331,7 +424,7 @@ class M_anggota extends CI_Model {
 		{
 			return $res = [
 				'success'		=> 0,
-				'msg'			=> 'ID Kwaran dan ID Gudep Tidak Boleh Kosong, Silahkan Periksa Data Anda dan Ulangi Prosesnya,.'
+				'msg'			=> 'ID Kwaran dan ID Gudep Tidak Boleh Kosong, Atau Nomor gudep yang anda masukkan salah , Silahkan Periksa Data Anda dan Ulangi Prosesnya,.'
 			];
 		}
 
@@ -358,49 +451,63 @@ class M_anggota extends CI_Model {
 			for ($i=1; $i < count($worksheet) ; $i++) { 
 				$gudep 			= $this->db->get_where('tb_gudep', ['no_gudep' => sprintf('%02s',$worksheet[$i][0]).'.'.sprintf('%03s',$worksheet[$i][1]) ])->row();
 				$id_gudep 		= $gudep->id_gudep;
+				if ($id_gudep != null) {
 
-				$data = [
-					'id_kwaran' 		=> $worksheet[$i][0],
-					'id_gudep' 			=> $id_gudep,
-					'ta' 				=> $worksheet[$i][2],
-					'nama' 				=> $worksheet[$i][3],
-					'tempat_lahir' 		=> $worksheet[$i][4],
-					'tanggal_lahir' 	=> date('Y-m-d',strtotime($worksheet[$i][5])),
-					'alamat'			=> $worksheet[$i][6],
-					'gol_darah'			=> $worksheet[$i][7],
-					'golongan'			=> $worksheet[$i][8],
-					'tingkat'			=> $worksheet[$i][9],
-					'kta'				=> $worksheet[$i][10],
-					'tempat_kmd'		=> $worksheet[$i][11],
-					'tahun_kmd'			=> $worksheet[$i][12],
-					'golongan_kmd'		=> $worksheet[$i][13],
-					'tempat_kml'		=> $worksheet[$i][14],
-					'tahun_kml'			=> $worksheet[$i][15],
-					'golongan_kml'		=> $worksheet[$i][16],
-					'tempat_kpd'		=> $worksheet[$i][17],
-					'tahun_kpd'			=> $worksheet[$i][18],
-					'golongan_kpd'		=> $worksheet[$i][19],
-					'tempat_kpl'		=> $worksheet[$i][20],
-					'tahun_kpl'			=> $worksheet[$i][21],
-					'golongan_kpl'		=> $worksheet[$i][22],
-					'petugas'			=> $this->session->userdata('ses_id')
-				];
+					//proses insert jika inputan nomor gudep sudah benar
+					$data = [
+						'id_kwaran' 		=> $worksheet[$i][0],
+						'id_gudep' 			=> $id_gudep,
+						'ta' 				=> $worksheet[$i][2],
+						'nama' 				=> $worksheet[$i][3],
+						'tempat_lahir' 		=> $worksheet[$i][4],
+						'tanggal_lahir' 	=> date('Y-m-d',strtotime($worksheet[$i][5])),
+						'alamat'			=> $worksheet[$i][6],
+						'gol_darah'			=> $worksheet[$i][7],
+						'golongan'			=> $worksheet[$i][8],
+						'tingkat'			=> $worksheet[$i][9],
+						'kta'				=> $worksheet[$i][10],
+						'tempat_kmd'		=> $worksheet[$i][11],
+						'tahun_kmd'			=> $worksheet[$i][12],
+						'golongan_kmd'		=> $worksheet[$i][13],
+						'tempat_kml'		=> $worksheet[$i][14],
+						'tahun_kml'			=> $worksheet[$i][15],
+						'golongan_kml'		=> $worksheet[$i][16],
+						'tempat_kpd'		=> $worksheet[$i][17],
+						'tahun_kpd'			=> $worksheet[$i][18],
+						'golongan_kpd'		=> $worksheet[$i][19],
+						'tempat_kpl'		=> $worksheet[$i][20],
+						'tahun_kpl'			=> $worksheet[$i][21],
+						'golongan_kpl'		=> $worksheet[$i][22],
+						'petugas'			=> $this->session->userdata('ses_id')
+					];
 
-				if ($worksheet[$i][0] != null) {
-					if ($worksheet[$i][1] != null) {
-						$this->M_master->input('tb_anggota_sementara',$data);
+					if ($worksheet[$i][0] != null) {
+						if ($worksheet[$i][1] != null) {
+							$this->M_master->input('tb_anggota_sementara',$data);
+						}
 					}
+					else
+					{
+						unlink($config['upload_path'].$config['file_name']); 
+						//hapus data anggota sementara
+						$this->db->where('petugas', $this->session->userdata('ses_id'));
+						$this->db->delete('tb_anggota_sementara');
+
+						$cek = 1;
+					}	
 				}
 				else
 				{
+					//proses jika inputan nomor gudep salah
 					unlink($config['upload_path'].$config['file_name']); 
-
 					//hapus data anggota sementara
 					$this->db->where('petugas', $this->session->userdata('ses_id'));
 					$this->db->delete('tb_anggota_sementara');
 
 					$cek = 1;
-				}	
+				}
+
+				
 			}
 
 			return $cek;

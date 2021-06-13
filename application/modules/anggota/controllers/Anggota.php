@@ -14,19 +14,45 @@ class Anggota extends MY_Controller {
 			redirect('auth','refresh');
 		}
 
-		$level = $this->session->userdata('ses_level');
-		$select = '';
-		$anggota = '';
+		$level 		= $this->session->userdata('ses_level');
+		$select 	= '';
+		$anggota 	= '';
+		$pangkalan 	= '';
+
+		$select2 ='
+		<select class="form-control" name="bulk" id="bulk">
+		<option value="">Bulk Action</option>
+		<option value="angkatan">Hapus By Tahun Ajaran</option>
+		</select>
+		';
 
 		switch ($level) {
 			case ADMIN:
-			$select = '<select name="kwaran" class="form-control" id="kwaran"></select>';
-			$anggota = $this->M_anggota->getsemuaAnggota();
+			$select = '
+			<div class="form-row">
+			<div class="form-group col-md-6">
+			<select class="form-control" name="bulk" id="bulk">
+			<option value="">Bulk Action</option>
+			<option value="angkatan">Hapus By Tahun Ajaran</option>
+			</select>
+			</div>
+			<div class="form-group col-md-6">
+			<select name="kwaran" class="form-control" id="kwaran"></select>
+			</div>
+			</div>
+			';
+			$anggota    	= $this->M_anggota->getsemuaAnggota();
+			$pangkalan 		= $this->M_anggota->getPangkalanBulk();
 			break;
+
 			case ADMIN_KWARAN:
-			$anggota = $this->M_anggota->getanggotaKwaran()->result();
+			$select = $select2;
+			$pangkalan = $this->M_anggota->getPangkalanBulk();
+			$anggota  = $this->M_anggota->getanggotaKwaran()->result();
 			break;
+
 			case ADMIN_GUDEP:
+			$select = $select2;
 			$anggota = $this->M_anggota->getanggotaGudep()->result();
 			break;
 			default:
@@ -38,7 +64,8 @@ class Anggota extends MY_Controller {
 			'sub'			=> 'anggota terdaftar',
 			'menu'			=> 'anggota',
 			'button_menu'	=> $select,
-			'anggota'		=> $anggota
+			'anggota'		=> $anggota,
+			'pangkalan'		=> $pangkalan
 		];
 
 		//echo json_encode($data);
@@ -72,21 +99,56 @@ class Anggota extends MY_Controller {
 
 		$level = $this->session->userdata('ses_level');
 		$select = '';
+		$select2 ='
+		<select class="form-control" name="bulk" id="bulk">
+		<option value="">Bulk Action</option>
+		<option value="angkatan">Hapus By Tahun Ajaran</option>
+		</select>
+		';
+
+		$pangkalan = '';
 		switch ($level) {
-			case 1:
-			$select = '<select name="kwaran" class="form-control" id="kwaran"></select>';
+			case ADMIN:
+			$select = '
+			<div class="form-row">
+			<div class="form-group col-md-5">
+			<select class="form-control" name="bulk" id="bulk">
+			<option value="">Action</option>
+			<option value="angkatan">Hapus Anggota by TA</option>
+			</select>
+			</div>
+			<div class="form-group col-md-7">
+			<select name="kwaran" class="form-control" id="kwaran"></select>
+			</div>
+			</div>
+			';
+			$pangkalan = $this->M_anggota->getPangkalanBulk();
 			break;
+
+			case ADMIN_KWARAN:
+			$select = $select2;
+			$pangkalan = $this->M_anggota->getPangkalanBulk();
+			$anggota = $this->M_anggota->getanggotaKwaran()->result();
+			break;
+
+			case ADMIN_GUDEP:
+			$select = $select2;
+			$anggota = $this->M_anggota->getanggotaGudep()->result();
+			break;
+
 			default:
 			break;
 		}
 
+		$nama_kwaran = $this->db->get_where('tb_kwaran', ['id_kwaran' => $id_kwaran])->row();
 
 		$data = [
 			'title'			=> 'Anggota',
-			'sub'			=> 'anggota terdaftar',
+			'sub'			=> 'anggota terdaftar di : <b class="text-warning"> KWARRAN '. strtoupper($nama_kwaran->nama_kwaran) .'</b>',
 			'menu'			=> 'anggota',
 			'button_menu'	=> $select,
-			'anggota'		=> $this->M_anggota->get_anggota($id_kwaran)->result()
+			'anggota'		=> $this->M_anggota->get_anggota($id_kwaran)->result(),
+			'pangkalan'		=> $pangkalan
 		];
 
 		//echo json_encode($data);
@@ -217,6 +279,7 @@ class Anggota extends MY_Controller {
 		$data = [
 			'id_kwaran'     => $this->input->post('kwaran'),
 			'id_gudep'  	=> $this->input->post('gudep') ,
+			'ta'  			=> $this->input->post('ta') ,
 			'nama' 			=> $this->input->post('nama'),
 			'tempat_lahir'  => $this->input->post('tempat_lahir'),
 			'tanggal_lahir' => date('Y-m-d', strtotime($this->input->post('tgl_lahir'))),
@@ -412,7 +475,7 @@ class Anggota extends MY_Controller {
 			'urutan'	=> 'asc'
 		];
 
-		$button = '<a href="'.base_url('excel/anggota/impot_admin').'.xls" class="btn-sm btn-success btn-round"><i class="fas fa-file-download"></i> Download Format</a>';
+		$button = '<a href="'.base_url('excel/anggota/import_admin').'.xls" class="btn-sm btn-success btn-round"><i class="fas fa-file-download"></i> Download Format</a>';
 		$data = [
 			'title'			=> 'Pangkalan',
 			'sub'			=> 'Master Data Anggota',
@@ -448,6 +511,24 @@ class Anggota extends MY_Controller {
 		$this->M_anggota->excel($anggota);
 	}
 
+	function bulk_action()
+	{
+		if ($this->session->userdata('ses_username') == null) {
+			redirect('auth','refresh');
+		}	
+
+		$cek = $this->M_anggota->bulkHapus();
+		if ($cek) {
+			$this->session->set_flashdata('success', 'Bulk Hapus berhasil');
+		}
+		else
+		{
+			$this->session->set_flashdata('error', 'Bulk Hapus gagal');
+		}
+		redirect('anggota','refresh');
+	}
+
+
 	function upload()
 	{
 		//proses import
@@ -461,6 +542,14 @@ class Anggota extends MY_Controller {
 			$this->session->set_flashdata('error', $cek['msg']);
 			redirect('anggota/import','refresh');	
 		}
+	}
+
+
+	/*ajax*/
+	function get_tahun_ajaran()
+	{
+		$data = $this->M_anggota->getTahunAjaran();
+		echo json_encode($data);
 	}
 }
 

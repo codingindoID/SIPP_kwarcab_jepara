@@ -42,7 +42,7 @@
 						<td>2. Pada kolom kwaran silahkan isikan kode kwaran sesuai pada table dibawah ini, </td>
 					</tr>
 					<tr>
-						<td>3. Pada kolom id gudep jangan isikan <span style="color: red; font-weight: bold">Nomor gudep</span>, tapi isikan dengan <span style="color: blue; font-weight: bold">Id Gudep</span> seperti pada table dibawah ini</td>
+						<td>3. Pada kolom id gudep isikan <span style="color: red; font-weight: bold">Nomor Urut Gudep</span>, Misal :  <span style="color: red; font-weight: bold">020</span> , cukup isikan dengan :  <span style="color: red; font-weight: bold">20</span>.</td>
 					</tr>
 				</tbody>
 			</table>

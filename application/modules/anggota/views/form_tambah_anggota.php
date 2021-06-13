@@ -1,6 +1,6 @@
 <form method="post" action="<?php echo site_url('anggota/insert_anggota/') ?>">
 	<div class="row">
-		<div class="col-md-6">
+		<div class="col-md-4">
 			<div class="form-group">
 				<label >Kwarran <span class="text-danger">**</span> </label>
 				<div class="select2-input">
@@ -13,7 +13,7 @@
 				</div>
 			</div>
 		</div>
-		<div class="col-md-6">
+		<div class="col-md-4">
 			<div class="form-group">
 				<label >Gudep <span class="text-danger">**</span></label>
 				<div class="select2-input">
@@ -22,6 +22,12 @@
 					</select>
 				</div>
 			</div>
+		</div>
+		<div class="col-md-4">
+			<div class="form-group">
+					<label >Tahun Ajaran <span class="text-danger">**</span></label>
+					<input type="number" class="form-control" name="ta" required>
+				</div>
 		</div>
 	</div>
 	<div class="info" hidden="true" >
