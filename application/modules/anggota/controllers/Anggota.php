@@ -93,7 +93,7 @@ class Anggota extends MY_Controller {
 
 	function filter_anggota($id_kwaran)
 	{
-		if ($this->session->userdata('ses_username') == null) {
+		if ($this->session->userdata('ses_level') == null) {
 			redirect('auth','refresh');
 		}
 
@@ -136,15 +136,23 @@ class Anggota extends MY_Controller {
 			$anggota = $this->M_anggota->getanggotaGudep()->result();
 			break;
 
+
 			default:
 			break;
 		}
 
-		$nama_kwaran = $this->db->get_where('tb_kwaran', ['id_kwaran' => $id_kwaran])->row();
+		if ($id_kwaran != 'semua') {
+			$nama_kwaran = $this->db->get_where('tb_kwaran', ['id_kwaran' => $id_kwaran])->row();
+			$nama_kwaran = ' KWARRAN '. $nama_kwaran->nama_kwaran;
+		}
+		else
+		{
+			$nama_kwaran = 'Seluruh Kwaran';
+		}
 
 		$data = [
 			'title'			=> 'Anggota',
-			'sub'			=> 'anggota terdaftar di : <b class="text-warning"> KWARRAN '. strtoupper($nama_kwaran->nama_kwaran) .'</b>',
+			'sub'			=> 'anggota terdaftar di : <b class="text-warning"> '. strtoupper($nama_kwaran) .'</b>',
 			'menu'			=> 'anggota',
 			'button_menu'	=> $select,
 			'anggota'		=> $this->M_anggota->get_anggota($id_kwaran)->result(),
@@ -275,6 +283,7 @@ class Anggota extends MY_Controller {
 		}
 
 		$alamat = $this->M_anggota->alamat();
+		$darah = ($this->input->post('darah') == 'Tidak Tahu') ? 'Tidak Tahu' :  $this->input->post('darah');
 
 		$data = [
 			'id_kwaran'     => $this->input->post('kwaran'),
@@ -288,7 +297,7 @@ class Anggota extends MY_Controller {
 			'rw' 			=> $this->input->post('rw'),
 			'desa' 			=> $this->input->post('desa'),
 			'kecamatan' 	=> $this->input->post('kecamatan'),
-			'gol_darah' 	=> $this->input->post('darah'),
+			'gol_darah' 	=> $darah,
 			'golongan' 		=> $this->input->post('golongan'),
 			'tingkat' 		=> $this->input->post('tingkat'),
 			'kta' 			=> $this->input->post('kta'),
@@ -401,6 +410,7 @@ class Anggota extends MY_Controller {
 			'menu'			=> 'anggota',
 			'button_menu'	=> $button,
 			'anggota'		=> $anggota,
+			'tingkat'		=> $this->db->get_where('tb_tingkatan', ['tingkat' => $anggota->golongan])->result(),
 			'asal'			=> $asal,
 			'gudep_terpilih'=> $gudep_terpilih,
 			'kecamatan'		=> $this->db->get('tb_kecamatan')->result(),

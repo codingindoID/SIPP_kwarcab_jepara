@@ -100,8 +100,8 @@ class Beranda extends MY_Controller {
 			'sub_penegak'	=> $this->_get_tingkat_kwaran('penegak',$id_kwaran),
 			'sub_pandega'	=> $this->_get_tingkat_kwaran('pandega',$id_kwaran),
 			'id_kwaran'		=> $id_kwaran,
-			'status_sek'	=> $this->M_master->getall('tb_status_kepemilikan',$order2)->result(),
-			'sifat_sek'		=> $this->M_master->getall('tb_sifat_kepemilikan',$order2)->result(),
+			'status_sek'	=> $this->M_master->getall('tb_status_kepemilikan',$order)->result(),
+			'sifat_sek'		=> $this->M_master->getall('tb_sifat_kepemilikan',$order)->result(),
 		];
 
 		//echo json_encode($data);

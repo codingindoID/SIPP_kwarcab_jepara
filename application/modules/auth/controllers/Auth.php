@@ -24,7 +24,7 @@ class Auth extends MY_Controller {
 		$password	= md5($this->input->post('password'));
 
 		//cek by usernmae
-		$cek = $this->M_master->getWhere('tb_user',['username' => $username,'password' => $password],$order)->row();
+		$cek = $this->M_master->getWhere('tb_user',['md5(username)' => md5($username),'password' => $password],$order)->row();
 		if ($cek) {
 			$session = array(
 				'ses_id' 		=> $cek->id_user,

@@ -1,6 +1,6 @@
 	var id_kwaran = $('#id_kwaran').val()
 	var base = $('#base').val()
-	var items="<option value=''>Filter Kwaran..</option>";
+	var items="<option value=''>Filter Kwaran..</option><option value='semua'>Semua Kwaran</option>";
 	$.ajax({
 		url : base+'c_master/get_kwaran',
 		type:'get',

@@ -78,4 +78,23 @@ $(document).ready(function() {
 		}
 	});
 
+	$('#golongan').change(function(event) {
+		var base    = $('#base').val()
+		var golongan  = $('#golongan').val()
+		$('select[name="tingkat"]').attr('disabled', false);
+		var items="";
+		$.ajax({
+			url : base+'anggota/get_tingkat/'+golongan,
+			type:'get',
+			dataType: 'json',
+			success: function(response) {
+
+				for (var i = 0; i < response.length; i++) {
+					items+="<option value='"+response[i].sub_tingkat+"'>"+response[i].sub_tingkat.toUpperCase()+"</option>";
+				}
+				$('select[name="tingkat"]').html(items); 
+			}
+		});
+	});
+
 });

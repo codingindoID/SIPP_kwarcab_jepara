@@ -11,7 +11,7 @@
  Target Server Version : 100414
  File Encoding         : 65001
 
- Date: 28/02/2021 23:22:14
+ Date: 14/06/2021 21:14:08
 */
 
 SET NAMES utf8mb4;
@@ -29,7 +29,7 @@ CREATE TABLE `tb_anggota`  (
   `tempat_lahir` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL,
   `tanggal_lahir` date NULL DEFAULT NULL,
   `alamat` text CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL,
-  `gol_darah` varchar(2) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL,
+  `gol_darah` varchar(15) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL,
   `golongan` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT 'siaga,penggalang, penegak, pandega, dewasa',
   `tingkat` varchar(20) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL,
   `kta` varchar(60) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL,
@@ -61,13 +61,59 @@ CREATE TABLE `tb_anggota`  (
   `pel_kpd` varchar(25) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL,
   `no_kpl` varchar(25) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL,
   `pel_kpl` varchar(25) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL,
+  `ta` int(4) NULL DEFAULT NULL,
+  `petugas` varchar(20) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL,
   PRIMARY KEY (`id_anggota`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 49 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 342 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
--- Records of tb_anggota
+-- Table structure for tb_anggota_sementara
 -- ----------------------------
-INSERT INTO `tb_anggota` VALUES (48, '29', '41', 'wwrwe', 'werwer', '1970-01-01', NULL, NULL, 'dewasa', 'kml', '', NULL, NULL, '', 0, NULL, 'qweqw', 2009, 'SIAGA', '', 0, NULL, '', 0, NULL, '2021-02-28 23:03:03', '827ccb0eea8a706c4c34a16891f84e7b', '1', '1', '20', '3320002', '', NULL, 'qwe', NULL, '', NULL, '', NULL);
+DROP TABLE IF EXISTS `tb_anggota_sementara`;
+CREATE TABLE `tb_anggota_sementara`  (
+  `id_anggota` int(12) NOT NULL AUTO_INCREMENT,
+  `id_kwaran` varchar(12) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL,
+  `id_gudep` varchar(20) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL,
+  `nama` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL,
+  `tempat_lahir` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL,
+  `tanggal_lahir` date NULL DEFAULT NULL,
+  `alamat` text CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL,
+  `gol_darah` varchar(15) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL,
+  `golongan` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT 'siaga,penggalang, penegak, pandega, dewasa',
+  `tingkat` varchar(20) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL,
+  `kta` varchar(60) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL,
+  `angkatan` int(4) NULL DEFAULT NULL COMMENT 'isikan tahun',
+  `active` enum('1','2') CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT 'masih aktif atau sudah tidak 1=active; 2 = non',
+  `tempat_kmd` varchar(60) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL,
+  `tahun_kmd` int(4) NULL DEFAULT 0,
+  `golongan_kmd` varchar(60) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL,
+  `tempat_kml` varchar(60) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL,
+  `tahun_kml` int(4) NULL DEFAULT 0,
+  `golongan_kml` varchar(60) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL,
+  `tempat_kpd` varchar(60) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL,
+  `tahun_kpd` int(4) NULL DEFAULT 0,
+  `golongan_kpd` varchar(60) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL,
+  `tempat_kpl` varchar(60) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL,
+  `tahun_kpl` int(4) NULL DEFAULT 0,
+  `golongan_kpl` varchar(60) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL,
+  `created_date` datetime(0) NULL DEFAULT current_timestamp(0),
+  `password` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL,
+  `rt` varchar(3) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL,
+  `rw` varchar(3) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL,
+  `desa` varchar(25) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL,
+  `kecamatan` varchar(25) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL,
+  `no_kmd` varchar(25) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL,
+  `pel_kmd` varchar(25) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL,
+  `no_kml` varchar(25) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL,
+  `pel_kml` varchar(25) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL,
+  `no_kpd` varchar(25) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL,
+  `pel_kpd` varchar(25) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL,
+  `no_kpl` varchar(25) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL,
+  `pel_kpl` varchar(25) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL,
+  `ta` int(4) NULL DEFAULT NULL,
+  `petugas` varchar(20) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL,
+  PRIMARY KEY (`id_anggota`) USING BTREE
+) ENGINE = InnoDB AUTO_INCREMENT = 342 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Table structure for tb_darah
@@ -78,7 +124,7 @@ CREATE TABLE `tb_darah`  (
   `darah` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL,
   `created_date` datetime(0) NULL DEFAULT current_timestamp(0),
   PRIMARY KEY (`id_darah`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 5 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 6 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of tb_darah
@@ -87,6 +133,7 @@ INSERT INTO `tb_darah` VALUES (1, 'A', '2020-12-06 12:14:23');
 INSERT INTO `tb_darah` VALUES (2, 'AB', '2020-12-06 12:14:25');
 INSERT INTO `tb_darah` VALUES (3, 'B', '2020-12-06 12:14:27');
 INSERT INTO `tb_darah` VALUES (4, 'O', '2020-12-06 12:14:30');
+INSERT INTO `tb_darah` VALUES (5, 'Tidak Tahu', '2021-06-11 16:15:29');
 
 -- ----------------------------
 -- Table structure for tb_desa
@@ -347,14 +394,13 @@ CREATE TABLE `tb_gudep`  (
   `created_date` datetime(0) NULL DEFAULT current_timestamp(0),
   `id_pangkalan` varchar(10) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL,
   PRIMARY KEY (`id_gudep`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 43 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 23 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of tb_gudep
 -- ----------------------------
-INSERT INTO `tb_gudep` VALUES (39, '1111', 'Putra', '2021-02-26 20:20:23', '64');
-INSERT INTO `tb_gudep` VALUES (40, '12323123', 'Putri', '2021-02-26 20:20:31', '64');
-INSERT INTO `tb_gudep` VALUES (41, '123', 'Putra', '2021-02-26 20:48:55', '66');
+INSERT INTO `tb_gudep` VALUES (17, '17.145', 'Putra', '2021-06-09 13:01:35', '94');
+INSERT INTO `tb_gudep` VALUES (18, '17.146', 'Putri', '2021-06-09 13:01:49', '94');
 
 -- ----------------------------
 -- Table structure for tb_kecamatan
@@ -405,27 +451,28 @@ CREATE TABLE `tb_kwaran`  (
   `awal_bakti` date NULL DEFAULT NULL,
   `akhir_bakti` date NULL DEFAULT NULL,
   PRIMARY KEY (`id_kwaran`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 34 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 32 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of tb_kwaran
 -- ----------------------------
-INSERT INTO `tb_kwaran` VALUES (15, 'Tahunan', '2020-12-18 13:49:03', '06', 'asdasasdfssdfd', 'adasdasdsa', 'asdasd', '1', '2', 'asdasd', '2021-02-02', '2021-02-24', '2021-03-10');
-INSERT INTO `tb_kwaran` VALUES (16, 'Keling', '2021-01-17 19:58:09', '01', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
-INSERT INTO `tb_kwaran` VALUES (17, 'Kembang', '2021-01-17 19:58:37', '02', '', '', '', '', '', NULL, NULL, NULL, NULL);
-INSERT INTO `tb_kwaran` VALUES (18, 'Bangsri', '2021-01-17 19:58:53', '03', '', '', '', '', '', NULL, NULL, NULL, NULL);
-INSERT INTO `tb_kwaran` VALUES (19, 'Mlonggo', '2021-01-17 19:59:24', '04', '', '', '', '', '', NULL, NULL, NULL, NULL);
-INSERT INTO `tb_kwaran` VALUES (20, 'Jepara', '2021-01-17 19:59:48', '05', '', '', '', '', '', NULL, NULL, NULL, NULL);
-INSERT INTO `tb_kwaran` VALUES (21, 'Kedung', '2021-01-17 20:00:24', '07', '', '', '', '', '', NULL, NULL, NULL, NULL);
-INSERT INTO `tb_kwaran` VALUES (22, 'Batealit', '2021-01-17 20:00:46', '08', '', '', '', '', '', NULL, NULL, NULL, NULL);
-INSERT INTO `tb_kwaran` VALUES (23, 'Pecangaan', '2021-01-17 20:01:12', '09', '', '', '', '', '', NULL, NULL, NULL, NULL);
-INSERT INTO `tb_kwaran` VALUES (24, 'Kalinyamatan', '2021-01-17 20:01:46', '10', '', '', '', '', '', NULL, NULL, NULL, NULL);
-INSERT INTO `tb_kwaran` VALUES (25, 'Mayong', '2021-01-17 20:02:22', '11', '', '', '', '', '', NULL, NULL, NULL, NULL);
-INSERT INTO `tb_kwaran` VALUES (26, 'Welahan', '2021-01-17 20:02:57', '12', '', '', '', '', '', NULL, NULL, NULL, NULL);
-INSERT INTO `tb_kwaran` VALUES (27, 'Nalumsari', '2021-01-17 20:03:33', '13', '', '', '', '', '', NULL, NULL, NULL, NULL);
-INSERT INTO `tb_kwaran` VALUES (28, 'Karimunjawa', '2021-01-17 20:04:10', '14', '', '', '', '', '', NULL, NULL, NULL, NULL);
-INSERT INTO `tb_kwaran` VALUES (29, 'Pakis Aji', '2021-01-17 20:04:43', '15', '', '', '', '', '', NULL, NULL, NULL, NULL);
-INSERT INTO `tb_kwaran` VALUES (30, 'Donorojo', '2021-01-17 20:05:44', '16', '', '', '', '', '', NULL, NULL, NULL, NULL);
+INSERT INTO `tb_kwaran` VALUES (1, 'Keling', '2021-01-17 19:58:09', '01', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
+INSERT INTO `tb_kwaran` VALUES (2, 'Kembang', '2021-01-17 19:58:37', '02', '', '', '', '', '', NULL, NULL, NULL, NULL);
+INSERT INTO `tb_kwaran` VALUES (3, 'Bangsri', '2021-01-17 19:58:53', '03', '', '', '', '', '', NULL, NULL, NULL, NULL);
+INSERT INTO `tb_kwaran` VALUES (4, 'Mlonggo', '2021-01-17 19:59:24', '04', '', '', '', '', '', NULL, NULL, NULL, NULL);
+INSERT INTO `tb_kwaran` VALUES (5, 'Jepara', '2021-01-17 19:59:48', '05', '', '', '', '', '', NULL, NULL, NULL, NULL);
+INSERT INTO `tb_kwaran` VALUES (6, 'Tahunan', '2020-12-18 13:49:03', '06', '', '', '', '', '', NULL, NULL, NULL, NULL);
+INSERT INTO `tb_kwaran` VALUES (7, 'Kedung', '2021-01-17 20:00:24', '07', '', '', '', '', '', NULL, NULL, NULL, NULL);
+INSERT INTO `tb_kwaran` VALUES (8, 'Batealit', '2021-01-17 20:00:46', '08', '', '', '', '', '', NULL, NULL, NULL, NULL);
+INSERT INTO `tb_kwaran` VALUES (9, 'Pecangaan', '2021-01-17 20:01:12', '09', '', '', '', '', '', NULL, NULL, NULL, NULL);
+INSERT INTO `tb_kwaran` VALUES (10, 'Kalinyamatan', '2021-01-17 20:01:46', '10', '', '', '', '', '', NULL, NULL, NULL, NULL);
+INSERT INTO `tb_kwaran` VALUES (11, 'Mayong', '2021-01-17 20:02:22', '11', '', '', '', '', '', NULL, NULL, NULL, NULL);
+INSERT INTO `tb_kwaran` VALUES (12, 'Welahan', '2021-01-17 20:02:57', '12', '', '', '', '', '', NULL, NULL, NULL, NULL);
+INSERT INTO `tb_kwaran` VALUES (13, 'Nalumsari', '2021-01-17 20:03:33', '13', '', '', '', '', '', NULL, NULL, NULL, NULL);
+INSERT INTO `tb_kwaran` VALUES (14, 'Karimunjawa', '2021-01-17 20:04:10', '14', '', '', '', '', '', NULL, NULL, NULL, NULL);
+INSERT INTO `tb_kwaran` VALUES (15, 'Donorojo', '2021-01-17 20:05:44', '15', '', '', '', '', '', NULL, NULL, NULL, NULL);
+INSERT INTO `tb_kwaran` VALUES (16, 'Pakis Aji', '2021-01-17 20:04:43', '16', '', '', '', '', '', NULL, NULL, NULL, NULL);
+INSERT INTO `tb_kwaran` VALUES (17, 'CAKRA BASWARA', '2021-05-18 09:12:59', '17', 'Pandu Eka Karsa', 'Pandu Satya Darma', 'Jl. HOS Cokroaminoto Nomor 3 Kauman Jepara', '1', '1', '1120/H/2021', '2021-05-19', '2021-05-28', '2021-05-29');
 
 -- ----------------------------
 -- Table structure for tb_pangkalan
@@ -441,15 +488,32 @@ CREATE TABLE `tb_pangkalan`  (
   `kamabigus` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL,
   `kagudep` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL,
   `jumlah_pembina` int(10) NULL DEFAULT NULL,
+  `petugas` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL,
   PRIMARY KEY (`id_pangkalan`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 72 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 99 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of tb_pangkalan
 -- ----------------------------
-INSERT INTO `tb_pangkalan` VALUES (64, 'SMA 1 Tahunan', 'Jl. Amarta 3 Tahunan', '15', NULL, '2021-02-26 20:20:11', 'sada', 'asd', 2);
-INSERT INTO `tb_pangkalan` VALUES (65, 'SMPN 1 TAHUNAN', 'JL. Amarta 3 Tahunan', '15', NULL, '2021-02-26 20:21:28', 'asda', 'asdas', 3);
-INSERT INTO `tb_pangkalan` VALUES (66, 'SMKN 1 PAKISAJI', 'asasa', '29', NULL, '2021-02-26 20:48:44', 'asd', 'asd', 2);
+INSERT INTO `tb_pangkalan` VALUES (94, 'SMA 3 HOS COKROAMINOTO', 'Jl HOS Cokroaminoto No. 3', '17', NULL, '2021-06-09 12:56:47', 'Pandu Nusantara', 'Cakra Buana', 10, NULL);
+
+-- ----------------------------
+-- Table structure for tb_pangkalan_sementara
+-- ----------------------------
+DROP TABLE IF EXISTS `tb_pangkalan_sementara`;
+CREATE TABLE `tb_pangkalan_sementara`  (
+  `id_pangkalan` int(12) NOT NULL AUTO_INCREMENT,
+  `nama_pangkalan` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL,
+  `alamat_pangkalan` text CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL,
+  `kwaran` varchar(10) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL,
+  `desa` varchar(10) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL,
+  `created_date` datetime(0) NULL DEFAULT current_timestamp(0),
+  `kamabigus` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL,
+  `kagudep` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL,
+  `jumlah_pembina` int(10) NULL DEFAULT NULL,
+  `petugas` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL,
+  PRIMARY KEY (`id_pangkalan`) USING BTREE
+) ENGINE = InnoDB AUTO_INCREMENT = 91 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Table structure for tb_sifat_kepemilikan
@@ -535,31 +599,31 @@ CREATE TABLE `tb_user`  (
   `img_user` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL,
   `created_date` datetime(0) NULL DEFAULT current_timestamp(0),
   PRIMARY KEY (`id_user`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 137 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 131 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of tb_user
 -- ----------------------------
-INSERT INTO `tb_user` VALUES (1, 'admin', '21232f297a57a5a743894a0e4a801fc3', 'kwarcabjepara1120@gmail.com', 'kwarcab jepara', '1', 'admin', 'admin', NULL, '2020-12-02 09:40:20');
-INSERT INTO `tb_user` VALUES (107, 'donorojo', '827ccb0eea8a706c4c34a16891f84e7b', '', 'Kwarran Donorojo', '2', '30', NULL, NULL, '2021-01-18 15:55:02');
-INSERT INTO `tb_user` VALUES (108, 'keling', '827ccb0eea8a706c4c34a16891f84e7b', '1234', 'Kwaran Keling', '2', '16', NULL, NULL, '2021-01-18 16:02:14');
-INSERT INTO `tb_user` VALUES (109, 'kembang', '827ccb0eea8a706c4c34a16891f84e7b', '123', 'Kwarran Kembang', '2', '17', NULL, NULL, '2021-01-18 16:03:52');
-INSERT INTO `tb_user` VALUES (110, 'bangsri', '827ccb0eea8a706c4c34a16891f84e7b', '111', 'Kwarran Bangsri', '2', '18', NULL, NULL, '2021-01-18 16:05:17');
-INSERT INTO `tb_user` VALUES (111, 'mlonggo', '827ccb0eea8a706c4c34a16891f84e7b', '121', 'Kwarran Mlonggo', '2', '19', NULL, NULL, '2021-01-18 16:07:21');
-INSERT INTO `tb_user` VALUES (112, 'pakisaji', '827ccb0eea8a706c4c34a16891f84e7b', '12123', 'Kwarran Pakis Aji', '2', '29', NULL, NULL, '2021-01-18 16:08:57');
-INSERT INTO `tb_user` VALUES (113, 'jepara', '827ccb0eea8a706c4c34a16891f84e7b', '131', 'Kwarran Jepara', '2', '20', NULL, NULL, '2021-01-18 16:14:24');
-INSERT INTO `tb_user` VALUES (114, 'tahunan', '827ccb0eea8a706c4c34a16891f84e7b', '141', 'Kwarran Tahunan', '2', '15', NULL, NULL, '2021-01-18 16:15:48');
-INSERT INTO `tb_user` VALUES (115, 'batealit', '827ccb0eea8a706c4c34a16891f84e7b', 'qw1', 'Kwarran Batealit', '2', '22', NULL, NULL, '2021-01-18 16:17:19');
-INSERT INTO `tb_user` VALUES (116, 'kedung', '827ccb0eea8a706c4c34a16891f84e7b', 'ada', 'Kwarran Kedung', '2', '21', NULL, NULL, '2021-01-18 16:18:42');
-INSERT INTO `tb_user` VALUES (117, 'pecangaan', '827ccb0eea8a706c4c34a16891f84e7b', 'shhk', 'Kwarran Pecangaan', '2', '23', NULL, NULL, '2021-01-18 16:21:27');
-INSERT INTO `tb_user` VALUES (118, 'welahan', '827ccb0eea8a706c4c34a16891f84e7b', 'khklhl', 'Kwarran Welahan', '2', '26', NULL, NULL, '2021-01-18 16:23:28');
-INSERT INTO `tb_user` VALUES (119, 'kalinyamatan', '827ccb0eea8a706c4c34a16891f84e7b', 'khiugig', 'Kwarran Kalinyamatan', '2', '24', NULL, NULL, '2021-01-18 16:29:48');
-INSERT INTO `tb_user` VALUES (120, 'nalumsari', '827ccb0eea8a706c4c34a16891f84e7b', 'ihoih', 'Kwarran Nalumsari', '2', '27', NULL, NULL, '2021-01-18 16:30:28');
-INSERT INTO `tb_user` VALUES (121, 'mayong', '827ccb0eea8a706c4c34a16891f84e7b', 'klhlpl', 'Kwarran Mayong', '2', '25', NULL, NULL, '2021-01-18 16:31:11');
-INSERT INTO `tb_user` VALUES (122, 'karimunjawa', '827ccb0eea8a706c4c34a16891f84e7b', 'lkhhpj', 'Kwarran Karimunjawa', '2', '28', NULL, NULL, '2021-01-18 16:31:38');
-INSERT INTO `tb_user` VALUES (134, 'caraka', '827ccb0eea8a706c4c34a16891f84e7b', 'caraka@gmail.com', 'CARAKA', '3', NULL, '64', NULL, '2021-02-26 20:21:10');
-INSERT INTO `tb_user` VALUES (135, 'smp1tahunan', '827ccb0eea8a706c4c34a16891f84e7b', 'smp1tahunan@gmail.com', 'SMPN 1 TAHUNAN', '3', NULL, '65', NULL, '2021-02-26 20:21:57');
-INSERT INTO `tb_user` VALUES (136, 'smkn1pakis', '827ccb0eea8a706c4c34a16891f84e7b', 'ganti@gmail.com', 'SMKN 1 PAKISAJI', '3', NULL, '66', NULL, '2021-02-26 20:50:10');
+INSERT INTO `tb_user` VALUES (1, 'admin', 'd7ed2401ea053d68895ababc33bf9463', 'kwarcabjepara1120@gmail.com', 'kwarcab jepara', '1', 'admin', 'admin', NULL, '2020-12-02 09:40:20');
+INSERT INTO `tb_user` VALUES (107, 'donorojo', '827ccb0eea8a706c4c34a16891f84e7b', '', 'Kwarran Donorojo', '2', '15', NULL, NULL, '2021-01-18 15:55:02');
+INSERT INTO `tb_user` VALUES (108, 'keling', '827ccb0eea8a706c4c34a16891f84e7b', '1234', 'Kwaran Keling', '2', '1', NULL, NULL, '2021-01-18 16:02:14');
+INSERT INTO `tb_user` VALUES (109, 'kembang', '827ccb0eea8a706c4c34a16891f84e7b', '123', 'Kwarran Kembang', '2', '2', NULL, NULL, '2021-01-18 16:03:52');
+INSERT INTO `tb_user` VALUES (110, 'bangsri', '827ccb0eea8a706c4c34a16891f84e7b', '111', 'Kwarran Bangsri', '2', '3', NULL, NULL, '2021-01-18 16:05:17');
+INSERT INTO `tb_user` VALUES (111, 'mlonggo', '827ccb0eea8a706c4c34a16891f84e7b', '121', 'Kwarran Mlonggo', '2', '4', NULL, NULL, '2021-01-18 16:07:21');
+INSERT INTO `tb_user` VALUES (112, 'pakisaji', '827ccb0eea8a706c4c34a16891f84e7b', '12123', 'Kwarran Pakis Aji', '2', '16', NULL, NULL, '2021-01-18 16:08:57');
+INSERT INTO `tb_user` VALUES (113, 'jepara', '827ccb0eea8a706c4c34a16891f84e7b', '131', 'Kwarran Jepara', '2', '5', NULL, NULL, '2021-01-18 16:14:24');
+INSERT INTO `tb_user` VALUES (114, 'tahunan', '827ccb0eea8a706c4c34a16891f84e7b', '-', 'Kwarran Tahunan', '2', '6', NULL, NULL, '2021-01-18 16:15:48');
+INSERT INTO `tb_user` VALUES (115, 'batealit', '827ccb0eea8a706c4c34a16891f84e7b', 'qw1', 'Kwarran Batealit', '2', '8', NULL, NULL, '2021-01-18 16:17:19');
+INSERT INTO `tb_user` VALUES (116, 'kedung', '827ccb0eea8a706c4c34a16891f84e7b', 'ada', 'Kwarran Kedung', '2', '7', NULL, NULL, '2021-01-18 16:18:42');
+INSERT INTO `tb_user` VALUES (117, 'pecangaan', '827ccb0eea8a706c4c34a16891f84e7b', 'shhk', 'Kwarran Pecangaan', '2', '9', NULL, NULL, '2021-01-18 16:21:27');
+INSERT INTO `tb_user` VALUES (118, 'welahan', '827ccb0eea8a706c4c34a16891f84e7b', 'khklhl', 'Kwarran Welahan', '2', '12', NULL, NULL, '2021-01-18 16:23:28');
+INSERT INTO `tb_user` VALUES (119, 'kalinyamatan', '827ccb0eea8a706c4c34a16891f84e7b', 'khiugig', 'Kwarran Kalinyamatan', '2', '10', NULL, NULL, '2021-01-18 16:29:48');
+INSERT INTO `tb_user` VALUES (120, 'nalumsari', '827ccb0eea8a706c4c34a16891f84e7b', 'ihoih', 'Kwarran Nalumsari', '2', '13', NULL, NULL, '2021-01-18 16:30:28');
+INSERT INTO `tb_user` VALUES (121, 'mayong', '827ccb0eea8a706c4c34a16891f84e7b', 'klhlpl', 'Kwarran Mayong', '2', '11', NULL, NULL, '2021-01-18 16:31:11');
+INSERT INTO `tb_user` VALUES (122, 'karimunjawa', '827ccb0eea8a706c4c34a16891f84e7b', 'lkhhpj', 'Kwarran Karimunjawa', '2', '14', NULL, NULL, '2021-01-18 16:31:38');
+INSERT INTO `tb_user` VALUES (124, 'super', '1b3231655cebb7a1f783eddf27d254ca', NULL, 'PengenNgoding', '1', 'admin', 'admin', NULL, '2021-06-02 12:54:22');
+INSERT INTO `tb_user` VALUES (128, 'CAKRABASWARA', '827ccb0eea8a706c4c34a16891f84e7b', 'cakra@gmail.com', 'CAKRABASWARA', '2', '17', NULL, NULL, '2021-06-14 19:13:04');
+INSERT INTO `tb_user` VALUES (129, 'hos', '827ccb0eea8a706c4c34a16891f84e7b', 'hos@gmail.com', 'HOS COKROAMINOTO', '3', NULL, '94', NULL, '2021-06-14 19:13:33');
 
 -- ----------------------------
 -- Table structure for user_token
@@ -571,6 +635,6 @@ CREATE TABLE `user_token`  (
   `token` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL,
   `created_date` datetime(0) NULL DEFAULT current_timestamp(0),
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 56 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 109 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = Dynamic;
 
 SET FOREIGN_KEY_CHECKS = 1;

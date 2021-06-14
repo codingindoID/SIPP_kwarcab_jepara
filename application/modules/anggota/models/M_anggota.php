@@ -14,7 +14,11 @@ class M_anggota extends CI_Model {
 	{
 		$this->db->join('tb_gudep', 'tb_gudep.id_gudep = tb_anggota.id_gudep');
 		$this->db->join('tb_pangkalan', 'tb_pangkalan.id_pangkalan = tb_gudep.id_pangkalan');
-		$this->db->where('tb_anggota.id_kwaran', $id_kwaran);
+		
+		if ($id_kwaran != 'semua') {
+			$this->db->where('tb_anggota.id_kwaran', $id_kwaran);
+		}
+		
 		$this->db->order_by('tb_anggota.nama', 'asc');
 		return $this->db->get('tb_anggota');
 	}
@@ -238,6 +242,7 @@ class M_anggota extends CI_Model {
 		$alamat 	= $desa->nama_desa." , RT : ". $rt ." / RW : " . $rw ." , kecamatan ". $kecamatan->nama_kecamatan;
 		$alamat 	= strtoupper($alamat);
 
+		$darah = ($this->input->post('darah') == 'Tidak Tahu') ? 'Tidak Tahu' :  $this->input->post('darah');
 
 		$data = [
 			'id_kwaran'     => $this->input->post('kwaran'),
@@ -250,8 +255,9 @@ class M_anggota extends CI_Model {
 			'rw' 			=> $this->input->post('rw'),
 			'desa' 			=> $this->input->post('desa'),
 			'kecamatan' 	=> $this->input->post('kecamatan'),
-			'gol_darah' 	=> $this->input->post('darah'),
+			'gol_darah' 	=> $darah,
 			'golongan' 		=> $this->input->post('golongan'),
+			'tingkat' 		=> $this->input->post('tingkat'),
 			'kta' 			=> $this->input->post('kta'),
 			'tempat_kmd' 	=> $this->input->post('tempat_kmd'),
 			'tahun_kmd' 	=> $this->input->post('tahun_kmd'),
@@ -316,7 +322,7 @@ class M_anggota extends CI_Model {
 			$sheet->setCellValue('F'.$x, $row->alamat);
 			$sheet->setCellValue('G'.$x, $row->tempat_lahir);
 			$sheet->setCellValue('H'.$x, $this->_set_tanggal($row->tanggal_lahir));
-			$sheet->setCellValue('I'.$x, $row->gol_darah = (5) ? '-' : $row->gol_darah );
+			$sheet->setCellValue('I'.$x, $row->gol_darah == 'Tidak Tahu' ? '-' : $row->gol_darah );
 			$sheet->setCellValue('J'.$x, $row->golongan);
 			$sheet->setCellValue('K'.$x, $row->tingkat);
 			$sheet->setCellValue('L'.$x, $row->tempat_kmd);
@@ -432,6 +438,7 @@ class M_anggota extends CI_Model {
 
 	private function _import_anggota($nama)
 	{
+		$cek = '';
 		$config['upload_path']          = './excel/';
 		$config['allowed_types']        = 'xls|xlsx';
 		$config['max_size']             = 5000;
@@ -451,6 +458,7 @@ class M_anggota extends CI_Model {
 			for ($i=1; $i < count($worksheet) ; $i++) { 
 				$gudep 			= $this->db->get_where('tb_gudep', ['no_gudep' => sprintf('%02s',$worksheet[$i][0]).'.'.sprintf('%03s',$worksheet[$i][1]) ])->row();
 				$id_gudep 		= $gudep->id_gudep;
+
 				if ($id_gudep != null) {
 
 					//proses insert jika inputan nomor gudep sudah benar
@@ -462,9 +470,9 @@ class M_anggota extends CI_Model {
 						'tempat_lahir' 		=> $worksheet[$i][4],
 						'tanggal_lahir' 	=> date('Y-m-d',strtotime($worksheet[$i][5])),
 						'alamat'			=> $worksheet[$i][6],
-						'gol_darah'			=> $worksheet[$i][7],
-						'golongan'			=> $worksheet[$i][8],
-						'tingkat'			=> $worksheet[$i][9],
+						'gol_darah'			=> ($worksheet[$i][7] == '') ? 'Tidak Tahu' : $worksheet[$i][7] ,
+						'golongan'			=> strtolower($worksheet[$i][8]),
+						'tingkat'			=> strtolower($worksheet[$i][9]),
 						'kta'				=> $worksheet[$i][10],
 						'tempat_kmd'		=> $worksheet[$i][11],
 						'tahun_kmd'			=> $worksheet[$i][12],
@@ -506,10 +514,7 @@ class M_anggota extends CI_Model {
 
 					$cek = 1;
 				}
-
-				
 			}
-
 			return $cek;
 		}
 	}

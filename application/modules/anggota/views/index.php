@@ -10,6 +10,7 @@ $level = $this->session->userdata('ses_level');
 				<th>Asal Pangkalan</th>
 				<th>Satuan</th>
 				<th>Tingkat</th>
+				<th>TA</th>
 				<th class="text-center">#</th>
 
 			</tr>
@@ -23,7 +24,8 @@ $level = $this->session->userdata('ses_level');
 						<td><?php echo $anggota->nama ?></td>
 						<td><?php echo $anggota->nama_pangkalan ?></td>
 						<td><?php echo $anggota->ambalan ?></td>
-						<td><?php echo $anggota->tingkat ?></td>
+						<td><?php echo strtoupper($anggota->tingkat) ?></td>
+						<td><?php echo $anggota->ta ?></td>
 						<td class="text-right">
 							<div class="dropdown">
 								<a href="#" class="btn-sm btn-success dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="color: white"> 

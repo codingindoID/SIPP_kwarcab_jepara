@@ -207,9 +207,18 @@ class Pangkalan extends MY_Controller {
 			redirect('auth','refresh');
 		}
 
+		//cek gudep nya
 		$cek = $this->M_master->delete('tb_pangkalan',['id_pangkalan' => $id]);
 		if (!$cek) {
+			//hapus anggota
+			$pang = $this->db->get_where('tb_gudep', ['id_pangkalan' => $id])->result();
+			$arr = array_column($pang,'id_gudep');
+			$this->db->where_in('id_gudep', $arr);
+			$this->db->delete('tb_anggota');
+
+			//hapus gudep
 			$this->db->delete('tb_gudep',['id_pangkalan' => $id]);
+
 			echo json_encode(array(
 				'success'	=> 1,
 				'message'	=> 'Data Berhasil Dihapus',

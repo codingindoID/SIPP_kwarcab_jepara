@@ -1,6 +1,6 @@
 <form method="post" action="<?php echo site_url('anggota/update_anggota') ?>">
 	<div class="row">
-		<div class="col-md-6">
+		<div class="col-md-4">
 			<input type="hidden" name="id_anggota" value="<?php echo $anggota->id_anggota ?>">
 			<input type="hidden" name="asal" value="<?php echo $asal ?>">
 			<div class="form-group">
@@ -15,7 +15,7 @@
 				</div>
 			</div>
 		</div>
-		<div class="col-md-6">
+		<div class="col-md-4">
 			<div class="form-group">
 				<label>Gudep **</label>
 				<div class="select2-input">
@@ -27,6 +27,12 @@
 					</select>
 				</div>
 			</div>
+		</div>
+		<div class="col-md-4">
+			<div class="form-group">
+					<label >Tahun Ajaran <span class="text-danger">**</span></label>
+					<input type="number" class="form-control" name="ta" required value="<?php echo $anggota->ta != null ? $anggota->ta : '' ?>">
+				</div>
 		</div>
 	</div>
 	<div class="info">
@@ -80,13 +86,6 @@
 			</div>
 		</div>
 		<div class="row">
-			<div class="col-md-12">
-				<div class="form-group">
-					<textarea type="text" class="form-control" readonly rows="3"><?php echo $anggota->nama_desa.' , RT: '.$anggota->rt.' / RW : '.$anggota->rw.' , '.$anggota->nama_kecamatan ?> </textarea>
-				</div>
-			</div>	
-		</div>
-		<div class="row">
 			<div class="col-md-6">
 				<div class="form-group">
 					<label>Tempat Lahir</label>
@@ -118,13 +117,25 @@
 			<div class="col-md-6">
 				<div class="form-group">
 					<label>Golongan Kepramukaan **</label>
-					<select name="golongan" class="form-control" required>
+					<select id="golongan" name="golongan" class="form-control" required>
 						<option value="">Pilih . . </option>
 						<?php foreach ($golongan as $g): ?>
-							<option <?php echo $anggota->golongan == $g->golongan ? 'selected' : '' ?> value="<?php echo $g->golongan ?>"><?php echo $g->golongan ?></option>
+							<option <?php echo $anggota->golongan == $g->golongan ? 'selected' : '' ?> value="<?php echo $g->golongan ?>"><?php echo strtoupper($g->golongan) ?></option>
 						<?php endforeach ?>
 					</select>
 				</div>
+			</div>
+			<div class="col-md-6">
+				<div class="form-group">
+					<label >Tingkat / Kualifikasi ( Tingkatan Terahir Yang Diperoleh ) <span class="text-danger">**</span></label>
+					<select name="tingkat" class="form-control" required>
+						<option value="">Pilih Tingkat. . </option>
+						<?php foreach ($tingkat as $t): ?>
+							<option value="<?php echo $t->sub_tingkat ?>" <?php echo $anggota->tingkat == $t->sub_tingkat ? 'selected' : '' ?>><?php echo strtoupper($t->sub_tingkat) ?></option>
+						<?php endforeach ?>
+					</select>
+				</div>
+				<p class="ml-2 text-danger">* Keterangan : NK = Non Kualifikasi</p>
 			</div>
 			<div class="col-md-6">
 				<div class="form-group">
