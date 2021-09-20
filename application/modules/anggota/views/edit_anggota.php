@@ -169,7 +169,7 @@
 			<div class="col-md-4">
 				<div class="form-group">
 					<label>Tempat</label>
-					<input type="text" class="form-control" name="tempat_kmd" placeholder="-" value="<?php echo $anggota->tempat_kml ?>">
+					<input type="text" class="form-control" name="tempat_kml" placeholder="-" value="<?php echo $anggota->tempat_kml ?>">
 				</div>
 			</div>
 			<div class="col-md-4">

@@ -188,12 +188,14 @@ class M_anggota extends CI_Model {
 		return $alamat; 
 	}
 
-	function get_potensi_anggota($where)
+	function get_potensi_anggota($param)
 	{
+		/*'tempat_'.$param.' != "" and tahun_'.$param.' != 0 and golongan_'.$param.' != ""'*/
 		$this->db->join('tb_gudep', 'tb_gudep.id_gudep = tb_anggota.id_gudep');
 		$this->db->join('tb_pangkalan', 'tb_pangkalan.id_pangkalan = tb_gudep.id_pangkalan');
 		$this->db->join('tb_kwaran', 'tb_anggota.id_kwaran = tb_kwaran.id_kwaran');
-		$this->db->where($where);
+		/*$this->db->where($where);*/
+		$this->db->where('tingkat', $param);
 		$this->db->order_by('tb_anggota.nama', 'asc');
 		return $this->db->get('tb_anggota');
 	}	

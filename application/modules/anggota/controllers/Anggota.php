@@ -30,13 +30,13 @@ class Anggota extends MY_Controller {
 			case ADMIN:
 			$select = '
 			<div class="form-row">
-			<div class="form-group col-md-6">
+			<div class="form-group">
 			<select class="form-control" name="bulk" id="bulk">
 			<option value="">Bulk Action</option>
 			<option value="angkatan">Hapus By Tahun Ajaran</option>
 			</select>
 			</div>
-			<div class="form-group col-md-6">
+			<div class="form-group">
 			<select name="kwaran" class="form-control" id="kwaran"></select>
 			</div>
 			</div>
@@ -466,7 +466,7 @@ class Anggota extends MY_Controller {
 			'sub'			=> 'Bersertifikat <b>'.strtoupper($param).'</b>',
 			'menu'			=> 'anggota',
 			'button_menu'	=> $button,
-			'anggota'		=> $this->M_anggota->get_potensi_anggota('tempat_'.$param.' != "" and tahun_'.$param.' != 0 and golongan_'.$param.' != ""')->result()
+			'anggota'		=> $this->M_anggota->get_potensi_anggota($param)->result()
 		];
 
 		//echo json_encode($data);
