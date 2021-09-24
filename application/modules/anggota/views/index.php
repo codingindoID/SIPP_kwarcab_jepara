@@ -67,7 +67,7 @@ $level = $this->session->userdata('ses_level');
 						<div class="col-md-6">
 							<div class="form-group">
 								<label >Pangkalan <span class="text-danger">**</span></label>
-								<select id="pangkalan_bulk" name="pangkalan_bulk" required>
+								<select id="pangkalan_anggota_bulk" class="form-control" name="pangkalan_bulk" required style="width: 100%;">
 									<option value="">Pilih Pangkalan. . </option>
 									<?php foreach ($pangkalan as $pang): ?>
 										<option value="<?php echo $pang->id_pangkalan ?>"><?php echo $pang->nama_pangkalan ?></option>

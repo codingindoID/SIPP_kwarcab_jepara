@@ -48,7 +48,7 @@
 			<div class="col-md-4">
 				<div class="form-group">
 					<div class="select2-input">
-						<select id="kecamatan" name="kecamatan" required>
+						<select id="kecamatan" name="kecamatan" class="form-control" style="width: 100%;" required>
 							<option value="">KECAMATAN . . </option>
 							<?php foreach ($kecamatan as $kec): ?>
 								<option value="<?php echo $kec->id_kecamatan ?>"><?php echo $kec->nama_kecamatan ?></option>
@@ -60,7 +60,7 @@
 			<div class="col-md-4">
 				<div class="form-group">
 					<div class="select2-input">
-						<select id="desa" name="desa" disabled required>
+						<select id="desa" name="desa" class="form-control" style="width: 100%;" disabled required>
 							<option value="">DESA</option>
 							<!-- <?php foreach ($kecamatan as $kec): ?>
 								<option value="<?php echo $kec->id_kecamatan ?>"><?php echo $kec->nama_kecamatan ?></option>

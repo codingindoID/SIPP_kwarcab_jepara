@@ -23,12 +23,12 @@
 		location.href = base+'anggota/filter_anggota/'+id;	
 	});
 
-	$('#pangkalan_bulk').select2({
+	$('#pangkalan_anggota_bulk').select2({
 		theme: "bootstrap",
 		dropdownParent: $("#modal-bulk")
 	});
 
-	$('#pangkalan_bulk').change(function(event) {
+	$('#pangkalan_anggota_bulk').change(function(event) {
 		var id = $(this).val()
 			var ta="<option value=''>--Pilih Tahun Ajaran--</option>";
 			$.ajax({

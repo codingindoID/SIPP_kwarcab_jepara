@@ -58,7 +58,7 @@ $level = $this->session->userdata('ses_level');
 						<div class="col-md-8">
 							<label for="exampleInputEmail1">Nama Pangkalan</label>
 							<div class="select2-input">
-								<select id="select-gudep" name="pangkalan" required>
+								<select id="select-gudep" name="pangkalan" class="form-control" style="width: 100%;" required>
 									<option value="">Pilih..</option>
 									<?php foreach ($pangkalan as $pang): ?>
 										<option value="<?php echo $pang->id_pangkalan ?>"><?php echo $pang->nama_pangkalan ?></option>

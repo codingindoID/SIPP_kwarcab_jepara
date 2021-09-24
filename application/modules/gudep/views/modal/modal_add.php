@@ -17,7 +17,7 @@
 								$id_pang  	= $this->session->userdata('ses_pangkalan');
 								$sesi  		= $this->session->userdata('ses_level');
 								?>
-								<select id="select-gudep" name="pangkalan" required>
+								<select id="select-gudep" name="pangkalan" required class="form-control" style="width: 100%;">
 									<option value="">Pilih..</option>
 									<?php foreach ($pangkalan as $pang): ?>
 										<option value="<?php echo $pang->id_pangkalan ?>"

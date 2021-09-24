@@ -13,7 +13,7 @@
 					<div class="form-group row">
 						<div class="col-md-8">
 							<label for="exampleInputEmail1">Nama Pangkalan</label>
-							<select name="pangkalan" id="pangkalan" class="form-control" required>
+							<select name="pangkalan" id="select-gudep-edit" class="form-control" required style="width: 100%;">
 								<option value="">Pilih..</option>	
 								<?php foreach ($pangkalan as $pang2): ?>
 									<option value="<?php echo $pang2->id_pangkalan ?>"><?php echo $pang2->nama_pangkalan ?></option>

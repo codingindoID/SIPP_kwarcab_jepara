@@ -5,6 +5,11 @@ $('#select-gudep').select2({
 	dropdownParent: $('#modal_add')
 });
 
+$('#select-gudep-edit').select2({
+	theme: "bootstrap",
+	dropdownParent: $('#modal_edit')
+});
+
 function hapus(id,asal="")
 {
 	Swal.fire({

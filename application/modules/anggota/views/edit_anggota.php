@@ -53,7 +53,7 @@
 			<div class="col-md-4">
 				<div class="form-group">
 					<div class="select2-input">
-						<select id="select-kecamatan" name="kecamatan" class="form-control" required>
+						<select id="select-kecamatan" name="kecamatan" class="form-control" style="width: 100%;" required>
 							<option value="">KECAMATAN . . </option>
 							<?php foreach ($kecamatan as $kec): ?>
 								<option <?php echo $anggota->kecamatan == $kec->id_kecamatan ? 'selected' : '' ?> value="<?php echo $kec->id_kecamatan ?>"><?php echo $kec->nama_kecamatan ?></option>
@@ -65,7 +65,7 @@
 			<div class="col-md-4">
 				<div class="form-group">
 					<div class="select2-input">
-						<select id="desa" name="desa" readonly class="form-control" required>
+						<select id="desa" name="desa" readonly class="form-control" style="width: 100%;" required>
 							<option value="">DESA</option>
 							<?php foreach ($desa as $des): ?>
 								<option <?php echo $anggota->desa == $des->id_desa ? 'selected' : '' ?> value="<?php echo $des->id_desa ?>"><?php echo $des->nama_desa ?></option>
