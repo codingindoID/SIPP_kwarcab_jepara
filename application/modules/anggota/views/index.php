@@ -2,7 +2,7 @@
 $level = $this->session->userdata('ses_level');
 ?>
 <div class="table-responsive">
-	<table id="basic-datatables" class="display table">
+	<table id="table-anggota" class="display table">
 		<thead>
 			<tr>
 				<th>No</th>
@@ -16,7 +16,7 @@ $level = $this->session->userdata('ses_level');
 			</tr>
 		</thead>
 		<tbody>
-			<?php if ($anggota): $no = 1;?>
+			<!-- <?php if ($anggota): $no = 1;?>
 				<?php foreach ($anggota as $anggota): ?>
 					<input type="hidden" id="id_kwaran" value="<?php echo $anggota->id_kwaran ?>">
 					<tr>
@@ -45,7 +45,7 @@ $level = $this->session->userdata('ses_level');
 					</tr>
 				<?php endforeach ?>
 			<?php endif ?>
-			
+			 -->
 		</tbody>
 	</table>
 </div>

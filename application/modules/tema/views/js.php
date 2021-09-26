@@ -34,15 +34,37 @@
         $('#basic-datatables').DataTable({
         });
 
-         $('#table-kwaran').DataTable({
+        $('#table-kwaran').DataTable({
            paging : false,
            info : false
+       });
+
+        $('#table-gudep').DataTable({
+         paging : false,
+         info : false
+     });
+
+        $('#table-anggota').DataTable({ 
+
+            "processing": true, 
+            "serverSide": true, 
+            "order": [], 
+
+            "ajax": {
+                "url": "<?php echo site_url('anggota/get_data_anggota')?>",
+                "type": "POST"
+            },
+
+
+            "columnDefs": [
+            { 
+                "targets": [ 0 ], 
+                "orderable": false, 
+            },
+            ],
+
         });
 
-          $('#table-gudep').DataTable({
-             paging : false,
-             info : false
-        });
     });
 </script>
 <script>

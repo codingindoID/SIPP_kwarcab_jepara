@@ -41,19 +41,19 @@ class Anggota extends MY_Controller {
 			</div>
 			</div>
 			';
-			$anggota    	= $this->M_anggota->getsemuaAnggota();
+			//$anggota    	= $this->M_anggota->getsemuaAnggota();
 			$pangkalan 		= $this->M_anggota->getPangkalanBulk();
 			break;
 
 			case ADMIN_KWARAN:
 			$select = $select2;
 			$pangkalan = $this->M_anggota->getPangkalanBulk();
-			$anggota  = $this->M_anggota->getanggotaKwaran()->result();
+			//$anggota  = $this->M_anggota->getanggotaKwaran()->result();
 			break;
 
 			case ADMIN_GUDEP:
 			$select = $select2;
-			$anggota = $this->M_anggota->getanggotaGudep()->result();
+			//$anggota = $this->M_anggota->getanggotaGudep()->result();
 			break;
 			default:
 			break;
@@ -64,7 +64,7 @@ class Anggota extends MY_Controller {
 			'sub'			=> 'anggota terdaftar',
 			'menu'			=> 'anggota',
 			'button_menu'	=> $select,
-			'anggota'		=> $anggota,
+			/*'anggota'		=> $anggota,*/
 			'pangkalan'		=> $pangkalan
 		];
 
@@ -91,7 +91,7 @@ class Anggota extends MY_Controller {
 		$this->template->load('tema/index','index',$data);
 	}
 
-	function filter_anggota($id_kwaran)
+	function filter_anggota($id_kwaran=null)
 	{
 		if ($this->session->userdata('ses_level') == null) {
 			redirect('auth','refresh');
@@ -183,7 +183,7 @@ class Anggota extends MY_Controller {
 		$level = $this->session->userdata('ses_level');
 
 		$button = '<button style="cursor:pointer" class="btn-sm btn-white btn-border btn-round mr-2" btn-success" onclick="goBack()"><i class="fa fa-arrow-left"></i> Kembali</button>';
-		
+
 		$data = [
 			'title'			=> 'Anggota',
 			'sub'			=> 'anggota terdaftar',
@@ -344,7 +344,7 @@ class Anggota extends MY_Controller {
 
 	function lihat_anggota($id)
 	{
-		
+
 		if ($this->session->userdata('ses_username') == null) {
 			redirect('auth','refresh');
 		}
@@ -363,7 +363,7 @@ class Anggota extends MY_Controller {
 		$this->template->load('tema/index','lihat_anggota',$data);
 	}
 
-	function hapus_anggota($id,$id_kwaran)
+	function hapus_anggota($id,$id_kwaran = null)
 	{
 		if ($this->session->userdata('ses_username') == null) {
 			redirect('auth','refresh');
@@ -398,7 +398,7 @@ class Anggota extends MY_Controller {
 			'kolom'		=> 'created_date',
 			'urutan'	=> 'desc'
 		];
-		
+
 		$button = '<button style="cursor:pointer" class="btn-sm btn-white btn-border btn-round mr-2" btn-success" onclick="goBack()"><i class="fa fa-arrow-left"></i> Kembali</button>';
 
 		$anggota = $this->M_anggota->getdetilanggota($id);
@@ -561,6 +561,53 @@ class Anggota extends MY_Controller {
 		$data = $this->M_anggota->getTahunAjaran();
 		echo json_encode($data);
 	}
+
+	/*serverside*/
+	function get_data_anggota()
+	{
+		$level = $this->session->userdata('ses_level');
+
+		$list = $this->M_anggota->get_datatables();
+		$data = array();
+		$no = $_POST['start'];
+		foreach ($list as $field) {
+			$menu 	= '';
+			$menu 	.= '<div class="dropdown">';
+			$menu 	.= '<a href="#" class="btn-sm btn-success dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="color: white"> 
+			<i class="fas fa-align-justify"></i>
+			</a>';
+			$menu 	.= '<div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+			<a class="dropdown-item" href="'. site_url('anggota/lihat_anggota/').$field->id_anggota . '"><i class="fa fa-eye" ></i> Lihat</a>';
+			if ($level != 4) {
+				$menu 	.= '<a class="dropdown-item" href="'. site_url('anggota/edit_anggota/').$field->id_anggota.'/anggota"><i class="fa fa-edit"></i> Edit</a>
+				<a class="dropdown-item" href="#" onclick="hapus(\''.$field->id_anggota.'\')"><i class="fa fa-trash" ></i> Hapus</a>';
+			}
+			$menu 	.= '</div>';
+			$menu 	.= '</div>';
+
+			$no++;
+			$row = array();
+			$row[] = $no;
+			$row[] = $field->nama;
+			$row[] = $field->nama_pangkalan;
+			$row[] = $field->ambalan;
+			$row[] = strtoupper($field->tingkat);
+			$row[] = $field->ta;
+			$row[] = $menu;
+
+			$data[] = $row;
+		}
+
+		$output = array(
+			"draw" 				=> $_POST['draw'],
+			"recordsTotal" 		=> $this->M_anggota->count_all(),
+			"recordsFiltered" 	=> $this->M_anggota->count_filtered(),
+			"data" 				=> $data,
+		);
+        //output dalam format JSON
+		echo json_encode($output);
+	}
+
 }
 
 /* End of file Anggota.php */
