@@ -91,7 +91,7 @@ class Anggota extends MY_Controller {
 		$this->template->load('tema/index','index',$data);
 	}
 
-	function filter_anggota($id_kwaran=null)
+	function filter_anggota($id_kwaran)
 	{
 		if ($this->session->userdata('ses_level') == null) {
 			redirect('auth','refresh');
@@ -128,12 +128,10 @@ class Anggota extends MY_Controller {
 			case ADMIN_KWARAN:
 			$select = $select2;
 			$pangkalan = $this->M_anggota->getPangkalanBulk();
-			$anggota = $this->M_anggota->getanggotaKwaran()->result();
 			break;
 
 			case ADMIN_GUDEP:
 			$select = $select2;
-			$anggota = $this->M_anggota->getanggotaGudep()->result();
 			break;
 
 
