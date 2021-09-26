@@ -389,6 +389,25 @@ class Anggota extends MY_Controller {
 		}
 	}
 
+	function hapus_potensi_anggota($id,$potensi)
+	{
+		if ($this->session->userdata('ses_username') == null) {
+			redirect('auth','refresh');
+		}
+
+		$cek = $this->M_master->delete('tb_anggota',['id_anggota' => $id]);
+		if (!$cek) {
+			$this->session->set_flashdata('success', 'Data Berhasil Dihapus');
+			redirect('anggota/anggota/potensi/'.$potensi,'refresh');
+
+		}
+		else
+		{
+			$this->session->set_flashdata('error', 'Gagal Hapus Data');
+			redirect('anggota/filter_anggota/'.$id_kwaran,'refresh');
+		}
+	}
+
 	function edit_anggota($id,$asal)
 	{
 		if ($this->session->userdata('ses_username') == null) {
@@ -467,11 +486,12 @@ class Anggota extends MY_Controller {
 			'sub'			=> 'Bersertifikat <b>'.strtoupper($param).'</b>',
 			'menu'			=> 'anggota',
 			'button_menu'	=> $button,
+			'filter_kwaran'	=> $param,
 			'anggota'		=> $this->M_anggota->get_potensi_anggota($param)->result()
 		];
 
 		//echo json_encode($data);
-		$this->template->load('tema/index','index',$data);
+		$this->template->load('tema/index','index_potensi',$data);
 	}
 
 	/*IMPORT*/

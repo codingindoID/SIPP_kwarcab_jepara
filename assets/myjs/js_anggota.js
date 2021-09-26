@@ -110,3 +110,22 @@
 			}
 		})
 	}
+
+	function hapus_potensi(id)
+	{
+		Swal.fire({
+			title: 'Anda Yakin Menghapus Data Ini?',
+			text: "Data Terhapus Tidak Dapat Dikembalikan, Dan Mungkin Akan Berprngaruh Pada Data Lainnya,",
+			icon: 'warning',
+			showCancelButton: true,
+			confirmButtonColor: '#3085d6',
+			cancelButtonColor: '#d33',
+			cancelButtonText: 'Batal',
+			confirmButtonText: 'Ya, tetap Hapus!'
+		}).then((result) => {
+			if (result.isConfirmed) {
+				location.href= base+'anggota/hapus_potensi_anggota/'+id+'/'+id_kwaran
+
+			}
+		})
+	}
