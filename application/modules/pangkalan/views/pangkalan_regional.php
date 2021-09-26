@@ -20,7 +20,7 @@
 					<th>No</th>
 					<th>Nama Pangkalan</th>
 					<th>Kamabigus</th>
-					<th>Kgudep</th>
+					<th>Kagudep</th>
 					<th class="text-center">Jumlah Pembina</th>
 					<th class="text-center">#</th>
 				</tr>

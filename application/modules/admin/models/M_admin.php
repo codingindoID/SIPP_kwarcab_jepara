@@ -197,6 +197,43 @@ class M_admin extends CI_Model {
 
 		$writer->save('php://output');
 	}
+
+	function updatepassword()
+	{
+		$data 	= ['password' 	=> md5($this->input->post('password'))];
+		$jenis 	= $this->input->post('jenis_admin');
+		
+		if ($jenis == 2) {
+			$action = site_url('admin/admin_kwaran');
+		}
+		else
+		{
+			$action = site_url('admin/admin_gudep');
+		}
+
+		//update ke database
+		$this->db->where('id_user', $this->input->post('id_user'));
+		$cek = $this->db->update('tb_user',$data);
+		if ($cek) {
+			$res = [
+				'success'	=> 1,
+				'title'		=> 'Sukses',
+				'message'	=> 'Password Berhasil Diupdate',
+				'icon'		=> 'success',
+				'action'	=> $action
+			];
+		}
+		else
+		{
+			$res = [
+				'success'	=> 0,
+				'title'		=> 'Gagal',
+				'message'	=> 'Gagal Update, Silahkan Ulangi Atau Gunakan Koneksi Yang Baik',
+				'icon'		=> 'error'
+			];
+		}
+		return $res;		
+	}
 }
 
 /* End of file M_admin.php */

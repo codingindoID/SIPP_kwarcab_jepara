@@ -1,4 +1,15 @@
 $('#btn-login').click(function(event) {
+	login()
+});
+
+$("#password").on('keyup', function (e) {
+	if (e.key === 'Enter' || e.keyCode === 13) {
+		login()
+	}
+});
+
+function login()
+{
 	var base 		= $('#base').val()
 	var username 	= $('input[name="username"]').val()
 	var password 	= $('input[name="password"]').val()
@@ -34,7 +45,7 @@ $('#btn-login').click(function(event) {
 				confirmButtonText: 'Ok'
 			}).then((result) => {
 				if (result.isConfirmed) {
-					location.href = base+'auth';
+					$('#password').val('')
 				}
 			})
 		}
@@ -53,4 +64,4 @@ $('#btn-login').click(function(event) {
 			}
 		})
 	});	
-});
+}

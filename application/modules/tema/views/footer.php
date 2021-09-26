@@ -16,7 +16,7 @@
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="#">
-                        <img height="30px" src="<?php echo base_url('assets/img/pengen.PNG') ?>" alt="">
+                        <img height="30px" src="<?php echo base_url('assets/img/pengen.png') ?>" alt="">
                     </a>
                 </li>
                 <li class="nav-item">

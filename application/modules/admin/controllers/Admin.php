@@ -59,9 +59,7 @@ class Admin extends MY_Controller {
 			}
 			else
 			{
-				$detil_user 	= $this->db->get_where('tb_user',['id_user' => $id_data])->row();
-				$id_kwaran		= $detil_user->id_kwaran;
-
+				$id_kwaran 	= $this->db->get_where('tb_user',['id_user' => $id_data])->row()->id_kwaran;
 				$where = [
 					'level'  	=> 3,
 					'kwaran'	=> $id_kwaran
@@ -225,41 +223,14 @@ class Admin extends MY_Controller {
 
 	function updatepassword()
 	{
-		if ($this->session->userdata('ses_level') != '1') {
+		$akses = ["1","2"];
+		$level = $this->session->userdata('ses_level');
+		if (!in_array($level, $akses)) {
 			redirect('auth','refresh');
 		}
 
-		$data 	= ['password' => md5($this->input->post('password'))];
-		$where 	= ['id_user' => $this->input->post('id_user')];
-		$jenis 	= $this->input->post('jenis_admin');
-		if ($jenis == 2) {
-			$action = site_url('admin/admin_kwaran');
-		}
-		else
-		{
-			$action = site_url('admin/admin_gudep');
-		}
-
-		//update ke database
-		$cek = $this->M_master->update('tb_user',$where,$data);
-		if (!$cek) {
-			echo json_encode(array(
-				'success'	=> 1,
-				'title'		=> 'Sukses',
-				'message'	=> 'Password Berhasil Diupdate',
-				'icon'		=> 'success',
-				'action'	=> $action
-			));
-		}
-		else
-		{
-			echo json_encode(array(
-				'success'	=> 0,
-				'title'		=> 'Gagal',
-				'message'	=> 'Gagal Update, Silahkan Ulangi Atau Gunakan Koneksi Yang Baik',
-				'icon'		=> 'error'
-			));
-		}		
+		$cek = $this->M_admin->updatepassword();
+		echo json_encode($cek);
 	}
 
 	function hapus_admin()

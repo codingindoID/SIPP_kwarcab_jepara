@@ -30,9 +30,9 @@
 		</div>
 		<div class="col-md-4">
 			<div class="form-group">
-					<label >Tahun Ajaran <span class="text-danger">**</span></label>
-					<input type="number" class="form-control" name="ta" required value="<?php echo $anggota->ta != null ? $anggota->ta : '' ?>">
-				</div>
+				<label >Tahun Ajaran <span class="text-danger">**</span></label>
+				<input type="number" class="form-control" name="ta" required value="<?php echo $anggota->ta != null ? $anggota->ta : '' ?>">
+			</div>
 		</div>
 	</div>
 	<div class="info">
@@ -81,7 +81,15 @@
 			</div>
 			<div class="col-md-2">
 				<div class="form-group">
-					<input type="number" class="form-control" name="rw"  placeholder="RT"  value="<?= $anggota->rw ?>" required>
+					<input type="number" class="form-control" name="rw"  placeholder="RW"  value="<?= $anggota->rw ?>" required>
+				</div>
+			</div>
+		</div>
+		<div class="row">
+			<div class="col-md-12">
+				<div class="form-group">
+					<label>ALamat Lengkap</label>
+					<textarea name="alamat" class="form-control" rows="2" required><?php echo $anggota->alamat ?></textarea>
 				</div>
 			</div>
 		</div>
