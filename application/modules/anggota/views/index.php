@@ -1,6 +1,7 @@
 <?php 
 $level = $this->session->userdata('ses_level');
 ?>
+<input type="hidden" id="id_kwaran" value="<?php echo $filter_kwaran ?>">
 <div class="table-responsive">
 	<table id="table-anggota" class="display table">
 		<thead>
@@ -16,36 +17,6 @@ $level = $this->session->userdata('ses_level');
 			</tr>
 		</thead>
 		<tbody>
-			<!-- <?php if ($anggota): $no = 1;?>
-				<?php foreach ($anggota as $anggota): ?>
-					<input type="hidden" id="id_kwaran" value="<?php echo $anggota->id_kwaran ?>">
-					<tr>
-						<td><?php echo $no++ ?></td>
-						<td><?php echo $anggota->nama ?></td>
-						<td><?php echo $anggota->nama_pangkalan ?></td>
-						<td><?php echo $anggota->ambalan ?></td>
-						<td><?php echo strtoupper($anggota->tingkat) ?></td>
-						<td><?php echo $anggota->ta ?></td>
-						<td class="text-right">
-							<div class="dropdown">
-								<a href="#" class="btn-sm btn-success dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="color: white"> 
-									<i class="fas fa-align-justify"></i>
-								</a>
-								<div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-									<a class="dropdown-item" href="<?php echo site_url('anggota/lihat_anggota/').$anggota->id_anggota ?>"><i class="fa fa-eye" ></i> Lihat</a>
-									<?php if ($level != 4): ?>
-										<a class="dropdown-item" href="<?php echo site_url('anggota/edit_anggota/').$anggota->id_anggota.'/anggota' ?>"><i class="fa fa-edit"></i> Edit</a>
-										<a class="dropdown-item" href="#" onclick="hapus(<?php echo $anggota->id_anggota ?>)"><i class="fa fa-trash" ></i> Hapus</a>
-									<?php endif ?>
-								</div>
-							</div>
-						</td>
-						
-
-					</tr>
-				<?php endforeach ?>
-			<?php endif ?>
-			 -->
 		</tbody>
 	</table>
 </div>
@@ -96,3 +67,27 @@ $level = $this->session->userdata('ses_level');
 </form>
 
 <script src="<?php echo base_url('assets/myjs/js_anggota.js') ?>" type="text/javascript"></script>
+<script>
+	$(document).ready(function() {
+		$('#table-anggota').DataTable({ 
+
+			"processing": true, 
+			"serverSide": true, 
+			"order": [], 
+
+			"ajax": {
+				"url": "<?php echo $link?>",
+				"type": "POST"
+			},
+
+
+			"columnDefs": [
+			{ 
+				"targets": [ 0 ], 
+				"orderable": false, 
+			},
+			],
+
+		});
+	});
+</script>

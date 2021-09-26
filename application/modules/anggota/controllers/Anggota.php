@@ -65,6 +65,8 @@ class Anggota extends MY_Controller {
 			'menu'			=> 'anggota',
 			'button_menu'	=> $select,
 			/*'anggota'		=> $anggota,*/
+			'link'			=> site_url('anggota/get_data_anggota'),
+			'filter_kwaran'	=> 'semua',
 			'pangkalan'		=> $pangkalan
 		];
 
@@ -152,8 +154,9 @@ class Anggota extends MY_Controller {
 			'title'			=> 'Anggota',
 			'sub'			=> 'anggota terdaftar di : <b class="text-warning"> '. strtoupper($nama_kwaran) .'</b>',
 			'menu'			=> 'anggota',
+			'filter_kwaran'	=> $id_kwaran,
 			'button_menu'	=> $select,
-			'anggota'		=> $this->M_anggota->get_anggota($id_kwaran)->result(),
+			'link'			=> site_url('anggota/get_data_anggota_filter/').$id_kwaran,
 			'pangkalan'		=> $pangkalan
 		];
 
@@ -566,6 +569,51 @@ class Anggota extends MY_Controller {
 		$level = $this->session->userdata('ses_level');
 
 		$list = $this->M_anggota->get_datatables();
+		$data = array();
+		$no = $_POST['start'];
+		foreach ($list as $field) {
+			$menu 	= '';
+			$menu 	.= '<div class="dropdown">';
+			$menu 	.= '<a href="#" class="btn-sm btn-success dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="color: white"> 
+			<i class="fas fa-align-justify"></i>
+			</a>';
+			$menu 	.= '<div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+			<a class="dropdown-item" href="'. site_url('anggota/lihat_anggota/').$field->id_anggota . '"><i class="fa fa-eye" ></i> Lihat</a>';
+			if ($level != 4) {
+				$menu 	.= '<a class="dropdown-item" href="'. site_url('anggota/edit_anggota/').$field->id_anggota.'/anggota"><i class="fa fa-edit"></i> Edit</a>
+				<a class="dropdown-item" href="#" onclick="hapus(\''.$field->id_anggota.'\')"><i class="fa fa-trash" ></i> Hapus</a>';
+			}
+			$menu 	.= '</div>';
+			$menu 	.= '</div>';
+
+			$no++;
+			$row = array();
+			$row[] = $no;
+			$row[] = $field->nama;
+			$row[] = $field->nama_pangkalan;
+			$row[] = $field->ambalan;
+			$row[] = strtoupper($field->tingkat);
+			$row[] = $field->ta;
+			$row[] = $menu;
+
+			$data[] = $row;
+		}
+
+		$output = array(
+			"draw" 				=> $_POST['draw'],
+			"recordsTotal" 		=> $this->M_anggota->count_all(),
+			"recordsFiltered" 	=> $this->M_anggota->count_filtered(),
+			"data" 				=> $data,
+		);
+        //output dalam format JSON
+		echo json_encode($output);
+	}
+
+	function get_data_anggota_filter($id_kwaran)
+	{
+		$level = $this->session->userdata('ses_level');
+
+		$list = $this->M_anggota->get_datatables_filter($id_kwaran);
 		$data = array();
 		$no = $_POST['start'];
 		foreach ($list as $field) {

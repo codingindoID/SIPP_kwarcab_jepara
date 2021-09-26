@@ -35,35 +35,14 @@
         });
 
         $('#table-kwaran').DataTable({
-           paging : false,
-           info : false
-       });
-
-        $('#table-gudep').DataTable({
          paging : false,
          info : false
      });
 
-        $('#table-anggota').DataTable({ 
-
-            "processing": true, 
-            "serverSide": true, 
-            "order": [], 
-
-            "ajax": {
-                "url": "<?php echo site_url('anggota/get_data_anggota')?>",
-                "type": "POST"
-            },
-
-
-            "columnDefs": [
-            { 
-                "targets": [ 0 ], 
-                "orderable": false, 
-            },
-            ],
-
-        });
+        $('#table-gudep').DataTable({
+           paging : false,
+           info : false
+       });
 
     });
 </script>
@@ -84,9 +63,9 @@
             cancelButtonText: 'Batal'
         }).then((result) => {
           if (result.isConfirmed) {
-           location.href = base+'auth/logout';
-       }
-   })
+             location.href = base+'auth/logout';
+         }
+     })
     });
 </script>
 <script src="https://cdn.jsdelivr.net/gh/gitbrent/bootstrap4-toggle@3.6.1/js/bootstrap4-toggle.min.js"></script>
