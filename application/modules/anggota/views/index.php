@@ -13,7 +13,6 @@ $level = $this->session->userdata('ses_level');
 				<th>Tingkat</th>
 				<th>TA</th>
 				<th class="text-center">#</th>
-
 			</tr>
 		</thead>
 		<tbody>

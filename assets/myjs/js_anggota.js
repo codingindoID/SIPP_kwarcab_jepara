@@ -20,7 +20,27 @@
 
 	$('#kwaran').change(function(event) {
 		var id = $('#kwaran').val()
-		location.href = base+'anggota/filter_anggota/'+id;	
+		//location.href = base+'anggota/filter_anggota/'+id;
+		$('#table-anggota').DataTable({ 
+
+			"processing": true, 
+			"serverSide": true, 
+			"order": [], 
+
+			"ajax": {
+				"url": base + '',
+				"type": "POST"
+			},
+
+
+			"columnDefs": [
+			{ 
+				"targets": [ 0 ], 
+				"orderable": false, 
+			},
+			],
+
+		});	
 	});
 
 	$('#pangkalan_anggota_bulk').select2({
@@ -30,21 +50,21 @@
 
 	$('#pangkalan_anggota_bulk').change(function(event) {
 		var id = $(this).val()
-			var ta="<option value=''>--Pilih Tahun Ajaran--</option>";
-			$.ajax({
-				url : base+'anggota/get_tahun_ajaran/',
-				type:'post',
-				data : { pangkalan_bulk : id},
-				dataType: 'json',
-				success: function(response) {
-					
-					for (var i = 0; i < response.length; i++) {
-						ta+="<option value='"+response[i].ta+"'>"+response[i].ta+"</option>";
-					}
-					$("#ta_bulk").html(ta); 
+		var ta="<option value=''>--Pilih Tahun Ajaran--</option>";
+		$.ajax({
+			url : base+'anggota/get_tahun_ajaran/',
+			type:'post',
+			data : { pangkalan_bulk : id},
+			dataType: 'json',
+			success: function(response) {
 
+				for (var i = 0; i < response.length; i++) {
+					ta+="<option value='"+response[i].ta+"'>"+response[i].ta+"</option>";
 				}
-			});
+				$("#ta_bulk").html(ta); 
+
+			}
+		});
 	});
 
 	$('#bulk').change(function(event) {
