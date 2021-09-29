@@ -43,7 +43,6 @@
            paging : false,
            info : false
        });
-
     });
 </script>
 <script>

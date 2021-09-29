@@ -120,7 +120,7 @@ class Anggota extends MY_Controller {
 			</select>
 			</div>
 			<div class="form-group col-md-7">
-			<select name="kwaran" class="form-control" id="kwaran"></select>
+			<select name="kwaran" class="form-control" id="kwaran" style="width: 100%"></select>
 			</div>
 			</div>
 			';

@@ -68,6 +68,8 @@ $level = $this->session->userdata('ses_level');
 <script src="<?php echo base_url('assets/myjs/js_anggota.js') ?>" type="text/javascript"></script>
 <script>
 	$(document).ready(function() {
+		var table 	= $('#table-anggota').DataTable()
+		table.destroy()
 		$('#table-anggota').DataTable({ 
 
 			"processing": true, 

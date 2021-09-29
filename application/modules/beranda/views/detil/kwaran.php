@@ -9,7 +9,7 @@
 					<div class="col-md-6">
 						<input type="hidden" id="id_kwaran" value="" name="id_kwaran">
 						<label for="exampleInputPassword1">NOMOR KWARAN</label>
-						<input type="text" class="form-control" name="nomor_kwaran" placeholder="nomor Kwaran" required value="<?php echo $kwaran->nomor_kwaran ?>">
+						<input type="text" class="form-control" name="nomor_kwaran" placeholder="nomor Kwaran" required value="<?php echo $kwaran->nomor_kwaran ?>" readonly>
 					</div>
 					<div class="col-md-6">
 						<label for="exampleInputPassword1">NAMA KWARAN</label>

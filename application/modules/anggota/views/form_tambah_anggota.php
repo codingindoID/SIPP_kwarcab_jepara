@@ -76,7 +76,7 @@
 			</div>
 			<div class="col-md-2">
 				<div class="form-group">
-					<input type="number" class="form-control" name="rw" disabled placeholder="RT" required>
+					<input type="number" class="form-control" name="rw" disabled placeholder="RW" required>
 				</div>
 			</div>
 		</div>
