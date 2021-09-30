@@ -129,7 +129,7 @@ class Pangkalan extends MY_Controller {
 		}
 	}
 
-	function lihat($id,$jumlah_pembina)
+	function lihat($id,$jumlah_pembina=0	)
 	{
 		if ($this->session->userdata('ses_username') == null) {
 			redirect('auth','refresh');

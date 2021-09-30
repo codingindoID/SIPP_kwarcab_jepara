@@ -18,7 +18,7 @@
 	<div class="col-md-6">
 		<label>Pangkalan ** </label>
 		<div class="select2-input">
-			<select id="select-kwaran" class="form-control" style="width: 100%;" name="pangkalan"  >
+			<select id="select-kwaran" class="form-control" style="width: 100%;" name="pangkalan" required >
 				<option value="">Pilih . . </option>
 				<?php foreach ($pangkalan as $p): ?>
 					<option <?php echo $p->id_pangkalan == $user->id_pangkalan ? 'selected' : '' ?> value="<?php echo $p->id_pangkalan ?>"><?php echo $p->nama_pangkalan ?></option>
