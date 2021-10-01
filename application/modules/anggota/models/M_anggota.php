@@ -469,6 +469,7 @@ class M_anggota extends CI_Model {
 
 					//proses insert jika inputan nomor gudep sudah benar
 					$data = [
+						'id_anggota'		=> uniqid(),
 						'id_kwaran' 		=> $worksheet[$i][0],
 						'id_gudep' 			=> $id_gudep,
 						'ta' 				=> $worksheet[$i][2],
