@@ -116,6 +116,9 @@ switch ($level) {
 <?php if ($level == '2'): ?>
 	<?php $this->load->view('detil/kwaran'); ?>
 <?php endif ?>
+<?php if ($level == '3'): ?>
+	<?php $this->load->view('detil/pangkalan'); ?>
+<?php endif ?>
 
 
 <!-- PRAMUKA MUDA -->

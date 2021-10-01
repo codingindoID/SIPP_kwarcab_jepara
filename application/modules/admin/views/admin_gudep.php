@@ -69,7 +69,7 @@
 						<div class="col-md-6">
 							<label>Pangkalan ** </label>
 							<div class="select2-input">
-								<select class="select-kwaran" name="pangkalan" class="form-control" style="width: 100%;" >
+								<select class="select-kwaran" name="pangkalan" class="form-control" style="width: 100%;" required >
 									<option value="">Pilih . . </option>
 									<?php foreach ($pangkalan as $k): ?>
 										<option value="<?php echo $k->id_pangkalan ?>"><?php echo $k->nama_pangkalan ?></option>	

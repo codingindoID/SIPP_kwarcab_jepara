@@ -142,7 +142,8 @@ class Beranda extends MY_Controller {
 			'sub_penggalang'=> $this->_get_tingkat_gudep('penggalang',$id_pangkalan),
 			'sub_penegak'	=> $this->_get_tingkat_gudep('penegak',$id_pangkalan),
 			'sub_pandega'	=> $this->_get_tingkat_gudep('pandega',$id_pangkalan),
-			'id_kwaran'		=> $id_pangkalan
+			'id_kwaran'		=> $id_pangkalan,
+			'pangkalan'		=> $this->db->get('tb_pangkalan', ['id_pangkalan' => $id_pangkalan])->row()
 		];
 
 		//echo json_encode($data);
@@ -260,6 +261,18 @@ class Beranda extends MY_Controller {
 			$this->session->set_flashdata('error', 'Gagal Update');
 			redirect('beranda/index_kwaran','refresh');
 		}
+	}
+
+	function aksi_updatePangkalan($id_pangkalan)
+	{
+		if ($this->session->userdata('ses_username') == null) {
+			redirect('auth','refresh');
+		}
+
+		$cek = $this->M_beranda->aksi_updatePangkalan($id_pangkalan);
+		$this->session->set_flashdata($cek['kode'], $cek['msg']);
+		redirect('beranda','refresh');
+
 	}
 
 }
