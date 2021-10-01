@@ -15,7 +15,7 @@
                     </a> -->
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="#">
+                    <a class="nav-link" href="https://pengenngoding.com/">
                         <img height="30px" src="<?php echo base_url('assets/img/pengen.png') ?>" alt="">
                     </a>
                 </li>
