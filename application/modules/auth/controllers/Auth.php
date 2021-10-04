@@ -40,62 +40,16 @@ class Auth extends MY_Controller {
 
 			echo json_encode(array(
 				'success'		=> 1,
-				'message'		=> 'selamat datang '.$cek->display_name
+				'message'		=> 'selamat datang '.$cek->display_name,
+				'level'			=> $cek->level
 			));
 		}
 		else
 		{
-			//cek by email
-			$cek = $this->M_master->getWhere('tb_user',['email' => $username, 'password' => $password],$order)->row();
-			if ($cek) {
-				$session = array(
-					'ses_id' 		=> $cek->id_user,
-					'ses_username' 	=> $cek->username,
-					'ses_level' 	=> $cek->level,
-					'ses_kwaran' 	=> $cek->id_kwaran,
-					'ses_pangkalan'	=> $cek->id_pangkalan,
-					'ses_display'	=> $cek->display_name,
-					'ses_email'		=> $cek->email
-				);
-
-				$this->session->set_userdata( $session );
-
-				echo json_encode(array(
-					'success'		=> 1,
-					'message'		=> 'selamat datang '.$cek->display_name
-				));
-			}
-			else
-			{
-				//cek by kta
-				$cek = $this->M_master->getWhere('tb_anggota',['kta' => $username, 'password' => $password],$order)->row();
-
-				if ($cek) {
-					$session = array(
-						'ses_id' 		=> $cek->id_anggota,
-						'ses_username' 	=> $cek->kta,
-						'ses_level' 	=> '4',
-						'ses_kwaran' 	=> '',
-						'ses_gudep' 	=> '',
-						'ses_display'	=> $cek->nama,
-						'ses_email'		=> 'anggota'
-					);
-
-					$this->session->set_userdata( $session );
-
-					echo json_encode(array(
-						'success'		=> 1,
-						'message'		=> 'selamat datang '.$cek->nama
-					));
-				}
-				else
-				{
-					echo json_encode(array(
-						'success'		=> 0,
-						'message'		=> 'data login tidak sesuai'
-					));
-				}	
-			}
+			echo json_encode(array(
+				'success'		=> 0,
+				'message'		=> 'Username Tidak Terdaftar'
+			));
 		}
 	}
 
