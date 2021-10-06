@@ -1,126 +1,4 @@
-
-<?php 
-$level = $this->session->userdata('ses_level');
-switch ($level) {
-	case 1:
-	$link_pangkalan = 'pangkalan';
-	$link_gudep 	= 'gudep';
-	$link_anggota 	= 'anggota';
-	$link_kwaran 	= 'kwaran';
-	break;
-	case 2:
-	$link_kwaran 	= '';
-	$link_pangkalan = 'pangkalan/regional';
-	$link_gudep 	= 'gudep/regional';
-	$link_anggota 	= 'anggota/filter_anggota/'.$id_kwaran;
-	break;
-	case 3:
-	$link_pangkalan = 'pangkalan/regional';
-	$link_gudep 	= 'gudep/regional';
-	$link_anggota 	= 'anggota/anggota_gudep/'.$id_kwaran; //id kwaran disini berisi id pangkalan, penamaannya saja yang kwaran
-	break;
-	default:
-	break;
-}
-?>
-<div class="row row-card-no-pd">
-	
-	<?php if ($level == 1): ?>
-		<div class="col-sm-6 col-md-6 mt-2">
-			<div class="card card-stats card-success card-round">
-				<div class="card-body " id="link_kwaran" style="cursor: pointer">
-					<div class="row">
-						<div class="col-5">
-							<div class="icon-big text-center">
-								<i class="flaticon-profile text-danger"></i>
-							</div>
-						</div>
-						<div class="col-7 col-stats">
-							<div class="numbers">
-								<p class="card-category">Kwaran</p>
-								<h4 class="card-title"><?php echo $kwaran ?></h4>
-							</div>
-						</div>
-					</div>
-				</div>
-			</div>
-		</div>
-	<?php endif ?>
-	
-	<?php if ($level == 1 || $level == 2): ?>	
-		<div class="col-sm-6 col-md-6 mt-2">
-			<div class="card card-stats card-secondary card-round">
-				<div class="card-body" id="link_pangkalan" style="cursor: pointer">
-					<div class="row">
-						<div class="col-5">
-							<div class="icon-big text-center">
-								<i class="flaticon-database text-primary"></i>
-							</div>
-						</div>
-						<div class="col-7 col-stats">
-							<div class="numbers">
-								<p class="card-category">Pangkalan</p>
-								<h4 class="card-title"><?php echo $pangkalan ?></h4>
-							</div>
-						</div>
-					</div>
-				</div>
-			</div>
-		</div>
-	<?php endif ?>
-
-	<div class="col-sm-6 col-md-6 mt-2">
-		<div class="card card-stats card-info card-round">
-			<div class="card-body" id="link_gudep" style="cursor: pointer">
-				<div class="row">
-					<div class="col-5">
-						<div class="icon-big text-center">
-							<i class="flaticon-web text-success"></i>
-						</div>
-					</div>
-					<div class="col-7 col-stats">
-						<div class="numbers">
-							<p class="card-category">Gudep</p>
-							<h4 class="card-title"><?php echo $gudep ?></h4>
-						</div>
-					</div>
-				</div>
-			</div>
-		</div>
-	</div>
-
-	
-	<div class="col-sm-6 col-md-6 mt-2">
-		<div class="card card-stats card-primary card-round">
-			<div class="card-body" id="link_anggota" style="cursor: pointer">
-				<div class="row">
-					<div class="col-5">
-						<div class="icon-big text-center">
-							<i class="flaticon-profile text-danger"></i>
-						</div>
-					</div>
-					<div class="col-7 col-stats">
-						<div class="numbers">
-							<p class="card-category">Anggota</p>
-							<h4 class="card-title"><?php echo $anggota ?></h4>
-						</div>
-					</div>
-				</div>
-			</div>
-		</div>
-	</div>
-
-</div>
-<br>
-
-<?php if ($level == '2'): ?>
-	<?php $this->load->view('detil/kwaran'); ?>
-<?php endif ?>
-<?php if ($level == '3'): ?>
-	<?php $this->load->view('detil/pangkalan'); ?>
-<?php endif ?>
-
-
+<div class="card card-body" style="margin-top: -20px;">
 <!-- PRAMUKA MUDA -->
 <h3 data-toggle="collapse" href="#body_muda" role="button" aria-expanded="false" aria-controls="collapseExample" style="cursor: pointer"><b><i class="flaticon-layers-1"></i> Potensi Anggota Muda</b> (<?php echo $siaga+$penggalang+$penegak+$pandega ?>)</h3>
 <div class="separator-solid"></div>
@@ -286,7 +164,7 @@ switch ($level) {
 					</div>
 					<div class="col col-stats ml-3 ml-sm-0">
 						<div class="numbers">
-							<p class="card-category"><a href="<?php echo site_url('anggota/potensi/kmd') ?>">KMD</a></p>
+							<p class="card-category">KMD</p>
 							<h4 class="card-title"><?php echo $kmd != null ? $kmd : '-' ?></h4>
 						</div>
 					</div>
@@ -305,7 +183,7 @@ switch ($level) {
 					</div>
 					<div class="col col-stats ml-3 ml-sm-0">
 						<div class="numbers">
-							<p class="card-category"><a href="<?php echo site_url('anggota/potensi/kml') ?>">KML</a></p>
+							<p class="card-category">KML</p>
 							<h4 class="card-title"><?php echo $kml != null ? $kml : '-' ?></h4>
 						</div>
 					</div>
@@ -324,7 +202,7 @@ switch ($level) {
 					</div>
 					<div class="col col-stats ml-3 ml-sm-0">
 						<div class="numbers">
-							<p class="card-category"><a href="<?php echo site_url('anggota/potensi/kpd') ?>">KPD</a></p>
+							<p class="card-category">KPD</p>
 							<h4 class="card-title"><?php echo $kpd != null ? $kpd : '-' ?></h4>
 						</div>
 					</div>
@@ -343,7 +221,7 @@ switch ($level) {
 					</div>
 					<div class="col col-stats ml-3 ml-sm-0">
 						<div class="numbers">
-							<p class="card-category"><a href="<?php echo site_url('anggota/potensi/kpl') ?>">KPL</a></p>
+							<p class="card-category">KPL</p>
 							<h4 class="card-title"><?php echo $kpl != null ? $kpl : '-' ?></h4>
 						</div>
 					</div>
@@ -356,7 +234,7 @@ switch ($level) {
 <h3 data-toggle="collapse" href="#body_non" role="button" aria-expanded="false" aria-controls="collapseExample" style="cursor: pointer"><b><i class="flaticon-layers-1"></i> Anggota Dewasa Non Kualifikasi</b> (<?php echo $non ?>)</h3>
 <div class="separator-solid"></div>
 <div class="row collapse" id="body_non">
-	<div class="col-sm-6 col-md-3">
+	<div class="col-sm-6 col-md-6">
 		<div class="card card-stats card-round">
 			<div class="card-body ">
 				<div class="row align-items-center">
@@ -367,7 +245,7 @@ switch ($level) {
 					</div>
 					<div class="col col-stats ml-3 ml-sm-0">
 						<div class="numbers">
-							<p class="card-category text-danger"><a href="<?php echo site_url('anggota/potensi/nk') ?>">NON Kualifikasi</a></p>
+							<p class="card-category text-danger">NON Kualifikasi</p>
 							<h4 class="card-title"><?php echo $non != null ? $non : '-' ?></h4>
 						</div>
 					</div>
@@ -377,22 +255,4 @@ switch ($level) {
 	</div>
 </div>
 
-
-<script>
-	var base = $('#base').val()
-	$('#link_kwaran').click(function(event) {
-		location.href = base+'<?php echo $link_kwaran ?>';
-	});
-
-	$('#link_pangkalan').click(function(event) {
-		location.href = base+'<?php echo $link_pangkalan ?>';
-	});
-
-	$('#link_gudep').click(function(event) {
-		location.href = base+'<?php echo $link_gudep ?>';
-	});
-
-	$('#link_anggota').click(function(event) {
-		location.href = base+'<?php echo $link_anggota ?>';
-	});
-</script>
+</div>

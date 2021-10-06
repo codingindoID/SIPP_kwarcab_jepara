@@ -10,9 +10,6 @@
             </div>
             <ul class="nav">
                 <li class="nav-item">
-                    <!-- <a class="nav-link" href="https://www.pengenngoding.com">
-                        <img height="15px" src="<?php echo base_url('assets/img/official.png') ?>" alt="">
-                    </a> -->
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="https://pengenngoding.com/">

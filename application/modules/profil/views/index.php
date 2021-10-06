@@ -29,8 +29,15 @@
 				<div class="row row-nav-line">
 					<ul class="nav nav-tabs nav-line nav-color-secondary w-100 pl-3" role="tablist">
 						<li class="nav-item"> <a class="nav-link active show" data-toggle="tab" href="#home" role="tab" aria-selected="true">Profile : </a> </li>
-						<li class="nav-item"> <a class="nav-link show" data-toggle="tab" href="#home" role="tab" aria-selected="true">KODE KWARRAN : <?php echo $this->session->userdata('ses_kwaran') != null ?  $this->session->userdata('ses_kwaran') : '-' ?></a> </li>
-						<li class="nav-item"> <a class="nav-link show" data-toggle="tab" href="#home" role="tab" aria-selected="true">KODE PANGKALAN : <?php echo $this->session->userdata('ses_pangkalan') != null ? $this->session->userdata('ses_pangkalan') : '-'; ?></a> </li>
+						<?php 
+						$level = $this->session->userdata('ses_level');
+						if ($level == '1' || $level == '2'): ?>
+							<li class="nav-item"> <a class="nav-link show" data-toggle="tab" href="#home" role="tab" aria-selected="true">KODE KWARRAN : <?php echo $profil->id_kwaran != null ? strtoupper($profil->id_kwaran) : '-' ?></a> </li>
+							<li class="nav-item"> <a class="nav-link show" data-toggle="tab" href="#home" role="tab" aria-selected="true">KODE PANGKALAN : <?php echo $profil->id_pangkalan != null ? strtoupper($profil->id_pangkalan) : '-'; ?></a> </li>
+						<?php else: ?>
+							<li class="nav-item"> <a class="nav-link show" data-toggle="tab" href="#home" role="tab" aria-selected="true">KODE KWARRAN : <?php echo $profil->kwaran != null ? $profil->kwaran : '-' ?></a> </li>
+							<li class="nav-item"> <a class="nav-link show" data-toggle="tab" href="#home" role="tab" aria-selected="true">KODE PANGKALAN : <?php echo $profil->id_pangkalan != null ? $profil->id_pangkalan : '-'; ?></a> </li>
+						<?php endif ?>
 					</ul>
 				</div>
 			</div>

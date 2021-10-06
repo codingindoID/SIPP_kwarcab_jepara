@@ -287,6 +287,7 @@ class Anggota extends MY_Controller {
 		$darah = ($this->input->post('darah') == 'Tidak Tahu') ? 'Tidak Tahu' :  $this->input->post('darah');
 
 		$data = [
+			'id_anggota'	=> uniqid(),	
 			'id_kwaran'     => $this->input->post('kwaran'),
 			'id_gudep'  	=> $this->input->post('gudep') ,
 			'ta'  			=> $this->input->post('ta') ,

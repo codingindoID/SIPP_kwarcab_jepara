@@ -73,6 +73,37 @@ class M_beranda extends CI_Model {
 
 	}
 
+	function aksi_updatePangkalan($id_pangkalan)
+	{
+		$data = [
+			'nama_pangkalan'		=> $this->input->post('nama_pangkalan'),
+			'alamat_pangkalan'		=> $this->input->post('alamat_pangkalan'),
+			'kamabigus'				=> $this->input->post('kamabigus'),
+			'kagudep'				=> $this->input->post('kagudep'),
+			'jumlah_pembina'		=> $this->input->post('jumlah_pembina')
+		];
+
+		$where = ['id_pangkalan' => $id_pangkalan];
+
+		$this->db->where($where);
+		$cek = $this->db->update('tb_pangkalan', $data);
+		if ($cek) {
+			$res = [
+				'kode'		=> 'success',
+				'msg'		=> 'Pangkalan Diperbarui'
+			];
+		}
+		else
+		{
+			$res = [
+				'kode'		=> 'error',
+				'msg'		=> 'Gagal'
+			];
+		}
+
+		return $res;
+	}
+
 }
 
 /* End of file M_beranda.php */

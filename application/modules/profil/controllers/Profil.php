@@ -6,7 +6,7 @@ class Profil extends MY_Controller {
 	{
 		parent::__construct();
 		$this->load->model('M_master');
-
+		$this->load->model('M_profil');
 	}
 	public function index()
 	{
@@ -14,14 +14,15 @@ class Profil extends MY_Controller {
 			redirect('auth','refresh');
 		}
 
-		$select = '';
 		$data = [
-			'title'			=> 'Anggota',
-			'sub'			=> 'anggota terdaftar',
-			'menu'			=> 'anggota',
-			'button_menu'	=> $select
+			'title'			=> 'Profil',
+			'sub'			=> 'Detil Profil',
+			'menu'			=> 'profil',
+			'button_menu'	=> '',
+			'profil'		=> $this->M_profil->getProfil()
 		];
 
+		//echo json_encode($data);
 		$this->template->load('tema/index','index',$data);
 	}
 

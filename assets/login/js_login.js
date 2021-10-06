@@ -31,7 +31,13 @@ function login()
 				confirmButtonText: 'Ok'
 			}).then((result) => {
 				if (result.isConfirmed) {
-					location.href = base+'beranda';
+					if (data.level == 4 ) {
+						location.href = base+'landing';
+					}
+					else
+					{
+						location.href = base+'beranda';
+					}
 				}
 			})
 		}
