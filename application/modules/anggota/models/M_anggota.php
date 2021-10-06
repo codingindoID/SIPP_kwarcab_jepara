@@ -466,7 +466,6 @@ class M_anggota extends CI_Model {
 				$id_gudep 		= $gudep->id_gudep;
 
 				if ($id_gudep != null) {
-
 					//proses insert jika inputan nomor gudep sudah benar
 					$data = [
 						'id_kwaran' 		=> $worksheet[$i][0],
