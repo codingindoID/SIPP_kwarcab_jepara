@@ -183,7 +183,7 @@ class M_pangkalan extends CI_Model {
 				}
 				else
 				{
-					unlink($config['upload_path'].$config['file_name']); 
+					unlink($config['upload_path'].$nama_file); 
 					
 					//hapus data anggota sementara
 					$this->db->where('petugas', $this->session->userdata('ses_id'));
