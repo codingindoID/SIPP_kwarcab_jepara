@@ -563,17 +563,13 @@ class Anggota extends MY_Controller {
 
 	function upload()
 	{
+		if ($this->session->userdata('ses_username') == null) {
+			redirect('auth','refresh');
+		}	
 		//proses import
 		$cek = $this->M_anggota->proses_import();
-		if ($cek['success'] == 1) {
-			$this->session->set_flashdata('success', 'Data Berhasil Diimport');
-			redirect('anggota/import','refresh');
-		}
-		else
-		{
-			$this->session->set_flashdata('error', $cek['msg']);
-			redirect('anggota/import','refresh');	
-		}
+		$this->session->set_flashdata($cek['kode'], $cek['msg']);
+		redirect('anggota/import','refresh');
 	}
 
 

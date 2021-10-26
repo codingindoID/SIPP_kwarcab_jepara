@@ -436,7 +436,7 @@ class M_anggota extends CI_Model {
 
 
 	//import
-	function proses_import()
+	/*function proses_import()
 	{
 		$nama_file = uniqid().".xls";
 		//cek jenis user		
@@ -464,6 +464,86 @@ class M_anggota extends CI_Model {
 			];
 		}
 
+	}*/
+
+	function proses_import()
+	{
+		$nama_file = uniqid().".xls";
+		$config['upload_path']          = './excel/';
+		$config['allowed_types']        = 'xls|xlsx';
+		$config['max_size']             = 5000;
+		$config['file_name']           	= $nama_file;
+		$this->load->library('upload', $config);
+		$this->upload->overwrite = true;
+		if ( ! $this->upload->do_upload('file'))
+		{
+			$res = [
+				'kode'	=> 'error',
+				'msg'	=> $this->upload->display_errors()
+			];
+		}
+		else
+		{
+			//proses import
+			$spreadsheet = \PhpOffice\PhpSpreadsheet\IOFactory::load($config['upload_path'].$config['file_name']);
+			$worksheet = $spreadsheet->getActiveSheet()->toArray();
+
+
+			for ($i=1; $i < count($worksheet) ; $i++) { 
+				if ($worksheet[$i][0] != '') {
+					$gudep 			= $this->db->get_where('tb_gudep', ['no_gudep' => sprintf('%02s',$worksheet[$i][0]).'.'.sprintf('%03s',$worksheet[$i][1]) ])->row();
+					if ($gudep) {
+						$id_gudep 		= $gudep->id_gudep;
+						$data[$i] = [
+							'id_anggota'		=> uniqid(),
+							'id_kwaran' 		=> $worksheet[$i][0],
+							'id_gudep' 			=> $id_gudep,
+							'ta' 				=> $worksheet[$i][2],
+							'nama' 				=> $worksheet[$i][3],
+							'tempat_lahir' 		=> $worksheet[$i][4],
+							'tanggal_lahir' 	=> date('Y-m-d',strtotime($worksheet[$i][5])),
+							'alamat'			=> $worksheet[$i][6],
+							'gol_darah'			=> ($worksheet[$i][7] == '') ? 'Tidak Tahu' : $worksheet[$i][7] ,
+							'golongan'			=> strtolower($worksheet[$i][8]),
+							'tingkat'			=> strtolower($worksheet[$i][9]),
+							'kta'				=> $worksheet[$i][10],
+							'tempat_kmd'		=> $worksheet[$i][11],
+							'tahun_kmd'			=> $worksheet[$i][12],
+							'golongan_kmd'		=> $worksheet[$i][13],
+							'tempat_kml'		=> $worksheet[$i][14],
+							'tahun_kml'			=> $worksheet[$i][15],
+							'golongan_kml'		=> $worksheet[$i][16],
+							'tempat_kpd'		=> $worksheet[$i][17],
+							'tahun_kpd'			=> $worksheet[$i][18],
+							'golongan_kpd'		=> $worksheet[$i][19],
+							'tempat_kpl'		=> $worksheet[$i][20],
+							'tahun_kpl'			=> $worksheet[$i][21],
+							'golongan_kpl'		=> $worksheet[$i][22],
+							'petugas'			=> $this->session->userdata('ses_id')
+						];
+					}
+				}
+			}	
+
+			$cek = 	$this->db->insert_batch('tb_anggota', $data);
+			if ($cek) {
+				$res = [
+					'kode'		=> 'success',
+					'msg'		=> 'Import Anggota Sukses'
+				];
+			}
+			else
+			{
+				$res = [
+					'kode'		=> 'error',
+					'msg'		=> 'Import Anggota Gagal'
+				];
+			}
+
+			unlink($config['upload_path'].$config['file_name']);
+		}
+
+		return $res;
 	}
 
 	private function _import_anggota($nama)

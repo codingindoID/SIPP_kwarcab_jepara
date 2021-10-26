@@ -53,7 +53,7 @@
 			<div class="col-md-4">
 				<div class="form-group">
 					<div class="select2-input">
-						<select id="select-kecamatan" name="kecamatan" class="form-control" style="width: 100%;" required>
+						<select id="select-kecamatan" name="kecamatan" class="form-control" style="width: 100%;">
 							<option value="">KECAMATAN . . </option>
 							<?php foreach ($kecamatan as $kec): ?>
 								<option <?php echo $anggota->kecamatan == $kec->id_kecamatan ? 'selected' : '' ?> value="<?php echo $kec->id_kecamatan ?>"><?php echo $kec->nama_kecamatan ?></option>
@@ -65,7 +65,7 @@
 			<div class="col-md-4">
 				<div class="form-group">
 					<div class="select2-input">
-						<select id="desa" name="desa" readonly class="form-control" style="width: 100%;" required>
+						<select id="desa" name="desa" readonly class="form-control" style="width: 100%;">
 							<option value="">DESA</option>
 							<?php foreach ($desa as $des): ?>
 								<option <?php echo $anggota->desa == $des->id_desa ? 'selected' : '' ?> value="<?php echo $des->id_desa ?>"><?php echo $des->nama_desa ?></option>
@@ -76,12 +76,12 @@
 			</div>
 			<div class="col-md-2">
 				<div class="form-group">
-					<input type="number" class="form-control" name="rt" placeholder="RT" value="<?= $anggota->rt ?>" required>
+					<input type="number" class="form-control" name="rt" placeholder="RT" value="<?= $anggota->rt ?>">
 				</div>
 			</div>
 			<div class="col-md-2">
 				<div class="form-group">
-					<input type="number" class="form-control" name="rw"  placeholder="RW"  value="<?= $anggota->rw ?>" required>
+					<input type="number" class="form-control" name="rw"  placeholder="RW"  value="<?= $anggota->rw ?>">
 				</div>
 			</div>
 		</div>
