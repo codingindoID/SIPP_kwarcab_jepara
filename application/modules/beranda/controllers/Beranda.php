@@ -119,8 +119,8 @@ class Beranda extends MY_Controller {
 			'urutan'	=> 'desc'
 		];
 
-		$detil_user = $this->db->get_where('tb_user', ['id_user' => $this->session->userdata('ses_id')])->row();
-		$id_pangkalan = $detil_user->id_pangkalan;
+		$detil_user	 	= $this->db->get_where('tb_user', ['id_user' => $this->session->userdata('ses_id')])->row();
+		$id_pangkalan 	= $detil_user->id_pangkalan;
 
 		$data = [
 			'title'			=> 'Beranda',
@@ -143,7 +143,7 @@ class Beranda extends MY_Controller {
 			'sub_penegak'	=> $this->_get_tingkat_gudep('penegak',$id_pangkalan),
 			'sub_pandega'	=> $this->_get_tingkat_gudep('pandega',$id_pangkalan),
 			'id_kwaran'		=> $id_pangkalan,
-			'pangkalan'		=> $this->db->get('tb_pangkalan', ['id_pangkalan' => $id_pangkalan])->row()
+			'pangkalan'		=> $this->db->get_where('tb_pangkalan', ['id_pangkalan' => $id_pangkalan])->row()
 		];
 
 		//echo json_encode($data);

@@ -91,12 +91,28 @@ class M_pangkalan extends CI_Model {
 
 	function import_pangkalan()
 	{
+		$pang 	= [];
+		$no 	= 0 ;
 		$nama_file = uniqid().".xls";
 
 		$cek = $this->_proses_import($nama_file);
 		if (!$cek) {
 			$data = $this->db->get_where('tb_pangkalan_sementara', ['petugas' => $this->session->userdata('ses_id')])->result();
-			$this->db->insert_batch('tb_pangkalan', $data);
+			foreach ($data as $dat) {
+			    $pang[$no] = [
+			    	'nama_pangkalan'	=> $dat->nama_pangkalan,
+			    	'alamat_pangkalan'	=> $dat->alamat_pangkalan,
+			    	'kwaran'			=> $dat->kwaran,
+			    	'desa'				=> $dat->desa,
+			    	'created_date'		=> $dat->created_date,
+			    	'kamabigus'			=> $dat->kamabigus,
+			    	'kagudep'			=> $dat->kagudep,
+			    	'jumlah_pembina'	=> $dat->jumlah_pembina,
+			    	'petugas'			=> $dat->petugas,
+			    ];
+			    $no++;
+			}
+			$this->db->insert_batch('tb_pangkalan', $pang);
 
 			$this->db->where('petugas', $this->session->userdata('ses_id'));
 			$this->db->delete('tb_pangkalan_sementara');
@@ -167,7 +183,7 @@ class M_pangkalan extends CI_Model {
 				}
 				else
 				{
-					unlink($config['upload_path'].$config['file_name']); 
+					unlink($config['upload_path'].$nama_file); 
 					
 					//hapus data anggota sementara
 					$this->db->where('petugas', $this->session->userdata('ses_id'));
