@@ -434,38 +434,6 @@ class M_anggota extends CI_Model {
 		return $this->db->get_where('tb_anggota', $where);
 	}
 
-
-	//import
-	/*function proses_import()
-	{
-		$nama_file = uniqid().".xls";
-		//cek jenis user		
-		$cek = $this->_import_anggota($nama_file);
-
-		if (!$cek) {
-			$data = $this->db->get_where('tb_anggota_sementara', ['petugas' => $this->session->userdata('ses_id')])->result();
-			$this->db->insert_batch('tb_anggota', $data);
-
-			$this->db->where('petugas', $this->session->userdata('ses_id'));
-			$this->db->delete('tb_anggota_sementara');
-
-			unlink('./excel/'.$nama_file);
-
-			return $res = [
-				'success'		=> 1,
-				'msg'			=> "berhasil import data"
-			];
-		}
-		else
-		{
-			return $res = [
-				'success'		=> 0,
-				'msg'			=> 'ID Kwaran dan ID Gudep Tidak Boleh Kosong, Atau Nomor gudep yang anda masukkan salah , Silahkan Periksa Data Anda dan Ulangi Prosesnya,.'
-			];
-		}
-
-	}*/
-
 	function proses_import()
 	{
 		$nama_file = uniqid().".xls";
@@ -545,90 +513,7 @@ class M_anggota extends CI_Model {
 
 		return $res;
 	}
-
-	private function _import_anggota($nama)
-	{
-		$cek = '';
-		$config['upload_path']          = './excel/';
-		$config['allowed_types']        = 'xls|xlsx';
-		$config['max_size']             = 5000;
-		$config['file_name']           	= $nama;
-		$this->load->library('upload', $config);
-		$this->upload->overwrite = true;
-
-		if ( ! $this->upload->do_upload('file')){
-			$response = $this->upload->display_errors();
-			$this->session->set_flashdata('error', $response);
-			redirect('anggota','refresh');
-		}else{
-		//proses import
-			$spreadsheet = \PhpOffice\PhpSpreadsheet\IOFactory::load($config['upload_path'].$config['file_name']);
-			$worksheet = $spreadsheet->getActiveSheet()->toArray();
-
-			for ($i=1; $i < count($worksheet) ; $i++) { 
-				$gudep 			= $this->db->get_where('tb_gudep', ['no_gudep' => sprintf('%02s',$worksheet[$i][0]).'.'.sprintf('%03s',$worksheet[$i][1]) ])->row();
-				$id_gudep 		= $gudep->id_gudep;
-
-				if ($id_gudep != null) {
-					//proses insert jika inputan nomor gudep sudah benar
-					$data = [
-						'id_anggota'		=> uniqid(),
-						'id_kwaran' 		=> $worksheet[$i][0],
-						'id_gudep' 			=> $id_gudep,
-						'ta' 				=> $worksheet[$i][2],
-						'nama' 				=> $worksheet[$i][3],
-						'tempat_lahir' 		=> $worksheet[$i][4],
-						'tanggal_lahir' 	=> date('Y-m-d',strtotime($worksheet[$i][5])),
-						'alamat'			=> $worksheet[$i][6],
-						'gol_darah'			=> ($worksheet[$i][7] == '') ? 'Tidak Tahu' : $worksheet[$i][7] ,
-						'golongan'			=> strtolower($worksheet[$i][8]),
-						'tingkat'			=> strtolower($worksheet[$i][9]),
-						'kta'				=> $worksheet[$i][10],
-						'tempat_kmd'		=> $worksheet[$i][11],
-						'tahun_kmd'			=> $worksheet[$i][12],
-						'golongan_kmd'		=> $worksheet[$i][13],
-						'tempat_kml'		=> $worksheet[$i][14],
-						'tahun_kml'			=> $worksheet[$i][15],
-						'golongan_kml'		=> $worksheet[$i][16],
-						'tempat_kpd'		=> $worksheet[$i][17],
-						'tahun_kpd'			=> $worksheet[$i][18],
-						'golongan_kpd'		=> $worksheet[$i][19],
-						'tempat_kpl'		=> $worksheet[$i][20],
-						'tahun_kpl'			=> $worksheet[$i][21],
-						'golongan_kpl'		=> $worksheet[$i][22],
-						'petugas'			=> $this->session->userdata('ses_id')
-					];
-
-					if ($worksheet[$i][0] != null) {
-						if ($worksheet[$i][1] != null) {
-							$this->M_master->input('tb_anggota_sementara',$data);
-						}
-					}
-					else
-					{
-						unlink($config['upload_path'].$config['file_name']); 
-						//hapus data anggota sementara
-						$this->db->where('petugas', $this->session->userdata('ses_id'));
-						$this->db->delete('tb_anggota_sementara');
-
-						$cek = 1;
-					}	
-				}
-				else
-				{
-					//proses jika inputan nomor gudep salah
-					unlink($config['upload_path'].$config['file_name']); 
-					//hapus data anggota sementara
-					$this->db->where('petugas', $this->session->userdata('ses_id'));
-					$this->db->delete('tb_anggota_sementara');
-
-					$cek = 1;
-				}
-			}
-			return $cek;
-		}
-	}
-
+	
 	/*serverside penduduk*/
 	private function _get_datatables_query()
 	{
