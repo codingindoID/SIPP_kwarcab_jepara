@@ -1,31 +1,30 @@
-
-<?php 
+<?php
 $level = $this->session->userdata('ses_level');
 switch ($level) {
 	case 1:
-	$link_pangkalan = 'pangkalan';
-	$link_gudep 	= 'gudep';
-	$link_anggota 	= 'anggota';
-	$link_kwaran 	= 'kwaran';
-	break;
+		$link_pangkalan = 'pangkalan';
+		$link_gudep 	= 'gudep';
+		$link_anggota 	= 'anggota';
+		$link_kwaran 	= 'kwaran';
+		break;
 	case 2:
-	$link_kwaran 	= '';
-	$link_pangkalan = 'pangkalan/regional';
-	$link_gudep 	= 'gudep/regional';
-	$link_anggota 	= 'anggota/filter_anggota/'.$id_kwaran;
-	break;
+		$link_kwaran 	= '';
+		$link_pangkalan = 'pangkalan/regional';
+		$link_gudep 	= 'gudep/regional';
+		$link_anggota 	= 'anggota/filter_anggota/' . $id_kwaran;
+		break;
 	case 3:
-	$link_pangkalan = 'pangkalan/regional';
-	$link_gudep 	= 'gudep/regional';
-	$link_anggota 	= 'anggota/anggota_gudep/'.$id_kwaran; //id kwaran disini berisi id pangkalan, penamaannya saja yang kwaran
-	break;
+		$link_pangkalan = 'pangkalan/regional';
+		$link_gudep 	= 'gudep/regional';
+		$link_anggota 	= 'anggota/anggota_gudep/' . $id_kwaran; //id kwaran disini berisi id pangkalan, penamaannya saja yang kwaran
+		break;
 	default:
-	break;
+		break;
 }
 ?>
 <div class="row row-card-no-pd">
-	
-	<?php if ($level == 1): ?>
+
+	<?php if ($level == 1) : ?>
 		<div class="col-sm-6 col-md-6 mt-2">
 			<div class="card card-stats card-success card-round">
 				<div class="card-body " id="link_kwaran" style="cursor: pointer">
@@ -46,8 +45,8 @@ switch ($level) {
 			</div>
 		</div>
 	<?php endif ?>
-	
-	<?php if ($level == 1 || $level == 2): ?>	
+
+	<?php if ($level == 1 || $level == 2) : ?>
 		<div class="col-sm-6 col-md-6 mt-2">
 			<div class="card card-stats card-secondary card-round">
 				<div class="card-body" id="link_pangkalan" style="cursor: pointer">
@@ -89,7 +88,7 @@ switch ($level) {
 		</div>
 	</div>
 
-	
+
 	<div class="col-sm-6 col-md-6 mt-2">
 		<div class="card card-stats card-primary card-round">
 			<div class="card-body" id="link_anggota" style="cursor: pointer">
@@ -113,16 +112,16 @@ switch ($level) {
 </div>
 <br>
 
-<?php if ($level == '2'): ?>
+<?php if ($level == '2') : ?>
 	<?php $this->load->view('detil/kwaran'); ?>
 <?php endif ?>
-<?php if ($level == '3'): ?>
+<?php if ($level == '3') : ?>
 	<?php $this->load->view('detil/pangkalan'); ?>
 <?php endif ?>
 
 
 <!-- PRAMUKA MUDA -->
-<h3 data-toggle="collapse" href="#body_muda" role="button" aria-expanded="false" aria-controls="collapseExample" style="cursor: pointer"><b><i class="flaticon-layers-1"></i> Potensi Anggota Muda</b> (<?php echo $siaga+$penggalang+$penegak+$pandega ?>)</h3>
+<h3 data-toggle="collapse" href="#body_muda" role="button" aria-expanded="false" aria-controls="collapseExample" style="cursor: pointer"><b><i class="flaticon-layers-1"></i> Potensi Anggota Muda</b> (<?php echo number_format($siaga['golongan'] + $penggalang['golongan'] + $penegak['golongan'] + $pandega['golongan'], 0) ?>)</h3>
 <div class="separator-solid"></div>
 <div class="row collapse" id="body_muda">
 	<div class="col-sm-6 col-md-3 col-xs-12">
@@ -137,7 +136,7 @@ switch ($level) {
 					<div class="col col-stats ml-3 ml-sm-0">
 						<div class="numbers">
 							<p class="card-category text-siaga" id="muda">Siaga</p>
-							<h4 class="card-title"><?php echo $siaga != null ? $siaga : '-' ?></h4>
+							<h4 class="card-title"><?php echo $siaga['golongan'] != null ? number_format($siaga['golongan'], 0) : '-' ?></h4>
 						</div>
 					</div>
 				</div>
@@ -146,11 +145,11 @@ switch ($level) {
 						<div class="card">
 							<div class="card-body bg-siaga text-white" style="border-radius: 20px;">
 								<table width="100%" style="font-size: 1rem">
-									<?php foreach ($sub_siaga as $s): ?>
+									<?php foreach ($siaga['rekap'] as $s) : ?>
 										<tr>
 											<td width="60%"><strong><?php echo $s['tingkat'] ?></strong></td>
 											<td> : </td>
-											<td> <?php echo $s['jumlah'] ?></td>
+											<td class="text-right"> <?php echo number_format($s['jumlah'], 0) ?></td>
 										</tr>
 									<?php endforeach ?>
 								</table>
@@ -173,7 +172,7 @@ switch ($level) {
 					<div class="col col-stats ml-3 ml-sm-0">
 						<div class="numbers">
 							<p class="card-category text-penggalang" id="muda">Penggalang</p>
-							<h4 class="card-title"><?php echo $penggalang != null ? $penggalang : '-' ?></h4>
+							<h4 class="card-title"><?php echo $penggalang['golongan'] != null ? number_format($penggalang['golongan'], 0) : '-' ?></h4>
 						</div>
 					</div>
 				</div>
@@ -182,11 +181,11 @@ switch ($level) {
 						<div class="card">
 							<div class="card-body bg-penggalang text-white" style="border-radius: 20px;">
 								<table width="100%" style="font-size: 1rem">
-									<?php foreach ($sub_penggalang as $g): ?>
+									<?php foreach ($penggalang['rekap'] as $g) : ?>
 										<tr>
 											<td width="60%"><strong><?php echo $g['tingkat'] ?></strong></td>
 											<td> : </td>
-											<td> <?php echo $g['jumlah'] ?></td>
+											<td class="text-right"> <?php echo number_format($g['jumlah'], 0) ?></td>
 										</tr>
 									<?php endforeach ?>
 								</table>
@@ -209,7 +208,7 @@ switch ($level) {
 					<div class="col col-stats ml-3 ml-sm-0">
 						<div class="numbers">
 							<p class="card-category text-penegak" id="muda">Penegak</p>
-							<h4 class="card-title"><?php echo $penegak != null ? $penegak : '-' ?></h4>
+							<h4 class="card-title"><?php echo $penegak['golongan'] != null ? number_format($penegak['golongan'], 0) : '-' ?></h4>
 						</div>
 					</div>
 				</div>
@@ -218,11 +217,11 @@ switch ($level) {
 						<div class="card">
 							<div class="card-body bg-penegak text-white" style="border-radius: 20px;">
 								<table width="100%" style="font-size: 1rem">
-									<?php foreach ($sub_penegak as $t): ?>
+									<?php foreach ($penegak['rekap'] as $t) : ?>
 										<tr>
 											<td width="60%"><strong><?php echo $t['tingkat'] ?></strong></td>
 											<td> : </td>
-											<td> <?php echo $t['jumlah'] ?></td>
+											<td class="text-right"> <?php echo number_format($t['jumlah'], 0) ?></td>
 										</tr>
 									<?php endforeach ?>
 								</table>
@@ -235,7 +234,7 @@ switch ($level) {
 	</div>
 	<div class="col-sm-6 col-md-3 col-xs-12">
 		<div class="card card-stats card-round">
-			<div class="card-body"  data-toggle="collapse" href="#card-pandega" role="button" aria-expanded="false" aria-controls="card-pandega" style="cursor: pointer">
+			<div class="card-body" data-toggle="collapse" href="#card-pandega" role="button" aria-expanded="false" aria-controls="card-pandega" style="cursor: pointer">
 				<div class="row align-items-center">
 					<div class="col-icon">
 						<div class="icon-big text-center icon-pandega bubble-shadow-small">
@@ -245,7 +244,7 @@ switch ($level) {
 					<div class="col col-stats ml-3 ml-sm-0">
 						<div class="numbers">
 							<p class="card-category text-pandega" id="muda">Pandega</p>
-							<h4 class="card-title"><?php echo $pandega != null ? $pandega : '-' ?></h4>
+							<h4 class="card-title"><?php echo $pandega['golongan'] != null ? number_format($pandega['golongan'], 0) : '-' ?></h4>
 						</div>
 					</div>
 				</div>
@@ -254,11 +253,11 @@ switch ($level) {
 						<div class="card">
 							<div class="card-body bg-pandega text-white" style="border-radius: 20px;">
 								<table width="100%" style="font-size: 1rem">
-									<?php foreach ($sub_pandega as $d): ?>
+									<?php foreach ($pandega['rekap'] as $d) : ?>
 										<tr>
 											<td width="60%"><strong><?php echo $d['tingkat'] ?></strong></td>
 											<td> : </td>
-											<td> <?php echo $d['jumlah'] ?></td>
+											<td class="text-right"> <?php echo number_format($d['jumlah'], 0) ?></td>
 										</tr>
 									<?php endforeach ?>
 								</table>
@@ -272,127 +271,81 @@ switch ($level) {
 </div>
 
 <!-- DEWASA -->
-<h3 data-toggle="collapse" href="#body_dewasa" role="button" aria-expanded="false" aria-controls="collapseExample" style="cursor: pointer"><b><i class="flaticon-layers-1"></i> Potensi Anggota Dewasa</b> (<?php echo $kmd+$kml+$kpd+$kpl ?>)</h3>
+<h3 data-toggle="collapse" href="#body_dewasa" role="button" aria-expanded="false" aria-controls="collapseExample" style="cursor: pointer"><b><i class="flaticon-layers-1"></i> Potensi Anggota Dewasa</b> (<?php echo number_format($dewasa['golongan'], 0) ?>)</h3>
 <div class="separator-solid"></div>
 <div class="row collapse" id="body_dewasa">
-	<div class="col-sm-6 col-md-3">
-		<div class="card card-stats card-round">
-			<div class="card-body ">
-				<div class="row align-items-center">
-					<div class="col-icon">
-						<div class="icon-big text-center icon-primary bubble-shadow-small">
-							<i class="icon-like"></i>
-						</div>
-					</div>
-					<div class="col col-stats ml-3 ml-sm-0">
-						<div class="numbers">
-							<p class="card-category"><a href="<?php echo site_url('anggota/potensi/kmd') ?>">KMD</a></p>
-							<h4 class="card-title"><?php echo $kmd != null ? $kmd : '-' ?></h4>
-						</div>
-					</div>
-				</div>
-			</div>
-		</div>
-	</div>
-	<div class="col-sm-6 col-md-3">
-		<div class="card card-stats card-round">
-			<div class="card-body">
-				<div class="row align-items-center">
-					<div class="col-icon">
-						<div class="icon-big text-center icon-info bubble-shadow-small">
-							<i class="icon-badge"></i>
-						</div>
-					</div>
-					<div class="col col-stats ml-3 ml-sm-0">
-						<div class="numbers">
-							<p class="card-category"><a href="<?php echo site_url('anggota/potensi/kml') ?>">KML</a></p>
-							<h4 class="card-title"><?php echo $kml != null ? $kml : '-' ?></h4>
+	<?php foreach ($dewasa['rekap'] as $var) : ?>
+		<?php
+		$exclude = ['NK', 'lainnya'];
+		?>
+		<?php if (!in_array($var['tingkat'], $exclude, true)) : ?>
+			<div class="col-sm-6 col-md-3">
+				<div class="card card-stats card-round">
+					<div class="card-body ">
+						<div class="row align-items-center">
+							<div class="col-icon">
+								<div class="icon-big text-center icon-info bubble-shadow-small">
+									<i class="icon-graduation"></i>
+								</div>
+							</div>
+							<div class="col col-stats ml-3 ml-sm-0">
+								<div class="numbers">
+									<p class="card-category"><a href="<?php echo site_url('anggota/potensi/') . $var['tingkat']  ?>"><?= strtoupper($var['tingkat']) ?></a></p>
+									<h4 class="card-title"><?php echo $var['jumlah'] ? number_format($var['jumlah'], 0) : '-' ?></h4>
+								</div>
+							</div>
 						</div>
 					</div>
 				</div>
 			</div>
-		</div>
-	</div>
-	<div class="col-sm-6 col-md-3">
-		<div class="card card-stats card-round">
-			<div class="card-body">
-				<div class="row align-items-center">
-					<div class="col-icon">
-						<div class="icon-big text-center icon-success bubble-shadow-small">
-							<i class="icon-graduation"></i>
-						</div>
-					</div>
-					<div class="col col-stats ml-3 ml-sm-0">
-						<div class="numbers">
-							<p class="card-category"><a href="<?php echo site_url('anggota/potensi/kpd') ?>">KPD</a></p>
-							<h4 class="card-title"><?php echo $kpd != null ? $kpd : '-' ?></h4>
-						</div>
-					</div>
-				</div>
-			</div>
-		</div>
-	</div>
-	<div class="col-sm-6 col-md-3">
-		<div class="card card-stats card-round">
-			<div class="card-body">
-				<div class="row align-items-center">
-					<div class="col-icon">
-						<div class="icon-big text-center icon-secondary bubble-shadow-small">
-							<i class="icon-diamond"></i>
-						</div>
-					</div>
-					<div class="col col-stats ml-3 ml-sm-0">
-						<div class="numbers">
-							<p class="card-category"><a href="<?php echo site_url('anggota/potensi/kpl') ?>">KPL</a></p>
-							<h4 class="card-title"><?php echo $kpl != null ? $kpl : '-' ?></h4>
-						</div>
-					</div>
-				</div>
-			</div>
-		</div>
-	</div>
+		<?php endif ?>
+	<?php endforeach ?>
 </div>
 
-<h3 data-toggle="collapse" href="#body_non" role="button" aria-expanded="false" aria-controls="collapseExample" style="cursor: pointer"><b><i class="flaticon-layers-1"></i> Anggota Dewasa Non Kualifikasi</b> (<?php echo $non ?>)</h3>
+<h3 data-toggle="collapse" href="#body_non" role="button" aria-expanded="false" aria-controls="collapseExample" style="cursor: pointer"><b><i class="flaticon-layers-1"></i> Anggota Dewasa Lainnya</b></h3>
 <div class="separator-solid"></div>
 <div class="row collapse" id="body_non">
-	<div class="col-sm-6 col-md-3">
-		<div class="card card-stats card-round">
-			<div class="card-body ">
-				<div class="row align-items-center">
-					<div class="col-icon">
-						<div class="icon-big text-center icon-danger bubble-shadow-small">
-							<i class="flaticon-shapes"></i>
-						</div>
-					</div>
-					<div class="col col-stats ml-3 ml-sm-0">
-						<div class="numbers">
-							<p class="card-category text-danger"><a href="<?php echo site_url('anggota/potensi/nk') ?>">NON Kualifikasi</a></p>
-							<h4 class="card-title"><?php echo $non != null ? $non : '-' ?></h4>
+	<?php foreach ($dewasa['rekap'] as $var) : ?>
+		<?php if (in_array($var['tingkat'], $exclude, true)) : ?>
+			<div class="col-sm-6 col-md-6">
+				<div class="card card-stats card-round">
+					<div class="card-body ">
+						<div class="row align-items-center">
+							<div class="col-icon">
+								<div class="icon-big text-center icon-danger bubble-shadow-small">
+									<i class="flaticon-shapes"></i>
+								</div>
+							</div>
+							<div class="col col-stats ml-3 ml-sm-0">
+								<div class="numbers">
+									<p class="card-category text-danger"><a href="<?php echo site_url('anggota/potensi/nk') ?>"><?= $var['tingkat'] ?></a></p>
+									<h4 class="card-title"><?php echo $var['jumlah'] != null ? number_format($var['jumlah']) : '-' ?></h4>
+								</div>
+							</div>
 						</div>
 					</div>
 				</div>
 			</div>
-		</div>
-	</div>
+		<?php endif ?>
+	<?php endforeach ?>
 </div>
 
 
 <script>
 	var base = $('#base').val()
 	$('#link_kwaran').click(function(event) {
-		location.href = base+'<?php echo $link_kwaran ?>';
+		location.href = base + '<?php echo $link_kwaran ?>';
 	});
 
 	$('#link_pangkalan').click(function(event) {
-		location.href = base+'<?php echo $link_pangkalan ?>';
+		location.href = base + '<?php echo $link_pangkalan ?>';
 	});
 
 	$('#link_gudep').click(function(event) {
-		location.href = base+'<?php echo $link_gudep ?>';
+		location.href = base + '<?php echo $link_gudep ?>';
 	});
 
 	$('#link_anggota').click(function(event) {
-		location.href = base+'<?php echo $link_anggota ?>';
+		location.href = base + '<?php echo $link_anggota ?>';
 	});
 </script>
