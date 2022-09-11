@@ -149,7 +149,7 @@ switch ($level) {
 										<tr>
 											<td width="60%"><strong><?php echo $s['tingkat'] ?></strong></td>
 											<td> : </td>
-											<td class="text-right"> <?php echo number_format($s['jumlah'], 0) ?></td>
+											<td class="text-right"><a href="<?= site_url('anggota/listAnggotaByTingkat/siaga/' . $s['tingkat']) ?>" class="text-white"> <?php echo number_format($s['jumlah'], 0) ?></a></td>
 										</tr>
 									<?php endforeach ?>
 								</table>

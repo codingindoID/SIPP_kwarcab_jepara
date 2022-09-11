@@ -1,7 +1,8 @@
 <?php
-defined('BASEPATH') OR exit('No direct script access allowed');
+defined('BASEPATH') or exit('No direct script access allowed');
 
-class Anggota extends MY_Controller {
+class Anggota extends MY_Controller
+{
 	public function __construct()
 	{
 		parent::__construct();
@@ -11,7 +12,7 @@ class Anggota extends MY_Controller {
 	public function index()
 	{
 		if ($this->session->userdata('ses_username') == null) {
-			redirect('auth','refresh');
+			redirect('auth', 'refresh');
 		}
 
 		$level 		= $this->session->userdata('ses_level');
@@ -19,7 +20,7 @@ class Anggota extends MY_Controller {
 		$anggota 	= '';
 		$pangkalan 	= '';
 
-		$select2 ='
+		$select2 = '
 		<select class="form-control" name="bulk" id="bulk">
 		<option value="">Bulk Action</option>
 		<option value="angkatan">Hapus By Tahun Ajaran</option>
@@ -28,7 +29,7 @@ class Anggota extends MY_Controller {
 
 		switch ($level) {
 			case ADMIN:
-			$select = '
+				$select = '
 			<div class="form-row">
 			<div class="form-group">
 			<select class="form-control" name="bulk" id="bulk">
@@ -41,22 +42,22 @@ class Anggota extends MY_Controller {
 			</div>
 			</div>
 			';
-			//$anggota    	= $this->M_anggota->getsemuaAnggota();
-			$pangkalan 		= $this->M_anggota->getPangkalanBulk();
-			break;
+				//$anggota    	= $this->M_anggota->getsemuaAnggota();
+				$pangkalan 		= $this->M_anggota->getPangkalanBulk();
+				break;
 
 			case ADMIN_KWARAN:
-			$select = $select2;
-			$pangkalan = $this->M_anggota->getPangkalanBulk();
-			//$anggota  = $this->M_anggota->getanggotaKwaran()->result();
-			break;
+				$select = $select2;
+				$pangkalan = $this->M_anggota->getPangkalanBulk();
+				//$anggota  = $this->M_anggota->getanggotaKwaran()->result();
+				break;
 
 			case ADMIN_GUDEP:
-			$select = $select2;
-			//$anggota = $this->M_anggota->getanggotaGudep()->result();
-			break;
+				$select = $select2;
+				//$anggota = $this->M_anggota->getanggotaGudep()->result();
+				break;
 			default:
-			break;
+				break;
 		}
 
 		$data = [
@@ -71,13 +72,13 @@ class Anggota extends MY_Controller {
 		];
 
 		//echo json_encode($data);
-		$this->template->load('tema/index','index',$data);
+		$this->template->load('tema/index', 'index', $data);
 	}
 
 	function anggota_gudep($id_pangkalan)
 	{
 		if ($this->session->userdata('ses_username') == null) {
-			redirect('auth','refresh');
+			redirect('auth', 'refresh');
 		}
 
 		$button = '<button style="cursor:pointer" class="btn-sm btn-white btn-border btn-round mr-2" btn-success" onclick="goBack()"><i class="fa fa-arrow-left"></i> Kembali</button>';
@@ -90,18 +91,18 @@ class Anggota extends MY_Controller {
 			'anggota'		=> $this->M_anggota->get_anggota_gudep($id_pangkalan)->result()
 		];
 
-		$this->template->load('tema/index','index',$data);
+		$this->template->load('tema/index', 'index', $data);
 	}
 
 	function filter_anggota($id_kwaran)
 	{
 		if ($this->session->userdata('ses_level') == null) {
-			redirect('auth','refresh');
+			redirect('auth', 'refresh');
 		}
 
 		$level = $this->session->userdata('ses_level');
 		$select = '';
-		$select2 ='
+		$select2 = '
 		<select class="form-control" name="bulk" id="bulk">
 		<option value="">Bulk Action</option>
 		<option value="angkatan">Hapus By Tahun Ajaran</option>
@@ -111,7 +112,7 @@ class Anggota extends MY_Controller {
 		$pangkalan = '';
 		switch ($level) {
 			case ADMIN:
-			$select = '
+				$select = '
 			<div class="form-row">
 			<div class="form-group col-md-5">
 			<select class="form-control" name="bulk" id="bulk">
@@ -124,61 +125,58 @@ class Anggota extends MY_Controller {
 			</div>
 			</div>
 			';
-			$pangkalan = $this->M_anggota->getPangkalanBulk();
-			break;
+				$pangkalan = $this->M_anggota->getPangkalanBulk();
+				break;
 
 			case ADMIN_KWARAN:
-			$select = $select2;
-			$pangkalan = $this->M_anggota->getPangkalanBulk();
-			break;
+				$select = $select2;
+				$pangkalan = $this->M_anggota->getPangkalanBulk();
+				break;
 
 			case ADMIN_GUDEP:
-			$select = $select2;
-			break;
+				$select = $select2;
+				break;
 
 
 			default:
-			break;
+				break;
 		}
 
 		if ($id_kwaran != 'semua') {
 			$nama_kwaran = $this->db->get_where('tb_kwaran', ['id_kwaran' => $id_kwaran])->row();
-			$nama_kwaran = ' KWARRAN '. $nama_kwaran->nama_kwaran;
-		}
-		else
-		{
+			$nama_kwaran = ' KWARRAN ' . $nama_kwaran->nama_kwaran;
+		} else {
 			$nama_kwaran = 'Seluruh Kwaran';
 		}
 
 		$data = [
 			'title'			=> 'Anggota',
-			'sub'			=> 'anggota terdaftar di : <b class="text-warning"> '. strtoupper($nama_kwaran) .'</b>',
+			'sub'			=> 'anggota terdaftar di : <b class="text-warning"> ' . strtoupper($nama_kwaran) . '</b>',
 			'menu'			=> 'anggota',
 			'filter_kwaran'	=> $id_kwaran,
 			'button_menu'	=> $select,
-			'link'			=> site_url('anggota/get_data_anggota_filter/').$id_kwaran,
+			'link'			=> site_url('anggota/get_data_anggota_filter/') . $id_kwaran,
 			'pangkalan'		=> $pangkalan
 		];
 
 		//echo json_encode($data);
-		$this->template->load('tema/index','index',$data);
+		$this->template->load('tema/index', 'index', $data);
 	}
 
 	function getDesa($id)
 	{
 		if ($this->session->userdata('ses_username') == null) {
-			redirect('auth','refresh');
+			redirect('auth', 'refresh');
 		}
 
 		$data = $this->db->get_where('tb_desa', ['id_kecamatan' => $id])->result();
 		echo json_encode($data);
-
 	}
 
 	function filter_anggota_admin($id_kwaran)
 	{
 		if ($this->session->userdata('ses_username') == null) {
-			redirect('auth','refresh');
+			redirect('auth', 'refresh');
 		}
 
 		$level = $this->session->userdata('ses_level');
@@ -194,7 +192,7 @@ class Anggota extends MY_Controller {
 		];
 
 		//echo json_encode($data);
-		$this->template->load('tema/index','index',$data);
+		$this->template->load('tema/index', 'index', $data);
 	}
 
 	function tambah_anggota()
@@ -202,7 +200,7 @@ class Anggota extends MY_Controller {
 		$level = $this->session->userdata('ses_level');
 		$id_user = $this->session->userdata('ses_id');
 		if ($level == null) {
-			redirect('auth','refresh');
+			redirect('auth', 'refresh');
 		}
 
 		$order = [
@@ -211,27 +209,27 @@ class Anggota extends MY_Controller {
 		];
 
 
-		$button = '<a href="'.site_url('anggota/import').'" class="btn-sm btn-success btn-round" accept=".xls , .xlsx"><i class="fas fa-file-import"></i> Import Excel</a>';
+		$button = '<a href="' . site_url('anggota/import') . '" class="btn-sm btn-success btn-round" accept=".xls , .xlsx"><i class="fas fa-file-import"></i> Import Excel</a>';
 
 		//membuat data dropdown kwaran berdasarkan level
-		$detil_user = $this->db->get_where('tb_user',['id_user' => $id_user])->row(); 
+		$detil_user = $this->db->get_where('tb_user', ['id_user' => $id_user])->row();
 		switch ($level) {
 			case 1:
-			$kwaran = $this->M_master->getall('tb_kwaran',$order)->result();
-			break;
-			case 2 :
-			$kwaran = $this->M_master->getWhere('tb_kwaran',['id_kwaran' => $detil_user->id_kwaran],$order)->result();
-			break;
+				$kwaran = $this->M_master->getall('tb_kwaran', $order)->result();
+				break;
+			case 2:
+				$kwaran = $this->M_master->getWhere('tb_kwaran', ['id_kwaran' => $detil_user->id_kwaran], $order)->result();
+				break;
 			case 3:
-			$id_pangkalan = $detil_user->id_pangkalan;
+				$id_pangkalan = $detil_user->id_pangkalan;
 				//mendapatkan id_kwaran dari select data di tb pangkalan
-			$pangkalan = $this->db->get_where('tb_pangkalan',['id_pangkalan' => $id_pangkalan])->row();
-			$id_kwaran = $pangkalan->kwaran;
+				$pangkalan = $this->db->get_where('tb_pangkalan', ['id_pangkalan' => $id_pangkalan])->row();
+				$id_kwaran = $pangkalan->kwaran;
 
-			$kwaran = $this->M_master->getWhere('tb_kwaran',['id_kwaran' => $id_kwaran],$order)->result();
-			break;
+				$kwaran = $this->M_master->getWhere('tb_kwaran', ['id_kwaran' => $id_kwaran], $order)->result();
+				break;
 			default:
-			break;
+				break;
 		}
 
 		$data = [
@@ -239,28 +237,28 @@ class Anggota extends MY_Controller {
 			'sub'			=> 'tambah anggota',
 			'menu'			=> 'tambah_anggota',
 			'button_menu'	=> $button,
-			'darah'			=> $this->M_master->getall('tb_darah',$order)->result(),
-			'golongan'		=> $this->M_master->getall('tb_golongan',$order)->result(),
+			'darah'			=> $this->M_master->getall('tb_darah', $order)->result(),
+			'golongan'		=> $this->M_master->getall('tb_golongan', $order)->result(),
 			'kecamatan'		=> $this->db->get('tb_kecamatan')->result(),
 			'kwaran'		=> $kwaran,
 			'golongan_sert'	=> $this->M_anggota->getall('tb_golongan_sertifikat')->result(),
 		];
 
 		//echo json_encode($data);
-		$this->template->load('tema/index','form_tambah_anggota',$data);
+		$this->template->load('tema/index', 'form_tambah_anggota', $data);
 	}
 
 	function get_tingkat($id_golongan)
 	{
 		if ($this->session->userdata('ses_username') == null) {
-			redirect('auth','refresh');
+			redirect('auth', 'refresh');
 		}
 
 		$order = [
 			'kolom'		=> 'id_tingkatan',
 			'urutan'	=> 'asc'
 		];
-		$data = $this->M_master->getWhere('tb_tingkatan',['tingkat' => strtolower($id_golongan)],$order)->result();
+		$data = $this->M_master->getWhere('tb_tingkatan', ['tingkat' => strtolower($id_golongan)], $order)->result();
 
 		echo json_encode($data);
 	}
@@ -268,7 +266,7 @@ class Anggota extends MY_Controller {
 	function get_gudep($id_kwaran)
 	{
 		if ($this->session->userdata('ses_username') == null) {
-			redirect('auth','refresh');
+			redirect('auth', 'refresh');
 		}
 
 		$data = $this->M_anggota->getgudep($id_kwaran)->result();
@@ -280,17 +278,17 @@ class Anggota extends MY_Controller {
 	function insert_anggota()
 	{
 		if ($this->session->userdata('ses_username') == null) {
-			redirect('auth','refresh');
+			redirect('auth', 'refresh');
 		}
 
 		$alamat = $this->M_anggota->alamat();
 		$darah = ($this->input->post('darah') == 'Tidak Tahu') ? 'Tidak Tahu' :  $this->input->post('darah');
 
 		$data = [
-			'id_anggota'	=> uniqid(),	
+			'id_anggota'	=> uniqid(),
 			'id_kwaran'     => $this->input->post('kwaran'),
-			'id_gudep'  	=> $this->input->post('gudep') ,
-			'ta'  			=> $this->input->post('ta') ,
+			'id_gudep'  	=> $this->input->post('gudep'),
+			'ta'  			=> $this->input->post('ta'),
 			'nama' 			=> $this->input->post('nama'),
 			'tempat_lahir'  => $this->input->post('tempat_lahir'),
 			'tanggal_lahir' => date('Y-m-d', strtotime($this->input->post('tgl_lahir'))),
@@ -326,21 +324,17 @@ class Anggota extends MY_Controller {
 			'password'		=> md5(12345)
 		];
 
-		$cek = $this->M_master->input('tb_anggota',$data);
+		$cek = $this->M_master->input('tb_anggota', $data);
 		if (!$cek) {
 			$this->session->set_flashdata('success', 'Anggota Berhasil Ditambahkan');
 			if ($this->session->userdata('ses_level') == 3) {
-				redirect('anggota','refresh');	
+				redirect('anggota', 'refresh');
+			} else {
+				redirect('anggota/filter_anggota/' . $this->input->post('kwaran'), 'refresh');
 			}
-			else
-			{
-				redirect('anggota/filter_anggota/'.$this->input->post('kwaran'),'refresh');
-			}
-		}
-		else
-		{
+		} else {
 			$this->session->set_flashdata('error', 'Gagal');
-			redirect('anggota/filter_anggota/'.$this->input->post('kwaran'),'refresh');
+			redirect('anggota/filter_anggota/' . $this->input->post('kwaran'), 'refresh');
 		}
 	}
 
@@ -348,7 +342,7 @@ class Anggota extends MY_Controller {
 	{
 
 		if ($this->session->userdata('ses_username') == null) {
-			redirect('auth','refresh');
+			redirect('auth', 'refresh');
 		}
 
 		$anggota = $this->M_anggota->get_anggota_byID($id)->row();
@@ -362,57 +356,59 @@ class Anggota extends MY_Controller {
 			'anggota'		=> $anggota
 		];
 		//echo json_encode($data);
-		$this->template->load('tema/index','lihat_anggota',$data);
+		$this->template->load('tema/index', 'lihat_anggota', $data);
 	}
 
-	function hapus_anggota($id,$id_kwaran = null)
+	function hapus_anggota($id, $id_kwaran = null)
 	{
 		if ($this->session->userdata('ses_username') == null) {
-			redirect('auth','refresh');
+			redirect('auth', 'refresh');
 		}
 
-		$cek = $this->M_master->delete('tb_anggota',['id_anggota' => $id]);
+		$cek = $this->M_master->delete('tb_anggota', ['id_anggota' => $id]);
 		if (!$cek) {
 			$this->session->set_flashdata('success', 'Data Berhasil Dihapus');
 			if ($this->session->userdata('ses_level') == 1) {
-				redirect('anggota/filter_anggota/'.$id_kwaran,'refresh');
+				redirect('anggota/filter_anggota/' . $id_kwaran, 'refresh');
+			} else {
+				redirect('anggota', 'refresh');
 			}
-			else
-			{
-				redirect('anggota','refresh');
-			}
-
-		}
-		else
-		{
+		} else {
 			$this->session->set_flashdata('error', 'Gagal Hapus Data');
-			redirect('anggota/filter_anggota/'.$id_kwaran,'refresh');
+			redirect('anggota/filter_anggota/' . $id_kwaran, 'refresh');
 		}
 	}
 
-	function hapus_potensi_anggota($id,$potensi)
+	function ajax_hapus_anggota($id_anggota)
 	{
 		if ($this->session->userdata('ses_username') == null) {
-			redirect('auth','refresh');
+			redirect('auth', 'refresh');
+		}
+		$this->db->where(['id_anggota'	=> $id_anggota]);
+		$cek =  $this->db->delete('tb_anggota');
+		echo ($cek) ? json_encode(1) : '';
+	}
+
+	function hapus_potensi_anggota($id, $potensi)
+	{
+		if ($this->session->userdata('ses_username') == null) {
+			redirect('auth', 'refresh');
 		}
 
-		$cek = $this->M_master->delete('tb_anggota',['id_anggota' => $id]);
+		$cek = $this->M_master->delete('tb_anggota', ['id_anggota' => $id]);
 		if (!$cek) {
 			$this->session->set_flashdata('success', 'Data Berhasil Dihapus');
-			redirect('anggota/anggota/potensi/'.$potensi,'refresh');
-
-		}
-		else
-		{
+			redirect('anggota/anggota/potensi/' . $potensi, 'refresh');
+		} else {
 			$this->session->set_flashdata('error', 'Gagal Hapus Data');
-			redirect('anggota/filter_anggota/'.$id_kwaran,'refresh');
+			redirect('anggota/filter_anggota/' . $potensi, 'refresh');
 		}
 	}
 
-	function edit_anggota($id,$asal)
+	function edit_anggota($id, $asal)
 	{
 		if ($this->session->userdata('ses_username') == null) {
-			redirect('auth','refresh');
+			redirect('auth', 'refresh');
 		}
 
 		$order = [
@@ -423,7 +419,7 @@ class Anggota extends MY_Controller {
 		$button = '<button style="cursor:pointer" class="btn-sm btn-white btn-border btn-round mr-2" btn-success" onclick="goBack()"><i class="fa fa-arrow-left"></i> Kembali</button>';
 
 		$anggota = $this->M_anggota->getdetilanggota($id);
-		$gudep_terpilih  = $anggota->id_gudep; 
+		$gudep_terpilih  = $anggota->id_gudep;
 
 		$data = [
 			'title'			=> 'Anggota',
@@ -433,23 +429,23 @@ class Anggota extends MY_Controller {
 			'anggota'		=> $anggota,
 			'tingkat'		=> $this->db->get_where('tb_tingkatan', ['tingkat' => $anggota->golongan])->result(),
 			'asal'			=> $asal,
-			'gudep_terpilih'=> $gudep_terpilih,
+			'gudep_terpilih' => $gudep_terpilih,
 			'kecamatan'		=> $this->db->get('tb_kecamatan')->result(),
 			'desa'			=> $this->db->get('tb_desa')->result(),
-			'gudep_dropdown'=> $this->M_anggota->getallGudep()->result(),
-			'darah'			=> $this->M_master->getall('tb_darah',$order)->result(),
-			'golongan'		=> $this->M_master->getall('tb_golongan',$order)->result(),
-			'kwaran'		=> $this->M_master->getall('tb_kwaran',$order)->result(),
+			'gudep_dropdown' => $this->M_anggota->getallGudep()->result(),
+			'darah'			=> $this->M_master->getall('tb_darah', $order)->result(),
+			'golongan'		=> $this->M_master->getall('tb_golongan', $order)->result(),
+			'kwaran'		=> $this->M_master->getall('tb_kwaran', $order)->result(),
 			'golongan_sert'	=> $this->M_anggota->getall('tb_golongan_sertifikat')->result(),
 		];
 
-		$this->template->load('tema/index','edit_anggota',$data);
+		$this->template->load('tema/index', 'edit_anggota', $data);
 	}
 
 	function update_anggota()
 	{
 		if ($this->session->userdata('ses_username') == null) {
-			redirect('auth','refresh');
+			redirect('auth', 'refresh');
 		}
 
 		$id_kwaran 	= $this->input->post('kwaran');
@@ -457,34 +453,49 @@ class Anggota extends MY_Controller {
 		$asal 		= $this->input->post('asal');
 
 		if ($asal == 'anggota') {
-			$redirect = 'anggota/filter_anggota/'.$id_kwaran;
-		}
-		else
-		{
-			$redirect = 'gudep/anggota_regional/'.$id_gudep;
+			$redirect = 'anggota/filter_anggota/' . $id_kwaran;
+		} else {
+			$redirect = 'gudep/anggota_regional/' . $id_gudep;
 		}
 
 		$cek = $this->M_anggota->update_anggota();
 		if (!$cek) {
 			$this->session->set_flashdata('success', 'update berhasil');
-		}
-		else
-		{
+		} else {
 			$this->session->set_flashdata('error', 'update gagal');
 		}
-		redirect($redirect,'refresh');
+		redirect($redirect, 'refresh');
+	}
+
+	function listAnggotaByTingkat($golongan, $tingkat)
+	{
+		if ($this->session->userdata('ses_level') == null) {
+			redirect('auth', 'refresh');
+		}
+		$button = '<button style="cursor:pointer" class="btn-sm btn-white btn-border btn-round mr-2" btn-success" onclick="goBack()"><i class="fa fa-arrow-left"></i> Kembali</button>';
+		$data = [
+			'title'			=> 'Potensi Anggota',
+			'sub'			=> 'Golongan <b>' . strtoupper($golongan) . '</b> , Tingkat <b>' . strtoupper($tingkat) . '</b>',
+			'menu'			=> 'anggota',
+			'button_menu'	=> $button,
+			'golongan'		=> $golongan,
+			'anggota'		=> $this->M_anggota->listAnggotaByTingkat($golongan, $tingkat)
+		];
+
+		// echo json_encode($data['anggota']);
+		$this->template->load('tema/index', 'listAnggotaByTingkat', $data);
 	}
 
 	function potensi($param)
 	{
 		if ($this->session->userdata('ses_username') == null) {
-			redirect('auth','refresh');
+			redirect('auth', 'refresh');
 		}
 
 		$button = '<button style="cursor:pointer" class="btn-sm btn-white btn-border btn-round mr-2" btn-success" onclick="goBack()"><i class="fa fa-arrow-left"></i> Kembali</button>';
 		$data = [
 			'title'			=> 'Potensi Anggota',
-			'sub'			=> 'Bersertifikat <b>'.strtoupper($param).'</b>',
+			'sub'			=> 'Bersertifikat <b>' . strtoupper($param) . '</b>',
 			'menu'			=> 'anggota',
 			'button_menu'	=> $button,
 			'filter_kwaran'	=> $param,
@@ -492,14 +503,14 @@ class Anggota extends MY_Controller {
 		];
 
 		//echo json_encode($data);
-		$this->template->load('tema/index','index_potensi',$data);
+		$this->template->load('tema/index', 'index_potensi', $data);
 	}
 
 	/*IMPORT*/
 	function import()
 	{
 		if ($this->session->userdata('ses_username') == null) {
-			redirect('auth','refresh');
+			redirect('auth', 'refresh');
 		}
 
 		$order = [
@@ -507,36 +518,36 @@ class Anggota extends MY_Controller {
 			'urutan'	=> 'asc'
 		];
 
-		$button = '<a href="'.base_url('excel/anggota/import_admin').'.xls" class="btn-sm btn-success btn-round"><i class="fas fa-file-download"></i> Download Format</a>';
+		$button = '<a href="' . base_url('excel/anggota/import_admin') . '.xls" class="btn-sm btn-success btn-round"><i class="fas fa-file-download"></i> Download Format</a>';
 		$data = [
 			'title'			=> 'Pangkalan',
 			'sub'			=> 'Master Data Anggota',
 			'menu'			=> 'anggota',
 			'button_menu'	=> $button,
 			'gudep'			=> $this->M_anggota->getallGudep()->result(),
-			'kwaran'		=> $this->M_master->getall('tb_kwaran',$order)->result()
+			'kwaran'		=> $this->M_master->getall('tb_kwaran', $order)->result()
 		];
-		$this->template->load('tema/index','import',$data);
+		$this->template->load('tema/index', 'import', $data);
 	}
 
 	function export_anggota()
 	{
 		if ($this->session->userdata('ses_username') == null) {
-			redirect('auth','refresh');
-		}	
+			redirect('auth', 'refresh');
+		}
 
 		switch ($this->session->userdata('ses_level')) {
 			case ADMIN:
-			$anggota = $this->M_anggota->getsemuaAnggota();
-			break;
+				$anggota = $this->M_anggota->getsemuaAnggota();
+				break;
 			case ADMIN_KWARAN:
-			$anggota = $this->M_anggota->getsemuaAnggotaKwaran();
-			break;
+				$anggota = $this->M_anggota->getsemuaAnggotaKwaran();
+				break;
 			case ADMIN_GUDEP:
-			$anggota = $this->M_anggota->getsemuaAnggotaGudep();
-			break;
+				$anggota = $this->M_anggota->getsemuaAnggotaGudep();
+				break;
 			default:
-			break;
+				break;
 		}
 
 		//echo json_encode($anggota);
@@ -546,30 +557,28 @@ class Anggota extends MY_Controller {
 	function bulk_action()
 	{
 		if ($this->session->userdata('ses_username') == null) {
-			redirect('auth','refresh');
-		}	
+			redirect('auth', 'refresh');
+		}
 
 		$cek = $this->M_anggota->bulkHapus();
 		if ($cek) {
 			$this->session->set_flashdata('success', 'Bulk Hapus berhasil');
-		}
-		else
-		{
+		} else {
 			$this->session->set_flashdata('error', 'Bulk Hapus gagal');
 		}
-		redirect('anggota','refresh');
+		redirect('anggota', 'refresh');
 	}
 
 
 	function upload()
 	{
 		if ($this->session->userdata('ses_username') == null) {
-			redirect('auth','refresh');
-		}	
+			redirect('auth', 'refresh');
+		}
 		//proses import
 		$cek = $this->M_anggota->proses_import();
 		$this->session->set_flashdata($cek['kode'], $cek['msg']);
-		redirect('anggota/import','refresh');
+		redirect('anggota/import', 'refresh');
 	}
 
 
@@ -595,10 +604,10 @@ class Anggota extends MY_Controller {
 			<i class="fas fa-align-justify"></i>
 			</a>';
 			$menu 	.= '<div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-			<a class="dropdown-item" href="'. site_url('anggota/lihat_anggota/').$field->id_anggota . '"><i class="fa fa-eye" ></i> Lihat</a>';
+			<a class="dropdown-item" href="' . site_url('anggota/lihat_anggota/') . $field->id_anggota . '"><i class="fa fa-eye" ></i> Lihat</a>';
 			if ($level != 4) {
-				$menu 	.= '<a class="dropdown-item" href="'. site_url('anggota/edit_anggota/').$field->id_anggota.'/anggota"><i class="fa fa-edit"></i> Edit</a>
-				<a class="dropdown-item" href="#" onclick="hapus(\''.$field->id_anggota.'\')"><i class="fa fa-trash" ></i> Hapus</a>';
+				$menu 	.= '<a class="dropdown-item" href="' . site_url('anggota/edit_anggota/') . $field->id_anggota . '/anggota"><i class="fa fa-edit"></i> Edit</a>
+				<a class="dropdown-item" href="#" onclick="hapus(\'' . $field->id_anggota . '\')"><i class="fa fa-trash" ></i> Hapus</a>';
 			}
 			$menu 	.= '</div>';
 			$menu 	.= '</div>';
@@ -622,7 +631,7 @@ class Anggota extends MY_Controller {
 			"recordsFiltered" 	=> $this->M_anggota->count_filtered(),
 			"data" 				=> $data,
 		);
-        //output dalam format JSON
+		//output dalam format JSON
 		echo json_encode($output);
 	}
 
@@ -640,10 +649,10 @@ class Anggota extends MY_Controller {
 			<i class="fas fa-align-justify"></i>
 			</a>';
 			$menu 	.= '<div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-			<a class="dropdown-item" href="'. site_url('anggota/lihat_anggota/').$field->id_anggota . '"><i class="fa fa-eye" ></i> Lihat</a>';
+			<a class="dropdown-item" href="' . site_url('anggota/lihat_anggota/') . $field->id_anggota . '"><i class="fa fa-eye" ></i> Lihat</a>';
 			if ($level != 4) {
-				$menu 	.= '<a class="dropdown-item" href="'. site_url('anggota/edit_anggota/').$field->id_anggota.'/anggota"><i class="fa fa-edit"></i> Edit</a>
-				<a class="dropdown-item" href="#" onclick="hapus(\''.$field->id_anggota.'\')"><i class="fa fa-trash" ></i> Hapus</a>';
+				$menu 	.= '<a class="dropdown-item" href="' . site_url('anggota/edit_anggota/') . $field->id_anggota . '/anggota"><i class="fa fa-edit"></i> Edit</a>
+				<a class="dropdown-item" href="#" onclick="hapus(\'' . $field->id_anggota . '\')"><i class="fa fa-trash" ></i> Hapus</a>';
 			}
 			$menu 	.= '</div>';
 			$menu 	.= '</div>';
@@ -667,10 +676,9 @@ class Anggota extends MY_Controller {
 			"recordsFiltered" 	=> $this->M_anggota->count_filtered(),
 			"data" 				=> $data,
 		);
-        //output dalam format JSON
+		//output dalam format JSON
 		echo json_encode($output);
 	}
-
 }
 
 /* End of file Anggota.php */
