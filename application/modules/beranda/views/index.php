@@ -23,7 +23,6 @@ switch ($level) {
 }
 ?>
 <div class="row row-card-no-pd">
-
 	<?php if ($level == 1) : ?>
 		<div class="col-sm-6 col-md-6 mt-2">
 			<div class="card card-stats card-success card-round">
@@ -121,7 +120,7 @@ switch ($level) {
 
 
 <!-- PRAMUKA MUDA -->
-<h3 data-toggle="collapse" href="#body_muda" role="button" aria-expanded="false" aria-controls="collapseExample" style="cursor: pointer"><b><i class="flaticon-layers-1"></i> Potensi Anggota Muda</b> (<?php echo number_format($siaga['golongan'] + $penggalang['golongan'] + $penegak['golongan'] + $pandega['golongan'], 0) ?>)</h3>
+<h3 data-toggle="collapse" href="#body_muda" role="button" aria-expanded="false" aria-controls="collapseExample" style="cursor: pointer"><b><i class="flaticon-layers-1"></i> Potensi Anggota Muda</b> ( <span class="text-danger"><?php echo number_format($siaga['total'] + $penggalang['total'] + $penegak['total'] + $pandega['total'], 0) ?></span> ) </h3>
 <div class="separator-solid"></div>
 <div class="row collapse" id="body_muda">
 	<div class="col-sm-6 col-md-3 col-xs-12">
@@ -136,7 +135,7 @@ switch ($level) {
 					<div class="col col-stats ml-3 ml-sm-0">
 						<div class="numbers">
 							<p class="card-category text-siaga" id="muda">Siaga</p>
-							<h4 class="card-title"><?php echo $siaga['golongan'] != null ? number_format($siaga['golongan'], 0) : '-' ?></h4>
+							<h4 class="card-title"><?php echo $siaga['total'] != null ? number_format($siaga['total'], 0) : '-' ?></h4>
 						</div>
 					</div>
 				</div>
@@ -145,13 +144,20 @@ switch ($level) {
 						<div class="card">
 							<div class="card-body bg-siaga text-white" style="border-radius: 20px;">
 								<table width="100%" style="font-size: 1rem">
-									<?php foreach ($siaga['rekap'] as $s) : ?>
-										<tr>
-											<td width="60%"><strong><?php echo $s['tingkat'] ?></strong></td>
-											<td> : </td>
-											<td class="text-right"><a href="<?= site_url('anggota/listAnggotaByTingkat/siaga/' . $s['tingkat']) ?>" class="text-white"> <?php echo number_format($s['jumlah'], 0) ?></a></td>
-										</tr>
-									<?php endforeach ?>
+									<?php
+									$key = 0;
+									$title = array_keys($siaga);
+									foreach ($siaga as $s) : ?>
+										<?php if ($title[$key] != 'total') : ?>
+											<tr>
+												<td width="60%"><strong><?= ucfirst($title[$key])  ?></strong></td>
+												<td> : </td>
+												<td class="text-right"><?php echo number_format($s, 0) ?></td>
+											</tr>
+										<?php endif ?>
+									<?php
+										$key++;
+									endforeach ?>
 								</table>
 							</div>
 						</div>
@@ -172,7 +178,7 @@ switch ($level) {
 					<div class="col col-stats ml-3 ml-sm-0">
 						<div class="numbers">
 							<p class="card-category text-penggalang" id="muda">Penggalang</p>
-							<h4 class="card-title"><?php echo $penggalang['golongan'] != null ? number_format($penggalang['golongan'], 0) : '-' ?></h4>
+							<h4 class="card-title"><?php echo $penggalang['total'] != null ? number_format($penggalang['total'], 0) : '-' ?></h4>
 						</div>
 					</div>
 				</div>
@@ -181,13 +187,20 @@ switch ($level) {
 						<div class="card">
 							<div class="card-body bg-penggalang text-white" style="border-radius: 20px;">
 								<table width="100%" style="font-size: 1rem">
-									<?php foreach ($penggalang['rekap'] as $g) : ?>
-										<tr>
-											<td width="60%"><strong><?php echo $g['tingkat'] ?></strong></td>
-											<td> : </td>
-											<td class="text-right"> <?php echo number_format($g['jumlah'], 0) ?></td>
-										</tr>
-									<?php endforeach ?>
+									<?php
+									$key = 0;
+									$title = array_keys($penggalang);
+									foreach ($penggalang as $g) : ?>
+										<?php if ($title[$key] != 'total') : ?>
+											<tr>
+												<td width="60%"><strong><?= ucfirst($title[$key])  ?></strong></td>
+												<td> : </td>
+												<td class="text-right"> <?php echo number_format($g, 0) ?></td>
+											</tr>
+										<?php endif; ?>
+									<?php
+										$key++;
+									endforeach ?>
 								</table>
 							</div>
 						</div>
@@ -208,7 +221,7 @@ switch ($level) {
 					<div class="col col-stats ml-3 ml-sm-0">
 						<div class="numbers">
 							<p class="card-category text-penegak" id="muda">Penegak</p>
-							<h4 class="card-title"><?php echo $penegak['golongan'] != null ? number_format($penegak['golongan'], 0) : '-' ?></h4>
+							<h4 class="card-title"><?php echo $penegak['total'] != null ? number_format($penegak['total'], 0) : '-' ?></h4>
 						</div>
 					</div>
 				</div>
@@ -217,13 +230,20 @@ switch ($level) {
 						<div class="card">
 							<div class="card-body bg-penegak text-white" style="border-radius: 20px;">
 								<table width="100%" style="font-size: 1rem">
-									<?php foreach ($penegak['rekap'] as $t) : ?>
-										<tr>
-											<td width="60%"><strong><?php echo $t['tingkat'] ?></strong></td>
-											<td> : </td>
-											<td class="text-right"> <?php echo number_format($t['jumlah'], 0) ?></td>
-										</tr>
-									<?php endforeach ?>
+									<?php
+									$key = 0;
+									$title = array_keys($penegak);
+									foreach ($penegak as $t) : ?>
+										<?php if ($title[$key] != 'total') : ?>
+											<tr>
+												<td width="60%"><strong><?= ucfirst($title[$key])  ?></strong></td>
+												<td> : </td>
+												<td class="text-right"> <?php echo number_format($t, 0) ?></td>
+											</tr>
+										<?php endif; ?>
+									<?php
+										$key++;
+									endforeach ?>
 								</table>
 							</div>
 						</div>
@@ -244,7 +264,7 @@ switch ($level) {
 					<div class="col col-stats ml-3 ml-sm-0">
 						<div class="numbers">
 							<p class="card-category text-pandega" id="muda">Pandega</p>
-							<h4 class="card-title"><?php echo $pandega['golongan'] != null ? number_format($pandega['golongan'], 0) : '-' ?></h4>
+							<h4 class="card-title"><?php echo $pandega['total'] != null ? number_format($pandega['total'], 0) : '-' ?></h4>
 						</div>
 					</div>
 				</div>
@@ -253,13 +273,20 @@ switch ($level) {
 						<div class="card">
 							<div class="card-body bg-pandega text-white" style="border-radius: 20px;">
 								<table width="100%" style="font-size: 1rem">
-									<?php foreach ($pandega['rekap'] as $d) : ?>
-										<tr>
-											<td width="60%"><strong><?php echo $d['tingkat'] ?></strong></td>
-											<td> : </td>
-											<td class="text-right"> <?php echo number_format($d['jumlah'], 0) ?></td>
-										</tr>
-									<?php endforeach ?>
+									<?php
+									$key = 0;
+									$title = array_keys($pandega);
+									foreach ($pandega as $d) : ?>
+										<?php if ($title[$key] != 'total') : ?>
+											<tr>
+												<td width="60%"><strong><?= ucfirst($title[$key])  ?></strong></td>
+												<td> : </td>
+												<td class="text-right"> <?php echo number_format($d, 0) ?></td>
+											</tr>
+										<?php endif; ?>
+									<?php
+										$key++;
+									endforeach ?>
 								</table>
 							</div>
 						</div>
@@ -271,14 +298,15 @@ switch ($level) {
 </div>
 
 <!-- DEWASA -->
-<h3 data-toggle="collapse" href="#body_dewasa" role="button" aria-expanded="false" aria-controls="collapseExample" style="cursor: pointer"><b><i class="flaticon-layers-1"></i> Potensi Anggota Dewasa</b> (<?php echo number_format($dewasa['golongan'], 0) ?>)</h3>
+<h3 data-toggle="collapse" href="#body_dewasa" role="button" aria-expanded="false" aria-controls="collapseExample" style="cursor: pointer"><b><i class="flaticon-layers-1"></i> Potensi Anggota Dewasa</b> ( <span class="text-danger"><?php echo number_format($dewasa['total'] - $dewasa['NK'], 0) ?></span> )</h3>
 <div class="separator-solid"></div>
 <div class="row collapse" id="body_dewasa">
-	<?php foreach ($dewasa['rekap'] as $var) : ?>
-		<?php
-		$exclude = ['NK', 'lainnya'];
-		?>
-		<?php if (!in_array($var['tingkat'], $exclude, true)) : ?>
+	<?php
+	$key = 0;
+	$title = array_keys($dewasa);
+	$exclude = ['total', 'NK'];
+	foreach ($dewasa as $var) : ?>
+		<?php if (!in_array($title[$key], $exclude, true)) : ?>
 			<div class="col-sm-6 col-md-3">
 				<div class="card card-stats card-round">
 					<div class="card-body ">
@@ -290,44 +318,61 @@ switch ($level) {
 							</div>
 							<div class="col col-stats ml-3 ml-sm-0">
 								<div class="numbers">
-									<p class="card-category"><a href="<?php echo site_url('anggota/potensi/') . $var['tingkat']  ?>"><?= strtoupper($var['tingkat']) ?></a></p>
-									<h4 class="card-title"><?php echo $var['jumlah'] ? number_format($var['jumlah'], 0) : '-' ?></h4>
+									<p class="card-category"><a href="<?php echo site_url('anggota/potensi/') . $title[$key]  ?>"><?= strtoupper($title[$key]) ?></a></p>
+									<h4 class="card-title"><?php echo $var ? number_format($var, 0) : '-' ?></h4>
 								</div>
 							</div>
 						</div>
 					</div>
 				</div>
 			</div>
-		<?php endif ?>
-	<?php endforeach ?>
+		<?php endif; ?>
+	<?php
+		$key++;
+	endforeach ?>
 </div>
 
-<h3 data-toggle="collapse" href="#body_non" role="button" aria-expanded="false" aria-controls="collapseExample" style="cursor: pointer"><b><i class="flaticon-layers-1"></i> Anggota Dewasa Lainnya</b></h3>
+<h3 data-toggle="collapse" href="#body_non" role="button" aria-expanded="false" aria-controls="collapseExample" style="cursor: pointer"><b><i class="flaticon-layers-1"></i> Anggota Lainnya</b> ( <span class="text-danger"><?= number_format($dewasa['NK'] + $lainnya['total'], 0) ?></span> ) </h3>
 <div class="separator-solid"></div>
 <div class="row collapse" id="body_non">
-	<?php foreach ($dewasa['rekap'] as $var) : ?>
-		<?php if (in_array($var['tingkat'], $exclude, true)) : ?>
-			<div class="col-sm-6 col-md-6">
-				<div class="card card-stats card-round">
-					<div class="card-body ">
-						<div class="row align-items-center">
-							<div class="col-icon">
-								<div class="icon-big text-center icon-danger bubble-shadow-small">
-									<i class="flaticon-shapes"></i>
-								</div>
-							</div>
-							<div class="col col-stats ml-3 ml-sm-0">
-								<div class="numbers">
-									<p class="card-category text-danger"><a href="<?php echo site_url('anggota/potensi/nk') ?>"><?= $var['tingkat'] ?></a></p>
-									<h4 class="card-title"><?php echo $var['jumlah'] != null ? number_format($var['jumlah']) : '-' ?></h4>
-								</div>
-							</div>
+	<div class="col-sm-6 col-md-6">
+		<div class="card card-stats card-round">
+			<div class="card-body ">
+				<div class="row align-items-center">
+					<div class="col-icon">
+						<div class="icon-big text-center icon-danger bubble-shadow-small">
+							<i class="flaticon-shapes"></i>
+						</div>
+					</div>
+					<div class="col col-stats ml-3 ml-sm-0">
+						<div class="numbers">
+							<p class="card-category text-danger"><a href="<?php echo site_url('anggota/potensi/nk') ?>">Dewasa NK</a></p>
+							<h4 class="card-title"><?php echo $dewasa['NK'] ? number_format($dewasa['NK'], 0) : '-' ?></h4>
 						</div>
 					</div>
 				</div>
 			</div>
-		<?php endif ?>
-	<?php endforeach ?>
+		</div>
+	</div>
+	<div class="col-sm-6 col-md-6">
+		<div class="card card-stats card-round">
+			<div class="card-body ">
+				<div class="row align-items-center">
+					<div class="col-icon">
+						<div class="icon-big text-center icon-danger bubble-shadow-small">
+							<i class="flaticon-shapes"></i>
+						</div>
+					</div>
+					<div class="col col-stats ml-3 ml-sm-0">
+						<div class="numbers">
+							<p class="card-category text-danger"><a target="__blank" href="<?= site_url('anggota/listAnggotaByTingkat') ?>">Tidak Berkategori</a></p>
+							<h4 class="card-title"><?= $lainnya['total'] ? number_format($lainnya['total'], 0)  : 0 ?></h4>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
 </div>
 
 

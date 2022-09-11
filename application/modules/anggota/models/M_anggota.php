@@ -229,15 +229,15 @@ class M_anggota extends CI_Model
 		return $data;
 	}
 
-	function listAnggotaByTingkat($golongan, $tingkat)
+	function listAnggotaByTingkat()
 	{
 		$level = $this->session->userdata('ses_level');
 		$kwaran = $this->session->userdata('ses_kwaran');
 		$pangkalan = $this->session->userdata('ses_pangkalan');
 
-		$query = " SELECT sub_tingkat from tb_tingkatan";
+		$query = " SELECT golongan from tb_golongan";
 		$golongan = $this->db->query($query)->result();
-		$golongan = array_column($golongan, 'sub_tingkat');
+		$golongan = array_column($golongan, 'golongan');
 
 		$query = " SELECT sub_tingkat from tb_tingkatan";
 		$tingkat = $this->db->query($query)->result();

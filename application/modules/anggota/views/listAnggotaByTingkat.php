@@ -32,7 +32,7 @@
                             <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
                                 <a class="dropdown-item" href="<?= site_url('anggota/lihat_anggota/') . $var->id_anggota  ?>"><i class="fa fa-eye"></i> Lihat</a>
                                 <a class="dropdown-item" href="<?= site_url('anggota/edit_anggota/') . $var->id_anggota  ?>/anggota"><i class="fa fa-edit"></i> Edit</a>
-                                <a class="dropdown-item" href="#" onclick="hapusAnggotaLainnya('<?= $golongan ?>','<?= $var->id_anggota ?>')"><i class="fa fa-trash"></i> Hapus</a>
+                                <a class="dropdown-item" href="#" onclick="hapusAnggotaLainnya('<?= $var->id_anggota ?>')"><i class="fa fa-trash"></i> Hapus</a>
                             </div>
                         </div>
                     </td>

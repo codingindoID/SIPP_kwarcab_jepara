@@ -112,7 +112,7 @@ function hapus(id) {
 	})
 }
 
-function hapusAnggotaLainnya(golongan, id) {
+function hapusAnggotaLainnya(id) {
 	Swal.fire({
 		title: 'Anda Yakin Menghapus Data Ini?',
 		text: "Data Terhapus Tidak Dapat Dikembalikan, Dan Mungkin Akan Berprngaruh Pada Data Lainnya,",

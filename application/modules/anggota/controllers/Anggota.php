@@ -17,7 +17,6 @@ class Anggota extends MY_Controller
 
 		$level 		= $this->session->userdata('ses_level');
 		$select 	= '';
-		$anggota 	= '';
 		$pangkalan 	= '';
 
 		$select2 = '
@@ -42,19 +41,16 @@ class Anggota extends MY_Controller
 			</div>
 			</div>
 			';
-				//$anggota    	= $this->M_anggota->getsemuaAnggota();
 				$pangkalan 		= $this->M_anggota->getPangkalanBulk();
 				break;
 
 			case ADMIN_KWARAN:
 				$select = $select2;
 				$pangkalan = $this->M_anggota->getPangkalanBulk();
-				//$anggota  = $this->M_anggota->getanggotaKwaran()->result();
 				break;
 
 			case ADMIN_GUDEP:
 				$select = $select2;
-				//$anggota = $this->M_anggota->getanggotaGudep()->result();
 				break;
 			default:
 				break;
@@ -467,7 +463,7 @@ class Anggota extends MY_Controller
 		redirect($redirect, 'refresh');
 	}
 
-	function listAnggotaByTingkat($golongan, $tingkat)
+	function listAnggotaByTingkat()
 	{
 		if ($this->session->userdata('ses_level') == null) {
 			redirect('auth', 'refresh');
@@ -475,11 +471,10 @@ class Anggota extends MY_Controller
 		$button = '<button style="cursor:pointer" class="btn-sm btn-white btn-border btn-round mr-2" btn-success" onclick="goBack()"><i class="fa fa-arrow-left"></i> Kembali</button>';
 		$data = [
 			'title'			=> 'Potensi Anggota',
-			'sub'			=> 'Golongan <b>' . strtoupper($golongan) . '</b> , Tingkat <b>' . strtoupper($tingkat) . '</b>',
+			'sub'			=> 'Golongan <b>Tidak Berkategori</b>',
 			'menu'			=> 'anggota',
 			'button_menu'	=> $button,
-			'golongan'		=> $golongan,
-			'anggota'		=> $this->M_anggota->listAnggotaByTingkat($golongan, $tingkat)
+			'anggota'		=> $this->M_anggota->listAnggotaByTingkat()
 		];
 
 		// echo json_encode($data['anggota']);
